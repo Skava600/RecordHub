@@ -3,12 +3,49 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.IdentityService.Api", "RecordHub.IdentityService\RecordHub.IdentityService.Api\RecordHub.IdentityService.Api.csproj", "{2E8F2E2D-733E-43A3-B129-FC1A12C00BE9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.IdentityService.Core", "RecordHub.IdentityService\RecordHub.IdentityService.Core\RecordHub.IdentityService.Core.csproj", "{98E887D4-08A7-4C0E-905E-6E5A9F238A8B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RecordHub.IdentityService", "RecordHub.IdentityService", "{B9F8F39F-9E6B-41D8-8362-D5F08A7BEF81}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.IdentityService.Persistence", "RecordHub.IdentityService\RecordHub.IdentityService.Persistence\RecordHub.IdentityService.Persistence.csproj", "{F3349ACB-4DAF-4292-A472-3D4550B17836}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.IdentityService.Domain", "RecordHub.IdentityService\RecordHub.IdentityService.Domain\RecordHub.IdentityService.Domain.csproj", "{702FF8BD-874C-42E7-852E-F6A50D690075}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2E8F2E2D-733E-43A3-B129-FC1A12C00BE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E8F2E2D-733E-43A3-B129-FC1A12C00BE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E8F2E2D-733E-43A3-B129-FC1A12C00BE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E8F2E2D-733E-43A3-B129-FC1A12C00BE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98E887D4-08A7-4C0E-905E-6E5A9F238A8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98E887D4-08A7-4C0E-905E-6E5A9F238A8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98E887D4-08A7-4C0E-905E-6E5A9F238A8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98E887D4-08A7-4C0E-905E-6E5A9F238A8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3349ACB-4DAF-4292-A472-3D4550B17836}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3349ACB-4DAF-4292-A472-3D4550B17836}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3349ACB-4DAF-4292-A472-3D4550B17836}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3349ACB-4DAF-4292-A472-3D4550B17836}.Release|Any CPU.Build.0 = Release|Any CPU
+		{702FF8BD-874C-42E7-852E-F6A50D690075}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{702FF8BD-874C-42E7-852E-F6A50D690075}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{702FF8BD-874C-42E7-852E-F6A50D690075}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{702FF8BD-874C-42E7-852E-F6A50D690075}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2E8F2E2D-733E-43A3-B129-FC1A12C00BE9} = {B9F8F39F-9E6B-41D8-8362-D5F08A7BEF81}
+		{98E887D4-08A7-4C0E-905E-6E5A9F238A8B} = {B9F8F39F-9E6B-41D8-8362-D5F08A7BEF81}
+		{F3349ACB-4DAF-4292-A472-3D4550B17836} = {B9F8F39F-9E6B-41D8-8362-D5F08A7BEF81}
+		{702FF8BD-874C-42E7-852E-F6A50D690075} = {B9F8F39F-9E6B-41D8-8362-D5F08A7BEF81}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BDD6659A-32F8-4085-AA8B-340D17435983}
 	EndGlobalSection
 EndGlobal

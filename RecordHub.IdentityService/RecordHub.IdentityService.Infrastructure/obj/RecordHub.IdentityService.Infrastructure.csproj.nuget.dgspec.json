@@ -1,31 +1,180 @@
 {
   "format": 1,
   "restore": {
-    "/home/skava/work/Modsen/Trainee-app/RecordHub.IdentityService/RecordHub.IdentityService.Infrastructure/RecordHub.IdentityService.Infrastructure.csproj": {}
+    "G:\\study\\work\\modsen_trainee\\RecordHub\\RecordHub.IdentityService\\RecordHub.IdentityService.Infrastructure\\RecordHub.IdentityService.Infrastructure.csproj": {}
   },
   "projects": {
-    "/home/skava/work/Modsen/Trainee-app/RecordHub.IdentityService/RecordHub.IdentityService.Infrastructure/RecordHub.IdentityService.Infrastructure.csproj": {
+    "G:\\study\\work\\modsen_trainee\\RecordHub\\RecordHub.IdentityService\\RecordHub.IdentityService.Core\\RecordHub.IdentityService.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/skava/work/Modsen/Trainee-app/RecordHub.IdentityService/RecordHub.IdentityService.Infrastructure/RecordHub.IdentityService.Infrastructure.csproj",
-        "projectName": "RecordHub.IdentityService.Infrastructure",
-        "projectPath": "/home/skava/work/Modsen/Trainee-app/RecordHub.IdentityService/RecordHub.IdentityService.Infrastructure/RecordHub.IdentityService.Infrastructure.csproj",
-        "packagesPath": "/home/skava/.nuget/packages/",
-        "outputPath": "/home/skava/work/Modsen/Trainee-app/RecordHub.IdentityService/RecordHub.IdentityService.Infrastructure/obj/",
+        "projectUniqueName": "G:\\study\\work\\modsen_trainee\\RecordHub\\RecordHub.IdentityService\\RecordHub.IdentityService.Core\\RecordHub.IdentityService.Core.csproj",
+        "projectName": "RecordHub.IdentityService.Core",
+        "projectPath": "G:\\study\\work\\modsen_trainee\\RecordHub\\RecordHub.IdentityService\\RecordHub.IdentityService.Core\\RecordHub.IdentityService.Core.csproj",
+        "packagesPath": "C:\\Users\\ivasi\\.nuget\\packages\\",
+        "outputPath": "G:\\study\\work\\modsen_trainee\\RecordHub\\RecordHub.IdentityService\\RecordHub.IdentityService.Core\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "/home/skava/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\ivasi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "G:\\study\\work\\modsen_trainee\\RecordHub\\RecordHub.IdentityService\\RecordHub.IdentityService.Domain\\RecordHub.IdentityService.Domain.csproj": {
+                "projectPath": "G:\\study\\work\\modsen_trainee\\RecordHub\\RecordHub.IdentityService\\RecordHub.IdentityService.Domain\\RecordHub.IdentityService.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[7.0.5, )"
+            },
+            "Microsoft.Extensions.Configuration.Abstractions": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            },
+            "Microsoft.Extensions.DependencyInjection.Abstractions": {
+              "target": "Package",
+              "version": "[7.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "G:\\study\\work\\modsen_trainee\\RecordHub\\RecordHub.IdentityService\\RecordHub.IdentityService.Domain\\RecordHub.IdentityService.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "G:\\study\\work\\modsen_trainee\\RecordHub\\RecordHub.IdentityService\\RecordHub.IdentityService.Domain\\RecordHub.IdentityService.Domain.csproj",
+        "projectName": "RecordHub.IdentityService.Domain",
+        "projectPath": "G:\\study\\work\\modsen_trainee\\RecordHub\\RecordHub.IdentityService\\RecordHub.IdentityService.Domain\\RecordHub.IdentityService.Domain.csproj",
+        "packagesPath": "C:\\Users\\ivasi\\.nuget\\packages\\",
+        "outputPath": "G:\\study\\work\\modsen_trainee\\RecordHub\\RecordHub.IdentityService\\RecordHub.IdentityService.Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\ivasi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.5, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "G:\\study\\work\\modsen_trainee\\RecordHub\\RecordHub.IdentityService\\RecordHub.IdentityService.Infrastructure\\RecordHub.IdentityService.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "G:\\study\\work\\modsen_trainee\\RecordHub\\RecordHub.IdentityService\\RecordHub.IdentityService.Infrastructure\\RecordHub.IdentityService.Infrastructure.csproj",
+        "projectName": "RecordHub.IdentityService.Infrastructure",
+        "projectPath": "G:\\study\\work\\modsen_trainee\\RecordHub\\RecordHub.IdentityService\\RecordHub.IdentityService.Infrastructure\\RecordHub.IdentityService.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\ivasi\\.nuget\\packages\\",
+        "outputPath": "G:\\study\\work\\modsen_trainee\\RecordHub\\RecordHub.IdentityService\\RecordHub.IdentityService.Infrastructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\ivasi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {
+              "G:\\study\\work\\modsen_trainee\\RecordHub\\RecordHub.IdentityService\\RecordHub.IdentityService.Core\\RecordHub.IdentityService.Core.csproj": {
+                "projectPath": "G:\\study\\work\\modsen_trainee\\RecordHub\\RecordHub.IdentityService\\RecordHub.IdentityService.Core\\RecordHub.IdentityService.Core.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -53,7 +202,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/7.0.105/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

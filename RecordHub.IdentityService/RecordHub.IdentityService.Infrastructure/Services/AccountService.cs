@@ -26,16 +26,13 @@ namespace RecordHub.IdentityService.Infrastructure.Services
         {
             var user = await userManager.FindByNameAsync(model.Email) ??
                 throw new UserNotFoundException();
+            var credetialsResult = await userManager.CheckPasswordAsync(
+                user, model.Password);
 
-            var credetialsResult = await signInManager.CheckPasswordSignInAsync(
-                user, model.Password, false);
-
-            if (!credetialsResult.Succeeded)
+            if (!credetialsResult)
             {
                 throw new InvalidCredentialsException();
             }
-
-            await signInManager.SignInAsync(user, true);
 
             return tokenService.GenerateJwtToken(user);
         }

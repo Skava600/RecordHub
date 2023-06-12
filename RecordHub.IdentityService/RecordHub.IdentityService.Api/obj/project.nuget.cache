@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "0qpvXeFt+nkc8LyiaTHef5QqNSzggwpgrwSTv9NqDZfC1L1fgKLvDq0upHzamz/lKKMpkaoJNkEV7hvMobKI3A==",
+  "dgSpecHash": "kPWldmIhxnulXYAfturj7mhGgvUwlDV8foBUohZC4xTXmAOuCAo/KVIiNGfHmupphzqADF8o3Q57EysrFy8xsg==",
   "success": true,
   "projectFilePath": "G:\\study\\work\\modsen_trainee\\RecordHub\\RecordHub.IdentityService\\RecordHub.IdentityService.Api\\RecordHub.IdentityService.Api.csproj",
   "expectedPackageFiles": [
@@ -57,6 +57,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.net.http.headers\\2.2.0\\microsoft.net.http.headers.2.2.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.netcore.platforms\\2.0.0\\microsoft.netcore.platforms.2.0.0.nupkg.sha512",
     "C:\\Users\\ivasi\\.nuget\\packages\\microsoft.openapi\\1.4.3\\microsoft.openapi.1.4.3.nupkg.sha512",
+    "C:\\Users\\ivasi\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.17.0\\microsoft.visualstudio.azure.containers.tools.targets.1.17.0.nupkg.sha512",
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder\\microsoft.win32.registry\\4.5.0\\microsoft.win32.registry.4.5.0.nupkg.sha512",
     "C:\\Users\\ivasi\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\ivasi\\.nuget\\packages\\npgsql\\7.0.4\\npgsql.7.0.4.nupkg.sha512",

@@ -1,0 +1,40 @@
+version: '3.8'
+networks:
+  recordhub:
+    driver: bridge
+services:
+    recordhub.identityservice.api:
+        image: ${DOCKER_REGISTRY-}recordhubidentityserviceapi
+        build:
+            context: .
+            dockerfile: RecordHub.IdentityService/RecordHub.IdentityService.Api/Dockerfile
+        networks:
+            - recordhub
+        ports:
+            - 3000:3000
+        environment:
+            DB_HOST: identitydb
+            DB_PORT: 5432
+            DB_USER: postgres
+            DB_PASSWORD: 123456
+            DB_NAME: RecordHub.Identity
+        depends_on:
+            - identitydb
+    identitydb:
+        image: postgres
+        container_name: identitydb
+        restart: always
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: 123456
+            POSTGRES_DB: identity
+        ports:
+            - '5432:5432'
+        networks:
+            - recordhub
+        volumes:
+            - "pgdata:/var/lib/postgresql/data"
+            - ./sql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
+
+volumes:
+        pgdata:   

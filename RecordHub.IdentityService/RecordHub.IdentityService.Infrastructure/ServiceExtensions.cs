@@ -1,15 +1,21 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using RecordHub.IdentityService.Core.Services;
+using RecordHub.IdentityService.Infrastructure.Configuration;
+using RecordHub.IdentityService.Infrastructure.Services;
 using System.Text;
 
-namespace RecordHub.IdentityService.Core
+namespace RecordHub.IdentityService.Infrastructure
 {
     public static class ServiceExtensions
     {
         public static IServiceCollection AddCore(this IServiceCollection services, IConfiguration configuration)
         {
+            services.Configure<JwtConfig>(configuration.GetSection("Jwt"))
+               .AddSingleton(x => x.GetRequiredService<IOptions<JwtConfig>>().Value);
 
             services.AddAuthentication(conf =>
             {
@@ -32,7 +38,8 @@ namespace RecordHub.IdentityService.Core
                 };
             });
 
-
+            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<ITokenService, TokenService>();
 
             return services;
 

@@ -8,15 +8,16 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\RecordHub.IdentityService.Core\RecordHub.IdentityService.Core.csproj" />
+    <ProjectReference Include="..\RecordHub.IdentityService.Infrastructure\RecordHub.IdentityService.Infrastructure.csproj" />
     <ProjectReference Include="..\RecordHub.IdentityService.Persistence\RecordHub.IdentityService.Persistence.csproj" />
   </ItemGroup>
 

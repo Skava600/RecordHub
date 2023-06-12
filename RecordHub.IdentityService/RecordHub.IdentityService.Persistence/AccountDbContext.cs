@@ -7,6 +7,7 @@ namespace RecordHub.IdentityService.Persistence
 {
     public class AccountDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
     {
+
         public AccountDbContext(DbContextOptions<AccountDbContext> options) : base(options)
         {
 
@@ -15,6 +16,8 @@ namespace RecordHub.IdentityService.Persistence
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.ApplyConfigurationsFromAssembly(typeof(AccountDbContext).Assembly);
         }
     }
 }

@@ -1,4 +1,5 @@
-using RecordHub.IdentityService.Core;
+using RecordHub.IdentityService.Api.Middlewares;
+using RecordHub.IdentityService.Infrastructure;
 using RecordHub.IdentityService.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCore(builder.Configuration);
 builder.Services.AddPersistence(builder.Configuration);
 var app = builder.Build();
-
+app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.IdentityService.P
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.IdentityService.Domain", "RecordHub.IdentityService\RecordHub.IdentityService.Domain\RecordHub.IdentityService.Domain.csproj", "{702FF8BD-874C-42E7-852E-F6A50D690075}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.IdentityService.Infrastructure", "RecordHub.IdentityService\RecordHub.IdentityService.Infrastructure\RecordHub.IdentityService.Infrastructure.csproj", "{8DF07400-7CEF-4BBB-9367-F68F2998625A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{702FF8BD-874C-42E7-852E-F6A50D690075}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{702FF8BD-874C-42E7-852E-F6A50D690075}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{702FF8BD-874C-42E7-852E-F6A50D690075}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DF07400-7CEF-4BBB-9367-F68F2998625A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DF07400-7CEF-4BBB-9367-F68F2998625A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DF07400-7CEF-4BBB-9367-F68F2998625A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DF07400-7CEF-4BBB-9367-F68F2998625A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +50,7 @@ Global
 		{98E887D4-08A7-4C0E-905E-6E5A9F238A8B} = {B9F8F39F-9E6B-41D8-8362-D5F08A7BEF81}
 		{F3349ACB-4DAF-4292-A472-3D4550B17836} = {B9F8F39F-9E6B-41D8-8362-D5F08A7BEF81}
 		{702FF8BD-874C-42E7-852E-F6A50D690075} = {B9F8F39F-9E6B-41D8-8362-D5F08A7BEF81}
+		{8DF07400-7CEF-4BBB-9367-F68F2998625A} = {B9F8F39F-9E6B-41D8-8362-D5F08A7BEF81}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BDD6659A-32F8-4085-AA8B-340D17435983}

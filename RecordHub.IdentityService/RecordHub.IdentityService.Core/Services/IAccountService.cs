@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
-using RecordHub.IdentityService.Core.DTO;
-using RecordHub.IdentityService.Core.Models;
+using RecordHub.IdentityService.Domain.Models;
 
 namespace RecordHub.IdentityService.Core.Services
 {
     public interface IAccountService
     {
-        Task<AuthTokenDTO> LoginAsync(
+        Task<string> LoginAsync(
             LoginModel model,
             HttpContext httpContext,
             CancellationToken cancellationToken = default);

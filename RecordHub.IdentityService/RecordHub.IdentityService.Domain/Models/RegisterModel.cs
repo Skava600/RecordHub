@@ -1,4 +1,4 @@
-﻿namespace RecordHub.IdentityService.Core.Models
+﻿namespace RecordHub.IdentityService.Domain.Models
 {
     public class RegisterModel
     {

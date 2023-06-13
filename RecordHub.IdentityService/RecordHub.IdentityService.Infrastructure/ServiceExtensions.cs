@@ -4,8 +4,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using RecordHub.IdentityService.Core.Services;
+using RecordHub.IdentityService.Core.Services.Logging;
 using RecordHub.IdentityService.Infrastructure.Configuration;
 using RecordHub.IdentityService.Infrastructure.Services;
+using RecordHub.IdentityService.Infrastructure.Services.Logging;
 using System.Text;
 
 namespace RecordHub.IdentityService.Infrastructure
@@ -40,9 +42,16 @@ namespace RecordHub.IdentityService.Infrastructure
 
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ITokenService, TokenService>();
+            services.RegisterLoggingInterfaces();
 
             return services;
 
+        }
+
+        private static IServiceCollection RegisterLoggingInterfaces(this IServiceCollection services)
+        {
+            services.AddScoped(typeof(IAppLogging<>), typeof(AppLogging<>));
+            return services;
         }
     }
 }

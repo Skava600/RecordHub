@@ -19,8 +19,6 @@ namespace RecordHub.IdentityService.Persistence
         }
         private static IServiceCollection AddDatabaseContext(this IServiceCollection services, IConfiguration configuration)
         {
-            var connectionString = configuration.GetConnectionString("DefaultConnection");
-
             return services.AddNpgsql<AccountDbContext>(Constants.IdentityDbConnectionString);
         }
 
@@ -35,8 +33,7 @@ namespace RecordHub.IdentityService.Persistence
                 .AddRoles<IdentityRole<Guid>>()
                 .AddRoleManager<RoleManager<IdentityRole<Guid>>>()
                 .AddRoleValidator<RoleValidator<IdentityRole<Guid>>>()
-                .AddEntityFrameworkStores<AccountDbContext>()
-                .AddSignInManager<SignInManager<User>>();
+                .AddEntityFrameworkStores<AccountDbContext>();
         }
     }
 }

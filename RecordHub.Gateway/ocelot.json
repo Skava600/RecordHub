@@ -1,0 +1,38 @@
+  {
+    "Routes": [
+      // Identity service
+      {
+        "UpstreamPathTemplate": "/api/Auth/{endpoint}",
+        "UpstreamHttpMethod": [ "Post" ],
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "recordhub.identityservice.api",
+            "Port": 443
+          }
+        ],
+        "DownstreamPathTemplate": "/api/Auth/{endpoint}",
+        "DangerousAcceptAnyServerCertificateValidator": true,
+        "SwaggerKey": "identity"
+      }
+    ],
+    "SwaggerEndPoints": [
+      {
+        "Key": "identity",
+        "TransformByOcelotConfig": false,
+        "Config": [
+          {
+            "Name": "Identity API",
+            "Version": "v1",
+            "Url": "https://recordhub.identityservice.api:443/swagger/v1/swagger.json"
+          }
+        ]
+      }
+    ],
+    "GlobalConfiguration": {
+      "BaseUrl": "https://localhost:5001",
+      "HttpHandlerOptions": {
+        "AllowAutoRedirect": true
+      }
+    }
+  }

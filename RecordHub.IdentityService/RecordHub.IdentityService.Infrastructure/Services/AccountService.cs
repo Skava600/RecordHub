@@ -11,7 +11,6 @@ namespace RecordHub.IdentityService.Infrastructure.Services
     public class AccountService : IAccountService
     {
         private readonly UserManager<User> userManager;
-        private readonly SignInManager<User> signInManager;
         private readonly ITokenService tokenService;
         public AccountService(
           UserManager<User> userManager,
@@ -19,7 +18,6 @@ namespace RecordHub.IdentityService.Infrastructure.Services
           ITokenService tokenService)
         {
             this.userManager = userManager;
-            this.signInManager = signInManager;
             this.tokenService = tokenService;
         }
         public async Task<string> LoginAsync(LoginModel model, HttpContext httpContext, CancellationToken cancellationToken = default)

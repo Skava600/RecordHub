@@ -20,7 +20,7 @@ namespace RecordHub.IdentityService.Api.Middlewares
             {
                 await _next(context);
             }
-            catch (MultipleErrorException ex)
+            catch (IdentityErrorsException ex)
             {
                 var code = HttpStatusCode.InternalServerError;
                 var message = ex.Message + string.Join("\n", ex.Errors.Select(e => $"{e.Code}: {e.Description}"));

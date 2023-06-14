@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using RecordHub.IdentityService.Core.Exceptions;
 using RecordHub.IdentityService.Core.Services;
 using RecordHub.IdentityService.Domain.Data.Entities;
@@ -23,25 +22,30 @@ namespace RecordHub.IdentityService.Infrastructure.Services
             this.tokenService = tokenService;
             this.roleManager = roleManager;
         }
-        public async Task<string> LoginAsync(LoginModel model, HttpContext httpContext, CancellationToken cancellationToken = default)
+        public async Task<string> LoginAsync(LoginModel model, CancellationToken cancellationToken = default)
         {
             var user = await userManager.FindByNameAsync(model.Email) ??
                 throw new UserNotFoundException();
+
             var credetialsResult = await userManager.CheckPasswordAsync(
                 user, model.Password);
-
             if (!credetialsResult)
             {
                 throw new InvalidCredentialsException();
             }
 
             List<Claim> additionalClaims = new List<Claim>();
-            string rolename = (await userManager.GetRolesAsync(user)).FirstOrDefault();
-            additionalClaims.Add(new Claim(ClaimTypes.Role, rolename));
+
+            string? rolename = (await userManager.GetRolesAsync(user)).FirstOrDefault();
+            if (rolename != null)
+            {
+                additionalClaims.Add(new Claim(ClaimTypes.Role, rolename));
+            }
+
             return tokenService.GenerateJwtToken(user, additionalClaims);
         }
 
-        public async Task RegisterAsync(RegisterModel model, HttpContext httpContext, CancellationToken cancellationToken = default)
+        public async Task RegisterAsync(RegisterModel model, CancellationToken cancellationToken = default)
         {
             var user = new User
             {
@@ -52,6 +56,9 @@ namespace RecordHub.IdentityService.Infrastructure.Services
                 PhoneNumber = model.PhoneNumber,
                 SecurityStamp = Guid.NewGuid().ToString()
             };
+
+            cancellationToken.ThrowIfCancellationRequested();
+
             var result = await userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
             {
@@ -65,17 +72,12 @@ namespace RecordHub.IdentityService.Infrastructure.Services
             }
         }
 
-        public Task SentEmailVerificationAsync(HttpContext httpContext, CancellationToken token = default)
+        public Task SentEmailVerificationAsync(CancellationToken token = default)
         {
             throw new NotImplementedException();
         }
 
-        public Task SignOut(HttpContext httpContext, CancellationToken token = default)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> VerifyEmailAsync(string token, HttpContext httpContext, CancellationToken cancellationToken = default)
+        public Task<bool> VerifyEmailAsync(string token, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }

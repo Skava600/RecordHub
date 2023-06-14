@@ -20,12 +20,13 @@ namespace RecordHub.IdentityService.Infrastructure.Services
                 new Claim (JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim (JwtRegisteredClaimNames.Email, user.Email),
                 new Claim (JwtRegisteredClaimNames.NameId, user.Id.ToString()),
-        };
+            };
 
             if (additionalClaims != null)
             {
                 claims.AddRange(additionalClaims);
             }
+
             JwtSecurityToken token = new TokenBuilder()
               .AddAudience(_config.Audience)
               .AddIssuer(_config.Issuer)
@@ -33,8 +34,8 @@ namespace RecordHub.IdentityService.Infrastructure.Services
               .AddKey(_config.Key)
               .AddClaims(claims)
               .Build();
-            string accessToken = new JwtSecurityTokenHandler().WriteToken(token);
 
+            string accessToken = new JwtSecurityTokenHandler().WriteToken(token);
 
             return accessToken;
         }

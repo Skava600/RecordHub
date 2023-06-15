@@ -21,7 +21,7 @@ namespace RecordHub.CatalogService.Infrastructure.Data
 
         public IRepository<Style> Styles => new BaseRepository<Style>(_context);
 
-        public IRepository<Language> Languages => new BaseRepository<Language>(_context);
+        public IRepository<Country> Countries => new BaseRepository<Country>(_context);
 
         public async Task CommitAsync()
         {

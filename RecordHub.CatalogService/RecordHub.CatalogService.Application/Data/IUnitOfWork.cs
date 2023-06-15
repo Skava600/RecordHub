@@ -9,7 +9,7 @@ namespace RecordHub.CatalogService.Application.Data
         IRepository<Label> Labels { get; }
         IRepository<Artist> Artists { get; }
         IRepository<Style> Styles { get; }
-        IRepository<Language> Languages { get; }
+        IRepository<Country> Countries { get; }
         Task CommitAsync();
     }
 }

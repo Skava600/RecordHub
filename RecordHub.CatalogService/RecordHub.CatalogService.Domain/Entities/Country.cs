@@ -1,6 +1,6 @@
 ﻿namespace RecordHub.CatalogService.Domain.Entities
 {
-    public class Language : BaseEntity
+    public class Country : BaseEntity
     {
         public ICollection<Record> Records { get; set; }
     }

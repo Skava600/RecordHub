@@ -33,20 +33,26 @@ namespace RecordHub.CatalogService.Infrastructure.Data.Repositories
             }
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default)
         {
             return await _dbSet.AsNoTracking().ToListAsync(cancellationToken);
         }
 
-        public async Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        public virtual async Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             var x = await _dbSet.FindAsync(id);
             return x;
         }
 
-        public async Task Update(T entity, CancellationToken cancellationToken = default)
+        public async Task UpdateAsync(T entity, CancellationToken cancellationToken = default)
         {
             _dbSet.Update(entity);
+        }
+
+        public virtual async Task<T?> GetBySlugAsync(string slug, CancellationToken cancellationToken = default)
+        {
+            var x = await _dbSet.FirstOrDefaultAsync(e => e.Slug.Equals(slug), cancellationToken);
+            return x;
         }
     }
 }

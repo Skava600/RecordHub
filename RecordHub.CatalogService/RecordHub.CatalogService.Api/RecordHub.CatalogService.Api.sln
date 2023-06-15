@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.CatalogService.Do
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.CatalogService.Infrastructure", "..\RecordHub.CatalogService.Infrastructure\RecordHub.CatalogService.Infrastructure.csproj", "{D0801BC6-7010-40CC-BF64-4CAC0895CBF0}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.Shared", "..\..\RecordHub.Shared\RecordHub.Shared.csproj", "{512417AD-34F8-44FF-8FE8-B34C0A70E96E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,8 +35,15 @@ Global
 		{D0801BC6-7010-40CC-BF64-4CAC0895CBF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0801BC6-7010-40CC-BF64-4CAC0895CBF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0801BC6-7010-40CC-BF64-4CAC0895CBF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{512417AD-34F8-44FF-8FE8-B34C0A70E96E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{512417AD-34F8-44FF-8FE8-B34C0A70E96E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{512417AD-34F8-44FF-8FE8-B34C0A70E96E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{512417AD-34F8-44FF-8FE8-B34C0A70E96E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D85A437C-4A1D-4B37-A5EB-233160262B17}
 	EndGlobalSection
 EndGlobal

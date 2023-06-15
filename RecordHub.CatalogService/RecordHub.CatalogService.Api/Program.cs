@@ -1,3 +1,5 @@
+using RecordHub.CatalogService.Api;
+using RecordHub.CatalogService.Api.Middlewares;
 using RecordHub.CatalogService.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,10 +9,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.ConfigureSwagger();
 builder.Services.AddPersistence(builder.Configuration);
+builder.Services.AddInfrastructure();
+builder.Services.AddJwtAuth(builder.Configuration);
 var app = builder.Build();
-
+app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

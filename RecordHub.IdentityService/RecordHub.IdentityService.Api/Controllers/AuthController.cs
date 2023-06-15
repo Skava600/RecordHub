@@ -21,7 +21,7 @@ namespace RecordHub.IdentityService.Api.Controllers
             CancellationToken cancellationToken = default)
         {
             var jwtToken = await accountService.LoginAsync(
-               model, HttpContext, cancellationToken);
+               model, cancellationToken);
 
             return Ok(jwtToken);
         }
@@ -32,7 +32,7 @@ namespace RecordHub.IdentityService.Api.Controllers
             CancellationToken cancellationToken = default)
         {
             await accountService.RegisterAsync(
-                model, HttpContext, cancellationToken);
+                model, cancellationToken);
 
             return Ok();
         }

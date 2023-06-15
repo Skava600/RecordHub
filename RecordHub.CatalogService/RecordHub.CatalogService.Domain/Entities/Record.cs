@@ -8,5 +8,8 @@
         public double Price { get; set; }
         public Label Label { get; set; }
         public ICollection<RecordStyle> RecordStyles { get; set; }
+        public Language Language { get; set; }
+        public Artist Artist { get; set; }
+
     }
 }

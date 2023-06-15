@@ -33,6 +33,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RecordHub.CatalogService", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.CatalogService.Api", "RecordHub.CatalogService\RecordHub.CatalogService.Api\RecordHub.CatalogService.Api.csproj", "{5CBF074E-7B34-4E35-8DA9-33C8EAC2EE20}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.CatalogService.Application", "RecordHub.CatalogService\RecordHub.CatalogService.Application\RecordHub.CatalogService.Application.csproj", "{0ECCAAFE-7415-448F-9F6E-48BFAA76AB9B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.CatalogService.Domain", "RecordHub.CatalogService\RecordHub.CatalogService.Domain\RecordHub.CatalogService.Domain.csproj", "{6F5A771A-F69A-4EC7-8AAF-19F475B61828}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.CatalogService.Infrastructure", "RecordHub.CatalogService\RecordHub.CatalogService.Infrastructure\RecordHub.CatalogService.Infrastructure.csproj", "{FBEFD793-FA06-47C3-B435-2877CCE5B4FD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +93,18 @@ Global
 		{5CBF074E-7B34-4E35-8DA9-33C8EAC2EE20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CBF074E-7B34-4E35-8DA9-33C8EAC2EE20}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CBF074E-7B34-4E35-8DA9-33C8EAC2EE20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0ECCAAFE-7415-448F-9F6E-48BFAA76AB9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0ECCAAFE-7415-448F-9F6E-48BFAA76AB9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0ECCAAFE-7415-448F-9F6E-48BFAA76AB9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0ECCAAFE-7415-448F-9F6E-48BFAA76AB9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F5A771A-F69A-4EC7-8AAF-19F475B61828}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F5A771A-F69A-4EC7-8AAF-19F475B61828}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F5A771A-F69A-4EC7-8AAF-19F475B61828}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F5A771A-F69A-4EC7-8AAF-19F475B61828}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBEFD793-FA06-47C3-B435-2877CCE5B4FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBEFD793-FA06-47C3-B435-2877CCE5B4FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBEFD793-FA06-47C3-B435-2877CCE5B4FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBEFD793-FA06-47C3-B435-2877CCE5B4FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -102,6 +120,9 @@ Global
 		{5ACA8124-CECE-4080-B383-E1A443B962B0} = {7F475E42-E4F1-4F62-A42A-9E8158B85855}
 		{2DEEB7AA-2AA6-40D7-93FA-019C8D2A6362} = {7F475E42-E4F1-4F62-A42A-9E8158B85855}
 		{5CBF074E-7B34-4E35-8DA9-33C8EAC2EE20} = {ABD4F5C0-98D7-4516-9755-2BFC2A89333F}
+		{0ECCAAFE-7415-448F-9F6E-48BFAA76AB9B} = {ABD4F5C0-98D7-4516-9755-2BFC2A89333F}
+		{6F5A771A-F69A-4EC7-8AAF-19F475B61828} = {ABD4F5C0-98D7-4516-9755-2BFC2A89333F}
+		{FBEFD793-FA06-47C3-B435-2877CCE5B4FD} = {ABD4F5C0-98D7-4516-9755-2BFC2A89333F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BDD6659A-32F8-4085-AA8B-340D17435983}

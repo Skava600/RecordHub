@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RecordHub.CatalogService.Domain\RecordHub.CatalogService.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

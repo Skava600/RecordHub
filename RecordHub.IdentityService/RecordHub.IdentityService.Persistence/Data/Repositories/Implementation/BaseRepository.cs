@@ -17,6 +17,7 @@ namespace RecordHub.IdentityService.Persistence.Data.Repositories.Implementation
         public async Task AddAsync(T entity, CancellationToken cancellationToken = default)
         {
             await _dbSet.AddAsync(entity);
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
         public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
@@ -29,6 +30,7 @@ namespace RecordHub.IdentityService.Persistence.Data.Repositories.Implementation
                     _dbSet.Attach(entity);
                 }
                 _dbSet.Remove(entity);
+                await _context.SaveChangesAsync(cancellationToken);
             }
         }
 
@@ -43,9 +45,10 @@ namespace RecordHub.IdentityService.Persistence.Data.Repositories.Implementation
             return x;
         }
 
-        public void Update(T entity)
+        public async Task Update(T entity, CancellationToken cancellationToken = default)
         {
             _dbSet.Update(entity);
+            await _context.SaveChangesAsync(cancellationToken);
         }
     }
 }

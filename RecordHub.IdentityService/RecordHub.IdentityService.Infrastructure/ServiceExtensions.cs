@@ -17,6 +17,16 @@ namespace RecordHub.IdentityService.Infrastructure
     {
         public static IServiceCollection AddCore(this IServiceCollection services, IConfiguration configuration)
         {
+            services.AddJwtBearerAuth(configuration);
+            services.RegisterLoggingInterfaces();
+            services.InjectCoreServices();
+
+            return services;
+
+        }
+
+        private static IServiceCollection AddJwtBearerAuth(this IServiceCollection services, IConfiguration configuration)
+        {
             services.Configure<JwtConfig>(configuration.GetSection("Jwt"));
             services.AddSingleton<JwtConfig>(sp => sp.GetRequiredService<IOptions<JwtConfig>>().Value);
 
@@ -53,13 +63,15 @@ namespace RecordHub.IdentityService.Infrastructure
                 };
             });
 
+            return services;
+        }
+
+        private static IServiceCollection InjectCoreServices(this IServiceCollection services)
+        {
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ITokenService, TokenService>();
-            services.RegisterLoggingInterfaces();
             services.AddAutoMapper(typeof(UserProfile));
-
             return services;
-
         }
 
         private static IServiceCollection RegisterLoggingInterfaces(this IServiceCollection services)

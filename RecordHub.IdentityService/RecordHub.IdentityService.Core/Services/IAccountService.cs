@@ -1,4 +1,5 @@
-﻿using RecordHub.IdentityService.Domain.Models;
+﻿using RecordHub.IdentityService.Core.DTO;
+using RecordHub.IdentityService.Domain.Models;
 
 namespace RecordHub.IdentityService.Core.Services
 {
@@ -12,7 +13,10 @@ namespace RecordHub.IdentityService.Core.Services
             RegisterModel model,
             CancellationToken cancellationToken = default);
 
-        Task SentEmailVerificationAsync(
+        Task SendEmailVerificationAsync(
+            CancellationToken token = default);
+
+        Task<UserDTO> GetUserInfoAsync(string? userId,
             CancellationToken token = default);
 
         Task<bool> VerifyEmailAsync(

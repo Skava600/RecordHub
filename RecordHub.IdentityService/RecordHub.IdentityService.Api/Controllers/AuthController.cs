@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RecordHub.IdentityService.Core.Services;
 using RecordHub.IdentityService.Domain.Models;
+using System.Security.Claims;
 
 namespace RecordHub.IdentityService.Api.Controllers
 {
@@ -35,6 +37,15 @@ namespace RecordHub.IdentityService.Api.Controllers
                 model, cancellationToken);
 
             return Ok();
+        }
+
+        [HttpGet("info")]
+        [Authorize]
+        public async Task<IActionResult> UserInfo(CancellationToken cancellationToken = default)
+        {
+            string? userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var user = await accountService.GetUserInfoAsync(userId, cancellationToken);
+            return Ok(user);
         }
 
 

@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using RecordHub.IdentityService.Core.DTO;
 using RecordHub.IdentityService.Core.Exceptions;
 using RecordHub.IdentityService.Core.Services;
 using RecordHub.IdentityService.Domain.Data.Entities;
@@ -11,17 +13,39 @@ namespace RecordHub.IdentityService.Infrastructure.Services
     public class AccountService : IAccountService
     {
         private readonly UserManager<User> userManager;
+        private readonly IMapper _mapper;
         private readonly RoleManager<IdentityRole<Guid>> roleManager;
         private readonly ITokenService tokenService;
         public AccountService(
           UserManager<User> userManager,
           RoleManager<IdentityRole<Guid>> roleManager,
+          IMapper mapper,
           ITokenService tokenService)
         {
             this.userManager = userManager;
             this.tokenService = tokenService;
             this.roleManager = roleManager;
+            _mapper = mapper;
         }
+
+        public async Task<UserDTO> GetUserInfoAsync(string? userId, CancellationToken token = default)
+        {
+            if (userId == null)
+            {
+                throw new UserNotFoundException();
+            }
+
+            var user = await userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                throw new UserNotFoundException();
+            }
+
+            UserDTO userDTO = _mapper.Map<UserDTO>(user);
+
+            return userDTO;
+        }
+
         public async Task<string> LoginAsync(LoginModel model, CancellationToken cancellationToken = default)
         {
             var user = await userManager.FindByNameAsync(model.Email) ??
@@ -72,7 +96,7 @@ namespace RecordHub.IdentityService.Infrastructure.Services
             }
         }
 
-        public Task SentEmailVerificationAsync(CancellationToken token = default)
+        public Task SendEmailVerificationAsync(CancellationToken token = default)
         {
             throw new NotImplementedException();
         }

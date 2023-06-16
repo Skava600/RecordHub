@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using RecordHub.IdentityService.Core.Mappers;
 using RecordHub.IdentityService.Core.Services;
 using RecordHub.IdentityService.Core.Services.Logging;
 using RecordHub.IdentityService.Infrastructure.Configuration;
@@ -55,6 +56,7 @@ namespace RecordHub.IdentityService.Infrastructure
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ITokenService, TokenService>();
             services.RegisterLoggingInterfaces();
+            services.AddAutoMapper(typeof(UserProfile));
 
             return services;
 

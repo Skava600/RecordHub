@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RecordHub.IdentityService.Core.TokenProviders;
 using RecordHub.IdentityService.Domain.Constants;
 using RecordHub.IdentityService.Domain.Data.Entities;
 using RecordHub.IdentityService.Persistence.Data.Repositories.Generic;
@@ -29,11 +30,26 @@ namespace RecordHub.IdentityService.Persistence
 
         private static void AddAspIdentity(this IServiceCollection services)
         {
-            services.AddIdentityCore<User>()
+            services.AddIdentityCore<User>(opt =>
+            {
+                opt.Password.RequiredLength = 7;
+                opt.Password.RequireDigit = false;
+                opt.Password.RequireUppercase = false;
+                opt.User.RequireUniqueEmail = true;
+                opt.SignIn.RequireConfirmedEmail = true;
+                opt.Tokens.EmailConfirmationTokenProvider = "emailconfirmation";
+            }
+            )
                 .AddRoles<IdentityRole<Guid>>()
                 .AddRoleManager<RoleManager<IdentityRole<Guid>>>()
                 .AddRoleValidator<RoleValidator<IdentityRole<Guid>>>()
-                .AddEntityFrameworkStores<AccountDbContext>();
+                .AddEntityFrameworkStores<AccountDbContext>()
+                .AddDefaultTokenProviders()
+                .AddTokenProvider<EmailConfirmationTokenProvider<User>>("emailconfirmation");
+            services.Configure<DataProtectionTokenProviderOptions>(opt =>
+    opt.TokenLifespan = TimeSpan.FromHours(2));
+            services.Configure<EmailConfirmationTokenProviderOptions>(opt =>
+                opt.TokenLifespan = TimeSpan.FromDays(3));
         }
     }
 }

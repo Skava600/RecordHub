@@ -1,6 +1,8 @@
 ﻿using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
 using RecordHub.MailService.Application.Services;
+using RecordHub.MailService.Infrastructure.Consumers;
+
 namespace RecordHub.MailService.Infrastructure
 {
     public static class ServiceExtensions
@@ -15,6 +17,7 @@ namespace RecordHub.MailService.Infrastructure
         {
             services.AddMassTransit(x =>
             {
+                x.AddConsumer<SendEmailConsumer>();
                 x.UsingRabbitMq((context, cfg) =>
                 {
                     cfg.Host("messagebus", "/", h =>

@@ -13,14 +13,15 @@ namespace RecordHub.IdentityService.Core.Services
             RegisterModel model,
             CancellationToken cancellationToken = default);
 
-        Task SendEmailVerificationAsync(
+        Task SendEmailVerificationAsync(string? userId,
             CancellationToken token = default);
 
         Task<UserDTO> GetUserInfoAsync(string? userId,
             CancellationToken token = default);
 
-        Task<bool> VerifyEmailAsync(
+        Task VerifyEmailAsync(
           string token,
+          string? userId,
           CancellationToken cancellationToken = default);
     }
 }

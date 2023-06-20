@@ -1,12 +1,16 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using MassTransit;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using RecordHub.IdentityService.Core.Mappers;
+using RecordHub.IdentityService.Core.Publishers;
 using RecordHub.IdentityService.Core.Services;
 using RecordHub.IdentityService.Core.Services.Logging;
+using RecordHub.IdentityService.Domain.Models;
 using RecordHub.IdentityService.Infrastructure.Configuration;
+using RecordHub.IdentityService.Infrastructure.Publishers;
 using RecordHub.IdentityService.Infrastructure.Services;
 using RecordHub.IdentityService.Infrastructure.Services.Logging;
 using System.Text;
@@ -70,7 +74,20 @@ namespace RecordHub.IdentityService.Infrastructure
         {
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IPublisher<MailData>, SendEmailPublisher>();
             services.AddAutoMapper(typeof(UserProfile));
+            services.AddMassTransit(x =>
+            {
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host("rabbitmq://messagebus", h =>
+                    {
+                        h.Username("guest");
+                        h.Password("guest");
+                    });
+                    cfg.ConfigureEndpoints(context);
+                });
+            });
             return services;
         }
 

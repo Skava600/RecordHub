@@ -1,0 +1,80 @@
+version: '3.8'
+networks:
+  recordhub:
+    name: recordhub
+services:
+    pgadmin:
+        image: dpage/pgadmin4
+        container_name: pgadmin_4
+        networks:
+          - recordhub
+        ports:
+          - '5050:80'
+        environment:
+          - PGADMIN_DEFAULT_EMAIL=uskava7@gmail.com
+          - PGADMIN_DEFAULT_PASSWORD=123456
+        depends_on:
+          - identitydb
+    recordhub.identityservice.api:
+        image: ${DOCKER_REGISTRY-}recordhubidentityserviceapi
+        build:
+            context: .
+            dockerfile: RecordHub.IdentityService/RecordHub.IdentityService.Api/Dockerfile
+        networks:
+            - recordhub
+        ports:
+            - '5002:443'
+        environment:
+            DB_HOST: identitydb
+            DB_PORT: 5432
+            DB_USER: postgres
+            DB_PASSWORD: 123456
+            DB_NAME: RecordHub.Identity
+            ASPNETCORE_ENVIRONMENT: Docker
+        depends_on:
+            - identitydb
+            - gateway
+    recordhub.mailservice.api:
+        image: ${DOCKER_REGISTRY-}recordhubmailserviceapi
+        build:
+            context: .
+            dockerfile: RecordHub.MailService/RecordHub.MailService.Api/Dockerfile
+        networks:
+            - recordhub
+        ports:
+            - 5003:443
+        depends_on:
+          - recordhub.identityservice.api
+          - gateway
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Docker
+    
+    identitydb:
+        image: postgres
+        container_name: identitydb
+        restart: always
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: 123456
+            POSTGRES_DB: identity
+        ports:
+            - '5432:5432'
+        networks:
+            - recordhub
+        volumes:
+            - "pgdata:/var/lib/postgresql/data"
+    gateway:
+        container_name: OcelotGateway
+        build:
+            context: .
+            dockerfile: RecordHub.Gateway/Dockerfile
+        ports: 
+        - '5001:443'
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Docker
+        networks:
+            - recordhub
+        restart: unless-stopped
+
+volumes:
+        pgdata:   

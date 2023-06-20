@@ -35,6 +35,7 @@ services:
             - identitydb
             - gateway
     recordhub.mailservice.api:
+        container_name: recordhub.mailservice.api
         image: ${DOCKER_REGISTRY-}recordhubmailserviceapi
         build:
             context: .
@@ -75,6 +76,26 @@ services:
         networks:
             - recordhub
         restart: unless-stopped
+    recordhub.catalogservice.api:
+        image: ${DOCKER_REGISTRY-}recordhubcatalogserviceapi
+        build:
+            context: .
+            dockerfile: RecordHub.CatalogService/RecordHub.CatalogService.Api/Dockerfile
+        networks:
+            - recordhub
+        ports:
+            - '5004:443'
+        environment:
+            DB_HOST: identitydb
+            DB_PORT: 5432
+            DB_USER: postgres
+            DB_PASSWORD: 123456
+            DB_NAME: RecordHub.Catalog
+            ASPNETCORE_ENVIRONMENT: Docker
+        depends_on:
+            - identitydb
+            - gateway
 
+    
 volumes:
         pgdata:   

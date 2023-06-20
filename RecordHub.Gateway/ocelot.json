@@ -14,8 +14,38 @@
         "DownstreamPathTemplate": "/api/Auth/{endpoint}",
         "DangerousAcceptAnyServerCertificateValidator": true,
         "SwaggerKey": "identity"
+      },
+      // catalog service
+      {
+        "UpstreamPathTemplate": "/api/Record",
+        "UpstreamHttpMethod": [ "Get", "Post" ],
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "recordhub.catalogservice.api",
+            "Port": 443
+          }
+        ],
+        "DownstreamPathTemplate": "/api/Record/",
+        "DangerousAcceptAnyServerCertificateValidator": true,
+        "SwaggerKey": "catalog"
+      },
+      {
+        "UpstreamPathTemplate": "/api/Record/{endpoint}",
+        "UpstreamHttpMethod": [ "Put", "Delete" ],
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "recordhub.catalogservice.api",
+            "Port": 443
+          }
+        ],
+        "DownstreamPathTemplate": "/api/Record/{endpoint}",
+        "DangerousAcceptAnyServerCertificateValidator": true,
+        "SwaggerKey": "catalog"
       }
     ],
+
     "SwaggerEndPoints": [
       {
         "Key": "identity",
@@ -25,6 +55,17 @@
             "Name": "Identity API",
             "Version": "v1",
             "Url": "https://recordhub.identityservice.api:443/swagger/v1/swagger.json"
+          }
+        ]
+      },
+      {
+        "Key": "catalog",
+        "TransformByOcelotConfig": false,
+        "Config": [
+          {
+            "Name": "Catalog API",
+            "Version": "v1",
+            "Url": "https://recordhub.catalogservice.api:443/swagger/v1/swagger.json"
           }
         ]
       }

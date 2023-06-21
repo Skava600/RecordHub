@@ -1,4 +1,4 @@
-﻿using RecordHub.MailService.Domain.Models;
+﻿using RecordHub.Shared.Models;
 
 namespace RecordHub.MailService.Application.Services
 {

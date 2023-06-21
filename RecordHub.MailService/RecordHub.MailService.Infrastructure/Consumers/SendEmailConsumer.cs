@@ -1,5 +1,6 @@
-﻿using RecordHub.MailService.Application.Services;
-using RecordHub.MailService.Domain.Models;
+﻿using MassTransit;
+using RecordHub.MailService.Application.Services;
+using RecordHub.Shared.Models;
 
 namespace RecordHub.MailService.Infrastructure.Consumers
 {
@@ -11,7 +12,7 @@ namespace RecordHub.MailService.Infrastructure.Consumers
             this.mailService = mailService;
         }
 
-        public async Task Consume(MassTransit.ConsumeContext<MailData> context)
+        public async Task Consume(ConsumeContext<MailData> context)
         {
             await mailService.SendAsync(context.Message, context.CancellationToken);
         }

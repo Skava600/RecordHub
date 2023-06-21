@@ -25,9 +25,15 @@ namespace RecordHub.MailService.Infrastructure
                         h.Username("guest");
                         h.Password("guest");
                     });
-                    cfg.ConfigureEndpoints(context);
+
+                    cfg.ReceiveEndpoint("send-email", ep =>
+                    {
+                        ep.ConfigureConsumer<SendEmailConsumer>(context);
+                        ep.Bind("RecordHub.Shared.Models:MailData");
+                    });
                 });
             });
+
             return services;
         }
     }

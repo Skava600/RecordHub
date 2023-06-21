@@ -9,9 +9,11 @@
   <ItemGroup>
     <PackageReference Include="MailKit" Version="4.1.0" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="7.0.1" />
+    <PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\RecordHub.Shared\RecordHub.Shared.csproj" />
     <ProjectReference Include="..\RecordHub.MailService.Application\RecordHub.MailService.Application.csproj" />
   </ItemGroup>
 

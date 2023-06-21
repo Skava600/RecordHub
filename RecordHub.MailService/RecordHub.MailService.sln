@@ -5,8 +5,6 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.MailService.Api", "RecordHub.MailService.Api\RecordHub.MailService.Api.csproj", "{22B78240-EB93-49D6-A340-EB9105FDB27D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.MailService.Domain", "RecordHub.MailService.Domain\RecordHub.MailService.Domain.csproj", "{4B5F0298-8919-4E4A-9EE3-FF41730308D8}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.MailService.Application", "RecordHub.MailService.Application\RecordHub.MailService.Application.csproj", "{759D02BB-B8AB-4739-AD79-C949665537E1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.MailService.Infrastructure", "RecordHub.MailService.Infrastructure\RecordHub.MailService.Infrastructure.csproj", "{394F8985-F881-4760-9E57-126FE8FD054F}"
@@ -23,10 +21,6 @@ Global
 		{22B78240-EB93-49D6-A340-EB9105FDB27D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22B78240-EB93-49D6-A340-EB9105FDB27D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22B78240-EB93-49D6-A340-EB9105FDB27D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4B5F0298-8919-4E4A-9EE3-FF41730308D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4B5F0298-8919-4E4A-9EE3-FF41730308D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4B5F0298-8919-4E4A-9EE3-FF41730308D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4B5F0298-8919-4E4A-9EE3-FF41730308D8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{759D02BB-B8AB-4739-AD79-C949665537E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{759D02BB-B8AB-4739-AD79-C949665537E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{759D02BB-B8AB-4739-AD79-C949665537E1}.Release|Any CPU.ActiveCfg = Release|Any CPU

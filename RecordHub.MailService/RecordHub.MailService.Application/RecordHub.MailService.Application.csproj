@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\RecordHub.Shared\RecordHub.Shared.csproj" />
-    <ProjectReference Include="..\RecordHub.MailService.Domain\RecordHub.MailService.Domain.csproj" />
   </ItemGroup>
 
 </Project>

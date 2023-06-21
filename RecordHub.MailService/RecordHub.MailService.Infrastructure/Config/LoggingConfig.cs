@@ -8,21 +8,23 @@ namespace RecordHub.MailService.Infrastructure.Config
 {
     public static class LoggingConfiguration
     {
+
         public static void ConfigureSerilog(this WebApplicationBuilder builder)
         {
             builder.Logging.ClearProviders();
-            builder.Host.UseSerilog((host, log) =>
-             {
-                 if (host.HostingEnvironment.IsProduction())
-                     log.MinimumLevel.Information();
-                 else
-                     log.MinimumLevel.Debug();
-
-                 log.MinimumLevel.Override("Microsoft", LogEventLevel.Warning);
-                 log.MinimumLevel.Override("Quartz", LogEventLevel.Information);
-                 log.WriteTo.Console();
-                 log.ReadFrom.Configuration(builder.Configuration);
-             });
+            LogEventLevel logLevel;
+            if (builder.Environment.IsProduction())
+                logLevel = LogEventLevel.Information;
+            else
+                logLevel = LogEventLevel.Debug;
+            var log = new LoggerConfiguration()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+                .MinimumLevel.Override("Quartz", LogEventLevel.Information)
+                .Enrich.FromLogContext()
+                .MinimumLevel.Is(logLevel)
+                .WriteTo.Console(restrictedToMinimumLevel: logLevel)
+                .ReadFrom.Configuration(builder.Configuration);
+            builder.Logging.AddSerilog(log.CreateLogger(), false);
         }
     }
 }

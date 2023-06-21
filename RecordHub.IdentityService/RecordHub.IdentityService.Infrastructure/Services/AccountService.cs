@@ -7,6 +7,7 @@ using RecordHub.IdentityService.Core.Services;
 using RecordHub.IdentityService.Domain.Data.Entities;
 using RecordHub.IdentityService.Domain.Enum;
 using RecordHub.IdentityService.Domain.Models;
+using RecordHub.Shared.Models;
 using System.Security.Claims;
 
 namespace RecordHub.IdentityService.Infrastructure.Services

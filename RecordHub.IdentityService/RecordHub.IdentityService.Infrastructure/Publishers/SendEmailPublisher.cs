@@ -1,6 +1,6 @@
 ﻿using MassTransit;
 using RecordHub.IdentityService.Core.Publishers;
-using RecordHub.IdentityService.Domain.Models;
+using RecordHub.Shared.Models;
 
 namespace RecordHub.IdentityService.Infrastructure.Publishers
 {
@@ -15,7 +15,11 @@ namespace RecordHub.IdentityService.Infrastructure.Publishers
 
         public async Task PublishMessage(MailData mailData)
         {
-            await _publishEndpoint.Publish<MailData>(mailData);
+            await _publishEndpoint.Publish<MailData>(mailData, context =>
+            {
+                context.SetRoutingKey("send-email");
+
+            });
         }
     }
 }

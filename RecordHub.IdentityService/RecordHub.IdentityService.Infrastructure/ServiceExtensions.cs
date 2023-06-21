@@ -7,12 +7,11 @@ using Microsoft.IdentityModel.Tokens;
 using RecordHub.IdentityService.Core.Mappers;
 using RecordHub.IdentityService.Core.Publishers;
 using RecordHub.IdentityService.Core.Services;
-using RecordHub.IdentityService.Core.Services.Logging;
-using RecordHub.IdentityService.Domain.Models;
 using RecordHub.IdentityService.Infrastructure.Configuration;
 using RecordHub.IdentityService.Infrastructure.Publishers;
 using RecordHub.IdentityService.Infrastructure.Services;
-using RecordHub.IdentityService.Infrastructure.Services.Logging;
+using RecordHub.Shared.Models;
+using RecordHub.Shared.Services.Logging;
 using System.Text;
 
 namespace RecordHub.IdentityService.Infrastructure
@@ -85,7 +84,6 @@ namespace RecordHub.IdentityService.Infrastructure
                         h.Username("guest");
                         h.Password("guest");
                     });
-                    cfg.ConfigureEndpoints(context);
                 });
             });
             return services;

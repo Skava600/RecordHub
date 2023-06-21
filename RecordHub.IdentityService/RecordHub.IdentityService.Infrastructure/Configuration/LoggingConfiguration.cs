@@ -4,7 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NpgsqlTypes;
 using RecordHub.IdentityService.Domain.Constants;
-using RecordHub.IdentityService.Infrastructure.Services.Logging.Settings;
+using RecordHub.Shared.Services.Logging.Settings;
 using Serilog;
 using Serilog.Core.Enrichers;
 using Serilog.Events;
@@ -15,8 +15,6 @@ namespace RecordHub.IdentityService.Infrastructure.Configuration
 {
     public static class LoggingConfiguration
     {
-
-
         internal static readonly string OutputTemplate =
             @"[{Timestamp:yy-MM-dd HH:mm:ss} {Level}]{ApplicationName}:{SourceContext}{NewLine}Message:{Message}{NewLine}in method {MemberName} at {FilePath}:{LineNumber}{NewLine}{Exception}{NewLine}";
 

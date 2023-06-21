@@ -26,6 +26,7 @@ namespace RecordHub.MailService.Infrastructure
                         h.Password("guest");
                     });
 
+
                     cfg.ReceiveEndpoint("send-email", ep =>
                     {
                         ep.ConfigureConsumer<SendEmailConsumer>(context);
@@ -36,5 +37,6 @@ namespace RecordHub.MailService.Infrastructure
 
             return services;
         }
+
     }
 }

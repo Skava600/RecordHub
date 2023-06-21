@@ -1,10 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Serilog;
-using Serilog.Events;
-
-namespace RecordHub.MailService.Infrastructure.Config
+﻿namespace RecordHub.MailService.Infrastructure.Config
 {
     public static class LoggingConfiguration
     {

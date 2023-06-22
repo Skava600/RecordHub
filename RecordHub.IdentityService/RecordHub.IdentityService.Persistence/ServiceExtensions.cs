@@ -15,6 +15,7 @@ namespace RecordHub.IdentityService.Persistence
         {
             services.AddDatabaseContext(configuration).AddRepositories();
             services.AddAspIdentity();
+            services.AddScoped<DbInitializer, DbInitializer>();
             services.Configure<IdentityOptions>(options => options.User.RequireUniqueEmail = true);
             return services;
         }

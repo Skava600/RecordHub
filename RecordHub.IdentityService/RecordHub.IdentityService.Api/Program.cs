@@ -28,9 +28,9 @@ using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
 
-    var context = services.GetRequiredService<AccountDbContext>();
+    var dbInitializer = services.GetRequiredService<DbInitializer>();
 
-    DbInitializer.Initialize(context);
+    await dbInitializer.Initialize();
 
 }
 app.UseHttpsRedirection();

@@ -55,7 +55,7 @@ namespace RecordHub.IdentityService.Infrastructure.Services
 
         public async Task<string> LoginAsync(LoginModel model, CancellationToken cancellationToken = default)
         {
-            var user = await _userManager.FindByNameAsync(model.Email) ??
+            var user = await _userManager.FindByNameAsync(model.UserName) ??
                 throw new UserNotFoundException();
 
             var credetialsResult = await _userManager.CheckPasswordAsync(

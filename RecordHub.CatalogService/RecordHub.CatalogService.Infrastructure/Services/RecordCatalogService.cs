@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using RecordHub.CatalogService.Application.Data;
 using RecordHub.CatalogService.Application.DTO;
+using RecordHub.CatalogService.Application.Exceptions;
 using RecordHub.CatalogService.Application.Services;
 using RecordHub.CatalogService.Domain.Entities;
 using RecordHub.CatalogService.Domain.Models;
@@ -43,15 +44,19 @@ namespace RecordHub.CatalogService.Infrastructure.Services
 
         public async Task<IEnumerable<RecordDTO>> GetByPageAsync(int page, int pageSize, CancellationToken cancellationToken = default)
         {
-            var records = await _repository.Records.GetByPageAsync(page, pageSize, cancellationToken);
-            var result = _mapper.Map<IEnumerable<RecordDTO>>(records);
-
+            IEnumerable<Record> records = await _repository.Records.GetByPageAsync(page, pageSize, cancellationToken);
+            IEnumerable<RecordDTO> result = _mapper.Map<IEnumerable<Record>, IEnumerable<RecordDTO>>(records);
             return result;
         }
 
         public async Task<RecordDTO?> GetBySlugAsync(string slug, CancellationToken cancellationToken = default)
         {
             Record? record = await _repository.Records.GetBySlugAsync(slug, cancellationToken);
+
+            if (record == null)
+            {
+                throw new EntityNotFoundException(nameof(slug));
+            }
 
             var result = _mapper.Map<RecordDTO>(record);
 

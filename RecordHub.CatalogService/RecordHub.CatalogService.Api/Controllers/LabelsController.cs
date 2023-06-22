@@ -7,21 +7,20 @@ namespace RecordHub.CatalogService.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RecordController : ControllerBase
+    public class LabelsController : ControllerBase
     {
-        private readonly IRecordCatalogService recordCatalogService;
+        private readonly ILabelCatalogService _labelService;
 
-        public RecordController(IRecordCatalogService recordCatalogService)
+        public LabelsController(ILabelCatalogService labelService)
         {
-            this.recordCatalogService = recordCatalogService;
+            _labelService = labelService;
         }
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<IActionResult> CreateAsync([FromBody] RecordModel model,
-          CancellationToken cancellationToken = default)
+        public async Task<IActionResult> CreateAsync([FromBody] LabelModel model, CancellationToken cancellationToken)
         {
-            await recordCatalogService.AddAsync(model, cancellationToken);
+            await _labelService.AddAsync(model, cancellationToken);
 
             return Ok();
         }
@@ -29,10 +28,10 @@ namespace RecordHub.CatalogService.Api.Controllers
         [Authorize(Roles = "Admin")]
         [HttpPut("{id:Guid}")]
         public async Task<IActionResult> UpdateAsync([FromRoute] Guid id,
-           [FromBody] RecordModel model,
+           [FromBody] LabelModel model,
            CancellationToken cancellationToken = default)
         {
-            await recordCatalogService.UpdateAsync(id, model, cancellationToken);
+            await _labelService.UpdateAsync(id, model, cancellationToken);
 
             return Ok();
         }
@@ -42,18 +41,17 @@ namespace RecordHub.CatalogService.Api.Controllers
         public async Task<IActionResult> DeleteAsync([FromRoute] Guid id,
            CancellationToken cancellationToken = default)
         {
-            await recordCatalogService.DeleteAsync(id, cancellationToken);
+            await _labelService.DeleteAsync(id, cancellationToken);
 
             return NoContent();
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetByPageAsync(
-            [FromQuery] int page,
-            [FromQuery] int pageSize,
-         CancellationToken cancellationToken = default)
+        public async Task<IActionResult> GetAllAsync(CancellationToken cancellationToken)
         {
-            return Ok(await recordCatalogService.GetByPageAsync(page, pageSize, cancellationToken));
+            var countries = await _labelService.GetAllAsync(cancellationToken);
+
+            return Ok(countries);
         }
     }
 }

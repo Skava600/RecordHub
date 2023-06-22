@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using RecordHub.CatalogService.Application.Exceptions;
+using System.Net;
 using System.Text.Json;
 
 namespace RecordHub.CatalogService.Api.Middlewares
@@ -16,6 +17,12 @@ namespace RecordHub.CatalogService.Api.Middlewares
             try
             {
                 await _next(context);
+            }
+            catch (EntityNotFoundException ex)
+            {
+                var code = HttpStatusCode.NotFound;
+                var message = ex.Message;
+                await HandleExceptionAsync(context, code, message);
             }
             catch (Exception ex)
             {

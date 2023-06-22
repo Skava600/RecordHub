@@ -17,7 +17,7 @@ namespace RecordHub.CatalogService.Infrastructure.Data
 
         public IRepository<Label> Labels => new BaseRepository<Label>(_context);
 
-        public IRepository<Artist> Artists => new BaseRepository<Artist>(_context);
+        public IArtistRepository Artists => new ArtistRepository(_context);
 
         public IRepository<Style> Styles => new BaseRepository<Style>(_context);
 

@@ -9,6 +9,11 @@ namespace RecordHub.CatalogService.Application.Converters
     public class RecordTypeConverter : ITypeConverter<RecordModel, Record>
     {
         private readonly IUnitOfWork _repository;
+
+        public RecordTypeConverter(IUnitOfWork repository)
+        {
+            _repository = repository;
+        }
         public Record Convert(RecordModel source, Record destination, ResolutionContext context)
         {
             destination ??= new Record();
@@ -49,7 +54,7 @@ namespace RecordHub.CatalogService.Application.Converters
 
             destination.Label = label;
             destination.Country = country;
-            destination.Artist = artist;
+            destination.ArtistId = artist.Id;
 
             return destination;
         }

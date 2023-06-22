@@ -17,6 +17,11 @@ namespace RecordHub.CatalogService.Infrastructure.Data.Repositories
             return records.AsNoTracking().CountAsync(cancellationToken);
         }
 
+        public override async Task<Record?> GetBySlugAsync(string slug, CancellationToken cancellationToken = default)
+        {
+            return await GetAllQueryIncludeGraph()
+                .FirstOrDefaultAsync(r => r.Slug.Equals(slug, StringComparison.OrdinalIgnoreCase));
+        }
         public async Task<IEnumerable<Record>> GetByPageAsync(int page, int pageSize, CancellationToken cancellationToken = default)
         {
             return await GetAllQueryIncludeGraph()
@@ -32,6 +37,7 @@ namespace RecordHub.CatalogService.Infrastructure.Data.Repositories
                 .Include(r => r.Country)
                 .Include(r => r.Styles)
                 .Include(r => r.Artist)
+
                 .AsSplitQuery()
                 .AsNoTracking();
         }

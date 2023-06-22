@@ -2,7 +2,6 @@
 {
     public class Style : BaseEntity
     {
-
         public ICollection<Record> Records { get; set; }
     }
 }

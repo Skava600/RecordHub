@@ -1,6 +1,7 @@
 using RecordHub.CatalogService.Api;
 using RecordHub.CatalogService.Api.Middlewares;
 using RecordHub.CatalogService.Infrastructure;
+using RecordHub.CatalogService.Infrastructure.Config;
 using RecordHub.CatalogService.Infrastructure.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,7 @@ builder.Services.ConfigureSwagger();
 builder.Services.AddPersistence(builder.Configuration);
 builder.Services.AddInfrastructure();
 builder.Services.AddJwtAuth(builder.Configuration);
+builder.ConfigureSerilog();
 var app = builder.Build();
 app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 // Configure the HTTP request pipeline.

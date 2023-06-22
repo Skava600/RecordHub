@@ -7,9 +7,9 @@
         public string Description { get; set; }
         public double Price { get; set; }
         public Label Label { get; set; }
-        public ICollection<Style> Styles { get; set; }
+        public IList<Style> Styles { get; set; }
         public Country Country { get; set; }
         public Artist Artist { get; set; }
-
+        public Guid ArtistId { get; set; }
     }
 }

@@ -2,6 +2,6 @@
 {
     public class Artist : BaseEntity
     {
-        public ICollection<Record> Artists { get; set; }
+        public ICollection<Record> Records { get; set; }
     }
 }

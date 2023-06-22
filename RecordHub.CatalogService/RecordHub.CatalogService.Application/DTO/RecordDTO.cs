@@ -2,7 +2,8 @@
 {
     public class RecordDTO
     {
-        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Slug { get; set; }
         public short Radius { get; set; }
         public int Year { get; set; }
         public string Description { get; set; }

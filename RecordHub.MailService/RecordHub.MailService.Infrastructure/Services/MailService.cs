@@ -19,7 +19,6 @@ namespace RecordHub.MailService.Infrastructure.Services
 
         public async Task<bool> SendAsync(MailData mailData, CancellationToken ct = default)
         {
-            // Initialize a new instance of the MimeKit.MimeMessage class
             var mail = new MimeMessage();
 
             #region Sender / Receiver
@@ -30,27 +29,6 @@ namespace RecordHub.MailService.Infrastructure.Services
             // Receiver
             foreach (string mailAddress in mailData.To)
                 mail.To.Add(MailboxAddress.Parse(mailAddress));
-
-            // Set Reply to if specified in mail data
-            if (!string.IsNullOrEmpty(mailData.ReplyTo))
-                mail.ReplyTo.Add(new MailboxAddress(mailData.ReplyToName, mailData.ReplyTo));
-
-            // BCC
-            // Check if a BCC was supplied in the request
-            if (mailData.Bcc != null)
-            {
-                // Get only addresses where value is not null or with whitespace. x = value of address
-                foreach (string mailAddress in mailData.Bcc.Where(x => !string.IsNullOrWhiteSpace(x)))
-                    mail.Bcc.Add(MailboxAddress.Parse(mailAddress.Trim()));
-            }
-
-            // CC
-            // Check if a CC address was supplied in the request
-            if (mailData.Cc != null)
-            {
-                foreach (string mailAddress in mailData.Cc.Where(x => !string.IsNullOrWhiteSpace(x)))
-                    mail.Cc.Add(MailboxAddress.Parse(mailAddress.Trim()));
-            }
             #endregion
 
             #region Content

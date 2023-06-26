@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Redis.OM" Version="0.5.2" />
+  </ItemGroup>
+
 </Project>

@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RecordHub.BasketService.Domain\RecordHub.BasketService.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

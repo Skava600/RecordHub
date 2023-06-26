@@ -75,6 +75,68 @@ services:
         networks:
             - recordhub
         restart: unless-stopped
+    recordhub.catalogservice.api:
+        image: ${DOCKER_REGISTRY-}recordhubcatalogserviceapi
+        build:
+            context: .
+            dockerfile: RecordHub.CatalogService/RecordHub.CatalogService.Api/Dockerfile
+        networks:
+            - recordhub
+        ports:
+            - '5004:443'
+        environment:
+            DB_HOST: identitydb
+            DB_PORT: 5432
+            DB_USER: postgres
+            DB_PASSWORD: 123456
+            DB_NAME: RecordHub.Catalog
+            ASPNETCORE_ENVIRONMENT: Docker
+        depends_on:
+            - identitydb
+            - gateway
+
+    messagebus:
+        container_name: messagebus
+        image: rabbitmq:management
+        networks:
+        - recordhub
+        ports:
+        - 5672:5672
+        - 15672:15672
+        restart: on-failure
+        healthcheck:
+            test: rabbitmq-diagnostics -q ping
+            interval: 10s
+            timeout: 10s
+            retries: 10
+            start_period: 10s
+        volumes:
+        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    recordhub.basketservice.api:
+        image: ${DOCKER_REGISTRY-}recordhubbasketserviceapi
+        build:
+            context: .
+            dockerfile: RecordHub.BasketService/RecordHub.BasketService.Api/Dockerfile
+        networks:
+            - recordhub
+        ports:
+            - 5005:443
+        depends_on:
+            - redis
+            - gateway
+    redis:
+        image: redis/redis-stack:latest
+        ports:
+          - 8001:8001
+          - 6379:6379
+        command:  bash -c "redis-server --loglevel warning  --requirepass password"
+        restart: unless-stopped
+
+        volumes:
+          - /local-data/:/data
+        networks:
+        - recordhub
 
 volumes:
-        pgdata:   
+        pgdata:

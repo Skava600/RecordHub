@@ -16,10 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\..\RecordHub.Shared\RecordHub.Shared.csproj" />
     <ProjectReference Include="..\RecordHub.BasketService.Applicatation\RecordHub.BasketService.Applicatation.csproj" />
     <ProjectReference Include="..\RecordHub.BasketService.Infrastructure\RecordHub.BasketService.Infrastructure.csproj" />
   </ItemGroup>

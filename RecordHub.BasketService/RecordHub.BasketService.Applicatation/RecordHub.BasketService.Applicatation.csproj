@@ -10,4 +10,12 @@
     <ProjectReference Include="..\RecordHub.BasketService.Domain\RecordHub.BasketService.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Mappers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.2" />
+  </ItemGroup>
+
 </Project>

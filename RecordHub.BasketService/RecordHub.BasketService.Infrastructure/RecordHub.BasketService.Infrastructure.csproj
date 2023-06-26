@@ -14,6 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\RecordHub.Shared\RecordHub.Shared.csproj" />
     <ProjectReference Include="..\RecordHub.BasketService.Applicatation\RecordHub.BasketService.Applicatation.csproj" />
     <ProjectReference Include="..\RecordHub.BasketService.Domain\RecordHub.BasketService.Domain.csproj" />
   </ItemGroup>

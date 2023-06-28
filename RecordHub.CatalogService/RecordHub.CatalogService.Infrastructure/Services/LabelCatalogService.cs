@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using RecordHub.CatalogService.Application.Data;
 using RecordHub.CatalogService.Application.DTO;
 using RecordHub.CatalogService.Application.Services;
@@ -12,15 +13,19 @@ namespace RecordHub.CatalogService.Infrastructure.Services
         private readonly IMapper _mapper;
 
         private readonly IUnitOfWork _repository;
-        public LabelCatalogService(IMapper mapper, IUnitOfWork repository)
+        private readonly IValidator<BaseEntity> _validator;
+        public LabelCatalogService(IMapper mapper, IUnitOfWork repository, IValidator<BaseEntity> validator)
         {
             _mapper = mapper;
             _repository = repository;
+            _validator = validator;
         }
 
         public async Task AddAsync(LabelModel model, CancellationToken cancellationToken)
         {
             var label = _mapper.Map<Label>(model);
+
+            await _validator.ValidateAndThrowAsync(label, cancellationToken);
 
             await _repository.Labels.AddAsync(label);
             await _repository.CommitAsync();

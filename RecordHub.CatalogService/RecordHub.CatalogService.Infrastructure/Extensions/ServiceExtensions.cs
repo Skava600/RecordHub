@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RecordHub.CatalogService.Application.Data;
 using RecordHub.CatalogService.Application.Mappers;
 using RecordHub.CatalogService.Application.Services;
+using RecordHub.CatalogService.Application.Validators;
 using RecordHub.CatalogService.Infrastructure.Services;
 using RecordHub.Shared.Extensions;
 
@@ -14,6 +16,7 @@ namespace RecordHub.CatalogService.Infrastructure.Extensions
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
             services.AddAutoMapperProfiles();
+            services.AddValidatorsFromAssemblyContaining(typeof(RecordValidator));
             services.AddScoped<IRecordCatalogService, RecordCatalogService>();
             services.AddScoped<IArtistCatalogService, ArtistCatalogService>();
             services.AddScoped<IStyleCatalogService, StyleCatalogService>();

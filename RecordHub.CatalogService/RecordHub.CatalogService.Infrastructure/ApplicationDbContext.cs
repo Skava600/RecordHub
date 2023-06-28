@@ -17,9 +17,9 @@ namespace RecordHub.CatalogService.Infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Record>().HasIndex(r => r.Slug);
-            modelBuilder.Entity<Label>().HasIndex(l => l.Slug);
-            modelBuilder.Entity<Artist>().HasIndex(a => a.Slug);
+            modelBuilder.Entity<Record>().HasAlternateKey(r => r.Slug);
+            modelBuilder.Entity<Label>().HasAlternateKey(l => l.Slug);
+            modelBuilder.Entity<Artist>().HasAlternateKey(a => a.Slug);
             modelBuilder.Entity<Country>().HasAlternateKey(c => c.Slug);
             modelBuilder.Entity<Style>().HasAlternateKey(d => d.Slug);
         }

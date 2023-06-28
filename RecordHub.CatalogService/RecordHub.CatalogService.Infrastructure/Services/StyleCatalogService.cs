@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using RecordHub.CatalogService.Application.Data;
 using RecordHub.CatalogService.Application.DTO;
 using RecordHub.CatalogService.Application.Services;
@@ -12,18 +13,21 @@ namespace RecordHub.CatalogService.Infrastructure.Services
         private readonly IMapper _mapper;
 
         private readonly IUnitOfWork _repository;
-
-        public StyleCatalogService(IMapper mapper, IUnitOfWork repository)
+        private readonly IValidator<BaseEntity> _validator;
+        public StyleCatalogService(IMapper mapper, IUnitOfWork repository, IValidator<BaseEntity> validator)
         {
             _mapper = mapper;
             _repository = repository;
+            _validator = validator;
         }
 
         public async Task AddAsync(StyleModel model, CancellationToken cancellationToken)
         {
             var style = _mapper.Map<Style>(model);
 
-            await _repository.Styles.AddAsync(style);
+            await _validator.ValidateAndThrowAsync(style, cancellationToken);
+
+            await _repository.Styles.AddAsync(style, cancellationToken);
             await _repository.CommitAsync();
         }
 
@@ -50,6 +54,9 @@ namespace RecordHub.CatalogService.Infrastructure.Services
             }
 
             _mapper.Map(model, style);
+
+            await _validator.ValidateAndThrowAsync(style, cancellationToken);
+
             await _repository.Styles.UpdateAsync(style, cancellationToken);
             await _repository.CommitAsync();
         }

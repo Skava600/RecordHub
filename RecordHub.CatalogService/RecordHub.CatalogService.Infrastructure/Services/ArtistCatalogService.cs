@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using RecordHub.CatalogService.Application.Data;
 using RecordHub.CatalogService.Application.DTO;
 using RecordHub.CatalogService.Application.Services;
@@ -13,16 +14,19 @@ namespace RecordHub.CatalogService.Infrastructure.Services
         private readonly IMapper _mapper;
 
         private readonly IUnitOfWork _repository;
-
-        public ArtistCatalogService(IMapper mapper, IUnitOfWork repository)
+        private readonly IValidator<BaseEntity> _validator;
+        public ArtistCatalogService(IMapper mapper, IUnitOfWork repository, IValidator<BaseEntity> validator)
         {
             _mapper = mapper;
             _repository = repository;
+            _validator = validator;
         }
 
         public async Task AddAsync(ArtistModel model, CancellationToken cancellationToken)
         {
             var artist = _mapper.Map<Artist>(model);
+
+            await _validator.ValidateAndThrowAsync(artist, cancellationToken);
 
             await _repository.Artists.AddAsync(artist);
             await _repository.CommitAsync();
@@ -54,6 +58,9 @@ namespace RecordHub.CatalogService.Infrastructure.Services
             }
 
             _mapper.Map(model, artist);
+
+            await _validator.ValidateAndThrowAsync(artist, cancellationToken);
+
             await _repository.Artists.UpdateAsync(artist, cancellationToken);
             await _repository.CommitAsync();
         }

@@ -1,4 +1,4 @@
-﻿using RecordHub.CatalogService.Application.Exceptions;
+﻿using RecordHub.Shared.Exceptions;
 using System.Net;
 using System.Text.Json;
 

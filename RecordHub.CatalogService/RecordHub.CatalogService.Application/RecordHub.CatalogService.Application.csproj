@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\RecordHub.Shared\RecordHub.Shared.csproj" />
     <ProjectReference Include="..\RecordHub.CatalogService.Domain\RecordHub.CatalogService.Domain.csproj" />
   </ItemGroup>
 

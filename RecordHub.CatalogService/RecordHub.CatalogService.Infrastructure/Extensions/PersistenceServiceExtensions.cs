@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RecordHub.CatalogService.Application.Data;
-using RecordHub.CatalogService.Domain.Constants;
 using RecordHub.CatalogService.Infrastructure.Data;
 
 namespace RecordHub.CatalogService.Infrastructure.Extensions
@@ -15,7 +14,7 @@ namespace RecordHub.CatalogService.Infrastructure.Extensions
         }
         private static IServiceCollection AddDatabaseContext(this IServiceCollection services, IConfiguration configuration)
         {
-            return services.AddNpgsql<ApplicationDbContext>(CatalogConstants.DbConnectionString);
+            return services.AddNpgsql<ApplicationDbContext>(configuration.GetConnectionString("DefaultConnectionString"));
         }
 
         private static IServiceCollection AddRepositories(this IServiceCollection services)

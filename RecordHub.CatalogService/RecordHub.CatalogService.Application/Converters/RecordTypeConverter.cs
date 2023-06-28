@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using RecordHub.CatalogService.Application.Data;
-using RecordHub.CatalogService.Application.Exceptions;
 using RecordHub.CatalogService.Domain.Entities;
 using RecordHub.CatalogService.Domain.Models;
+using RecordHub.Shared.Exceptions;
 
 namespace RecordHub.CatalogService.Application.Converters
 {

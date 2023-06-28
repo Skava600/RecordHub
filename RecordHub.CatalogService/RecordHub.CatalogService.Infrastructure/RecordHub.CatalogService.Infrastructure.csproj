@@ -13,7 +13,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Protos\greet.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.54.0" />
+    <PackageReference Include="Grpc.AspNetCore.Server" Version="2.54.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.7">
       <PrivateAssets>all</PrivateAssets>
@@ -31,6 +37,10 @@
     <ProjectReference Include="..\..\RecordHub.Shared\RecordHub.Shared.csproj" />
     <ProjectReference Include="..\RecordHub.CatalogService.Application\RecordHub.CatalogService.Application.csproj" />
     <ProjectReference Include="..\RecordHub.CatalogService.Domain\RecordHub.CatalogService.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="Protos\greet.proto" GrpcServices="Server" />
   </ItemGroup>
 
 </Project>

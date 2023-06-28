@@ -24,13 +24,6 @@ services:
             - recordhub
         ports:
             - '5002:443'
-        environment:
-            DB_HOST: identitydb
-            DB_PORT: 5432
-            DB_USER: postgres
-            DB_PASSWORD: 123456
-            DB_NAME: RecordHub.Identity
-            ASPNETCORE_ENVIRONMENT: Docker
         depends_on:
             - identitydb
             - gateway
@@ -84,17 +77,21 @@ services:
             - recordhub
         ports:
             - '5004:443'
-        environment:
-            DB_HOST: identitydb
-            DB_PORT: 5432
-            DB_USER: postgres
-            DB_PASSWORD: 123456
-            DB_NAME: RecordHub.Catalog
-            ASPNETCORE_ENVIRONMENT: Docker
         depends_on:
             - identitydb
             - gateway
-
+    recordhub.catalogservice.grpc:
+        image: ${DOCKER_REGISTRY-}recordhubcatalogservicegrpc
+        build:
+            context: .
+            dockerfile: RecordHub.CatalogService/RecordHub.CatalogService.Grpc/Dockerfile
+        networks:
+            - recordhub
+        ports:
+            - '5005:443'
+        depends_on:
+            - identitydb
+            - gateway
     messagebus:
         container_name: messagebus
         image: rabbitmq:management
@@ -121,7 +118,7 @@ services:
         networks:
             - recordhub
         ports:
-            - 5005:443
+            - 5006:443
         depends_on:
             - redis
             - gateway

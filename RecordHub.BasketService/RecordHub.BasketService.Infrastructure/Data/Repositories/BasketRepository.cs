@@ -1,22 +1,22 @@
-﻿using Newtonsoft.Json;
-using RecordHub.BasketService.Domain.Entities;
+﻿using RecordHub.BasketService.Domain.Entities;
 using StackExchange.Redis;
+using System.Text.Json;
 
 namespace RecordHub.BasketService.Infrastructure.Data.Repositories
 {
     public class BasketRepository : IBasketRepository
     {
         private readonly IConnectionMultiplexer _redisCache;
-        private readonly IDatabaseAsync _redisDb;
+        private readonly IDatabase database;
         public BasketRepository(IConnectionMultiplexer redisCache)
         {
             _redisCache = redisCache;
-            _redisDb = redisCache.GetDatabase();
+            database = redisCache.GetDatabase();
         }
 
         public async Task<bool> ClearBasketAsync(string userName)
         {
-            var result = await _redisDb.StringGetDeleteAsync(userName);
+            var result = await database.StringGetDeleteAsync(userName);
             if (result == RedisValue.Null)
             {
                 return false;
@@ -27,16 +27,16 @@ namespace RecordHub.BasketService.Infrastructure.Data.Repositories
 
         public async Task<ShoppingCart?> GetBasketAsync(string userId)
         {
-            var basket = await _redisDb.StringGetAsync(userId);
+            var basket = await database.StringGetAsync(userId);
             if (String.IsNullOrEmpty(basket))
                 return null;
 
-            return JsonConvert.DeserializeObject<ShoppingCart>(basket);
+            return JsonSerializer.Deserialize<ShoppingCart>(basket);
         }
 
         public Task UpdateBasket(ShoppingCart basket)
         {
-            return _redisDb.StringSetAsync(basket.UserName, JsonConvert.SerializeObject(basket));
+            return database.StringSetAsync(basket.UserName, JsonSerializer.Serialize(basket));
         }
     }
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RecordHub.BasketService.Applicatation.Services;
-using RecordHub.BasketService.Domain.Entities;
+using RecordHub.BasketService.Domain.Models;
 using System.Security.Claims;
 
 namespace RecordHub.BasketService.Api.Controllers
@@ -27,7 +27,7 @@ namespace RecordHub.BasketService.Api.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> UpdateBasketAsync([FromBody] ShoppingCartItem cartItem)
+        public async Task<IActionResult> UpdateBasketAsync([FromBody] ShoppingCartItemModel cartItem)
         {
             string? userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             await basketService.UpdateCartItemAsync(userId, cartItem);

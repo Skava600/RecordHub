@@ -1,0 +1,22 @@
+﻿syntax = "proto3";
+ 
+option csharp_namespace = "RecordHub.BasketService.Infrastructure";
+ 
+package catalog;
+ 
+service CatalogChecker {
+  // отправка сообщения
+  rpc CheckProductExisting (ProductRequest) returns (ProductReply);
+}
+ 
+// сообщение от клиента содержит name
+message ProductRequest {
+  string productId = 1;
+}
+ 
+// сообщение клиенту содержит message
+message ProductReply {
+  double price = 1;
+  bool isExisting = 2;
+  string Name = 3;
+}

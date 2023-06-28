@@ -6,5 +6,6 @@ namespace RecordHub.IdentityService.Domain.Data.Entities
     {
         public string Name { get; set; }
         public string Surname { get; set; }
+        public ICollection<Address> Addresses { get; set; }
     }
 }

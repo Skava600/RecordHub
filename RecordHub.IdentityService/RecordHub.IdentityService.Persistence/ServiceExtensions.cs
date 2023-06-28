@@ -25,6 +25,7 @@ namespace RecordHub.IdentityService.Persistence
 
         private static IServiceCollection AddRepositories(this IServiceCollection services)
         {
+            services.AddScoped<IAddressRepository, AddressRepository>();
             return services.AddScoped<IUserRepository, UserRepository>();
         }
 

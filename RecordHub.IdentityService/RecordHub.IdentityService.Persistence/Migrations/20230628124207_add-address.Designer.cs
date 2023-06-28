@@ -12,37 +12,18 @@ using RecordHub.IdentityService.Persistence;
 namespace RecordHub.IdentityService.Persistence.Migrations
 {
     [DbContext(typeof(AccountDbContext))]
-    [Migration("20230612074431_addroles")]
-    partial class addroles
+    [Migration("20230628124207_add-address")]
+    partial class addaddress
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.5")
+                .HasAnnotation("ProductVersion", "7.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("text");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("text");
-
-                    b.Property<string>("NormalizedName")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Roles");
-                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
                 {
@@ -73,13 +54,13 @@ namespace RecordHub.IdentityService.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d5cda852-26c2-4ad6-a71f-a78c1ececc23"),
+                            Id = new Guid("4c1bfc9e-a5ff-4bbe-bd64-bbdbbcd7741c"),
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = new Guid("e15c6eb8-4a08-498f-9ba2-46ae34cc7f9f"),
+                            Id = new Guid("56f497ec-3db3-4b9a-a1ce-f2ac3dc03518"),
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -186,6 +167,48 @@ namespace RecordHub.IdentityService.Persistence.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("RecordHub.IdentityService.Domain.Data.Entities.Address", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Appartment")
+                        .HasColumnType("text");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("HouseNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Korpus")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Postcode")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("State")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Street")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("RecordHub.IdentityService.Domain.Data.Entities.User", b =>
@@ -310,6 +333,20 @@ namespace RecordHub.IdentityService.Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("RecordHub.IdentityService.Domain.Data.Entities.Address", b =>
+                {
+                    b.HasOne("RecordHub.IdentityService.Domain.Data.Entities.User", null)
+                        .WithMany("Addresses")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("RecordHub.IdentityService.Domain.Data.Entities.User", b =>
+                {
+                    b.Navigation("Addresses");
                 });
 #pragma warning restore 612, 618
         }

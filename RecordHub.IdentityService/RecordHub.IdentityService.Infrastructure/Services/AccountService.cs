@@ -7,6 +7,7 @@ using RecordHub.IdentityService.Core.Services;
 using RecordHub.IdentityService.Domain.Data.Entities;
 using RecordHub.IdentityService.Domain.Enum;
 using RecordHub.IdentityService.Domain.Models;
+using RecordHub.IdentityService.Persistence.Data.Repositories.Generic;
 using RecordHub.Shared.Exceptions;
 using RecordHub.Shared.Models;
 using System.Security.Claims;
@@ -16,6 +17,7 @@ namespace RecordHub.IdentityService.Infrastructure.Services
     public class AccountService : IAccountService
     {
         private readonly UserManager<User> _userManager;
+        private readonly IAddressRepository _addressRepo;
         private readonly IPublisher<MailData> _mailPublisher;
         private readonly IMapper _mapper;
         private readonly RoleManager<IdentityRole<Guid>> _roleManager;
@@ -25,7 +27,8 @@ namespace RecordHub.IdentityService.Infrastructure.Services
           RoleManager<IdentityRole<Guid>> roleManager,
           IMapper mapper,
           ITokenService tokenService,
-          IPublisher<MailData> mailPublisher
+          IPublisher<MailData> mailPublisher,
+          IAddressRepository addressRepository
           )
         {
             this._userManager = userManager;
@@ -33,6 +36,7 @@ namespace RecordHub.IdentityService.Infrastructure.Services
             this._roleManager = roleManager;
             _mapper = mapper;
             this._mailPublisher = mailPublisher;
+            _addressRepo = addressRepository;
         }
 
         public async Task<UserDTO> GetUserInfoAsync(string? userId, CancellationToken token = default)
@@ -50,6 +54,7 @@ namespace RecordHub.IdentityService.Infrastructure.Services
             }
 
             UserDTO userDTO = _mapper.Map<UserDTO>(user);
+            userDTO.Addresses = _addressRepo.GetAddressesByUserId(user.Id);
 
             return userDTO;
         }

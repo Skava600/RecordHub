@@ -1,4 +1,5 @@
-﻿using MassTransit;
+﻿using FluentValidation;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using RecordHub.IdentityService.Core.Mappers;
 using RecordHub.IdentityService.Core.Publishers;
 using RecordHub.IdentityService.Core.Services;
+using RecordHub.IdentityService.Core.Validators;
 using RecordHub.IdentityService.Infrastructure.Configuration;
 using RecordHub.IdentityService.Infrastructure.Publishers;
 using RecordHub.IdentityService.Infrastructure.Services;
@@ -72,9 +74,16 @@ namespace RecordHub.IdentityService.Infrastructure
         private static IServiceCollection InjectCoreServices(this IServiceCollection services)
         {
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IAddressService, AddressService>();
             services.AddScoped<ITokenService, TokenService>();
+
             services.AddScoped<IPublisher<MailData>, SendEmailPublisher>();
+
             services.AddAutoMapper(typeof(UserProfile));
+            services.AddAutoMapper(typeof(AddressProfile));
+
+            services.AddValidatorsFromAssemblyContaining(typeof(AddressValidator));
+
             services.AddMassTransit(x =>
             {
                 x.UsingRabbitMq((context, cfg) =>

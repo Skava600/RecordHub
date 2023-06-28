@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\RecordHub.Shared\RecordHub.Shared.csproj" />
     <ProjectReference Include="..\RecordHub.IdentityService.Core\RecordHub.IdentityService.Core.csproj" />
+    <ProjectReference Include="..\RecordHub.IdentityService.Persistence\RecordHub.IdentityService.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

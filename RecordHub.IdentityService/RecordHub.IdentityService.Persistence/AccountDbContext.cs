@@ -7,6 +7,7 @@ namespace RecordHub.IdentityService.Persistence
 {
     public class AccountDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
     {
+        public DbSet<Address> Addresses { get; set; }
 
         public AccountDbContext(DbContextOptions<AccountDbContext> options) : base(options)
         {

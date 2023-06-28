@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using RecordHub.IdentityService.Domain.Data.Entities;
 using RecordHub.IdentityService.Domain.Enum;
 
@@ -18,7 +19,12 @@ namespace RecordHub.IdentityService.Persistence
 
         public async Task Initialize()
         {
-            ctx.Database.EnsureCreated();
+            var pendingMigrations = await ctx.Database.GetPendingMigrationsAsync();
+
+            if (pendingMigrations.Any())
+            {
+                await ctx.Database.MigrateAsync();
+            }
             var user = new User
             {
                 Email = "uskava7@gmail.com",
@@ -29,11 +35,13 @@ namespace RecordHub.IdentityService.Persistence
                 UserName = "admin",
                 PhoneNumber = "123",
             };
+
             if (!ctx.Users.Any(u => u.UserName.Equals(user.UserName)))
             {
                 var result = await _userManager.CreateAsync(user, "123456aA.");
                 await _userManager.AddToRoleAsync(user, nameof(Roles.Admin));
             }
+
 
         }
     }

@@ -2,7 +2,8 @@
 
 namespace RecordHub.IdentityService.Persistence.Data.Repositories.Generic
 {
-    public interface IUserRepository : IRepository<User>
+    public interface IAddressRepository : IRepository<Address>
     {
+        IEnumerable<Address> GetAddressesByUserId(Guid userId);
     }
 }

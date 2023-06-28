@@ -4,3 +4,4 @@
     {
         public const int TokenLifeTime = 120;
     }
+}

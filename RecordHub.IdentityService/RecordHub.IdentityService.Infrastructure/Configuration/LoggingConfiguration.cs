@@ -3,7 +3,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NpgsqlTypes;
-using RecordHub.IdentityService.Domain.Constants;
 using RecordHub.Shared.Services.Logging.Settings;
 using Serilog;
 using Serilog.Core.Enrichers;
@@ -36,7 +35,7 @@ namespace RecordHub.IdentityService.Infrastructure.Configuration
             builder.Logging.ClearProviders();
             var config = builder.Configuration;
             var settings = config.GetSection(nameof(AppLoggingSettings)).Get<AppLoggingSettings>();
-            var connectionString = Constants.IdentityDbConnectionString;
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionString");
             var tableName = settings.PostgresSettings.TableName;
             var schema = settings.PostgresSettings.Schema;
             string restrictedToMinimumLevel = settings.General.RestrictedToMinimumLevel;

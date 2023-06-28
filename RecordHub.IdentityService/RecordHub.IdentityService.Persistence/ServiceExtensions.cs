@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RecordHub.IdentityService.Core.TokenProviders;
-using RecordHub.IdentityService.Domain.Constants;
 using RecordHub.IdentityService.Domain.Data.Entities;
 using RecordHub.IdentityService.Persistence.Data.Repositories.Generic;
 using RecordHub.IdentityService.Persistence.Data.Repositories.Implementation;
@@ -21,7 +20,7 @@ namespace RecordHub.IdentityService.Persistence
         }
         private static IServiceCollection AddDatabaseContext(this IServiceCollection services, IConfiguration configuration)
         {
-            return services.AddNpgsql<AccountDbContext>(Constants.IdentityDbConnectionString);
+            return services.AddNpgsql<AccountDbContext>(configuration.GetConnectionString("DefaultConnectionString"));
         }
 
         private static IServiceCollection AddRepositories(this IServiceCollection services)

@@ -14,7 +14,7 @@ message ProductRequest {
   string productId = 1;
 }
  
-// сообщение клиенту содержит message
+// сообщение клиенту содержит price, isExisting, name
 message ProductReply {
   double price = 1;
   bool isExisting = 2;

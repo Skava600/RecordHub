@@ -123,6 +123,19 @@ services:
         depends_on:
             - redis
             - gateway
+
+    recordhub.orderingservice.api:
+        image: ${DOCKER_REGISTRY-}recordhuborderingserviceapi
+        build:
+            context: .
+            dockerfile: RecordHub.OrderingService/RecordHub.OrderingService.Api/Dockerfile
+        networks:
+            - recordhub
+        ports:
+            - 5007:443
+        depends_on:
+            - identitydb
+            - gateway
     redis:
         image: redis/redis-stack:latest
         ports:

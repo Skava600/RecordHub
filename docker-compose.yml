@@ -75,6 +75,23 @@ services:
         networks:
             - recordhub
         restart: unless-stopped
-
+    messagebus:
+    	container_name: rabbitmq-bus
+    	image: rabbitmq:management
+    	networks:
+      		- recordhub
+    	ports:
+      		- 5672:5672
+      		- 15672:15672
+    	restart: on-failure
+    	healthcheck:
+      		test: rabbitmq-diagnostics -q ping
+      		interval: 10s
+      		timeout: 10s
+      		retries: 10
+      		start_period: 10s
+    	volumes:
+      		- ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/mnesia/
+      		- ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
 volumes:
         pgdata:   

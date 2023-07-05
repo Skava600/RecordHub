@@ -1,3 +1,4 @@
+using Hangfire;
 using RecordHub.MailService.Api.Extensions;
 using RecordHub.MailService.Infrastructure;
 using RecordHub.MailService.Infrastructure.Config;
@@ -9,9 +10,10 @@ builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
 
 
 builder.Services.ConfigureMail(builder.Configuration);
-builder.Services.AddInfrastructureServices();
+builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.AddMassTransit();
 builder.ConfigureSerilog();
 var app = builder.Build();
+app.UseHangfireDashboard();
 app.UseHttpsRedirection();
 app.Run();

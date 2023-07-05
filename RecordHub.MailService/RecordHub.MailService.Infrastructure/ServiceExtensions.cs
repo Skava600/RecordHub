@@ -1,15 +1,28 @@
-﻿using MassTransit;
+﻿using Hangfire;
+using Hangfire.PostgreSql;
+using MassTransit;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RecordHub.MailService.Application.Services;
 using RecordHub.MailService.Infrastructure.Consumers;
-
 namespace RecordHub.MailService.Infrastructure
 {
     public static class ServiceExtensions
     {
-        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
+        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddTransient<IMailService, RecordHub.MailService.Infrastructure.Services.MailService>();
+            services.AddHangfire(
+                x => x.UsePostgreSqlStorage(
+                    configuration.GetConnectionString("HangfireConnection")));
+            services.AddHangfireServer();
+            GlobalConfiguration.Configuration
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseSerilogLogProvider()
+                .UseColouredConsoleLogProvider()
+                .UseRecommendedSerializerSettings();
+
             return services;
         }
 

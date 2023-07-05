@@ -1,4 +1,5 @@
-﻿using MassTransit;
+﻿using Hangfire;
+using MassTransit;
 using RecordHub.MailService.Application.Services;
 using RecordHub.Shared.Models;
 
@@ -12,9 +13,12 @@ namespace RecordHub.MailService.Infrastructure.Consumers
             this.mailService = mailService;
         }
 
-        public async Task Consume(ConsumeContext<MailData> context)
+        public Task Consume(ConsumeContext<MailData> context)
         {
-            await mailService.SendAsync(context.Message, context.CancellationToken);
+            BackgroundJob.Enqueue(
+                () => mailService.SendAsync(context.Message, context.CancellationToken));
+
+            return Task.CompletedTask;
         }
     }
 }

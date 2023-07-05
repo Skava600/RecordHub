@@ -1,9 +1,10 @@
 using RecordHub.CatalogService.Api;
 using RecordHub.CatalogService.Api.Middlewares;
 using RecordHub.CatalogService.Infrastructure;
-using RecordHub.CatalogService.Infrastructure.Config;
 using RecordHub.CatalogService.Infrastructure.Extensions;
 using RecordHub.CatalogService.Infrastructure.Services;
+using RecordHub.Shared.Config;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.

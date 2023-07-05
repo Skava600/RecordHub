@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\RecordHub.Shared\RecordHub.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

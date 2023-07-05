@@ -1,10 +1,11 @@
 ﻿using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using RecordHub.OrderingService.Application.Mappers;
 using RecordHub.OrderingService.Application.Services;
 using RecordHub.OrderingService.Infrastructure.Config;
+using RecordHub.OrderingService.Infrastructure.Consumers;
 using RecordHub.Shared.Extensions;
-using RecordHub.Shared.MassTransit.Models.Order;
 
 namespace RecordHub.OrderingService.Infrastructure.Extensions
 {
@@ -14,6 +15,7 @@ namespace RecordHub.OrderingService.Infrastructure.Extensions
         {
             var cfg = configuration.Get<AppConfig>();
             services.AddScoped<IOrderingService, RecordHub.OrderingService.Infrastructure.Services.OrderingService>();
+            services.AddAutoMapper(typeof(OrderProfile));
             return services.AddMassTransit(cfg.MassTransit);
         }
         public static IServiceCollection AddJwtAuth(this IServiceCollection services, IConfiguration configuration)
@@ -24,23 +26,24 @@ namespace RecordHub.OrderingService.Infrastructure.Extensions
             return services;
         }
 
-        private static IServiceCollection AddMassTransit(this IServiceCollection services, MassTransitOptions cfg)
+        private static IServiceCollection AddMassTransit(this IServiceCollection services, MassTransitOptions massTransitOptions)
         {
             services.AddMassTransit(x =>
             {
-
-
-
-                x.AddBus(context => Bus.Factory.CreateUsingRabbitMq((c) =>
+                x.AddConsumer<BasketCheckoutConsumer>();
+                x.UsingRabbitMq((ctx, cfg) =>
                 {
-                    c.Host(cfg.Host, h =>
+                    cfg.Host(massTransitOptions.Host, h =>
                     {
                         h.Username("guest");
                         h.Password("guest");
                     });
-                    c.ConfigureEndpoints(context);
-                }));
-                x.AddRequestClient<BasketInfoRequest>();
+
+                    cfg.ReceiveEndpoint(massTransitOptions.BasketCheckoutQueue, c =>
+                    {
+                        c.ConfigureConsumer<BasketCheckoutConsumer>(ctx);
+                    });
+                });
             });
 
             return services;

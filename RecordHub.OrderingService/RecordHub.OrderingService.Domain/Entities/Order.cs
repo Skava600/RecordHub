@@ -1,9 +1,16 @@
-﻿namespace RecordHub.OrderingService.Domain.Entities
+﻿using RecordHub.Shared.Enums;
+
+namespace RecordHub.OrderingService.Domain.Entities
 {
     public class Order : BaseEntity
     {
-        public Guid UserId { get; set; }
-        public Address Address { get; set; }
-
+        public string UserId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string EmailAddress { get; set; }
+        public IEnumerable<OrderItem> Items { get; set; }
+        public double TotalPrice { get; set; }
+        public string Address { get; set; }
+        public StatesEnum State { get; set; }
     }
 }

@@ -9,7 +9,7 @@ using RecordHub.IdentityService.Domain.Enum;
 using RecordHub.IdentityService.Domain.Models;
 using RecordHub.IdentityService.Persistence.Data.Repositories.Generic;
 using RecordHub.Shared.Exceptions;
-using RecordHub.Shared.Models;
+using RecordHub.Shared.MassTransit.Models;
 using System.Security.Claims;
 
 namespace RecordHub.IdentityService.Infrastructure.Services

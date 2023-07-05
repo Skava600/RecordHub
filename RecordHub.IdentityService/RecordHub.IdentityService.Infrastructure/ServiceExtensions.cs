@@ -12,7 +12,7 @@ using RecordHub.IdentityService.Core.Validators;
 using RecordHub.IdentityService.Infrastructure.Configuration;
 using RecordHub.IdentityService.Infrastructure.Publishers;
 using RecordHub.IdentityService.Infrastructure.Services;
-using RecordHub.Shared.Models;
+using RecordHub.Shared.MassTransit.Models;
 using RecordHub.Shared.Services.Logging;
 using System.Text;
 

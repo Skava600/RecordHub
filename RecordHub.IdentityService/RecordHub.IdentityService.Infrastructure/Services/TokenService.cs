@@ -20,6 +20,9 @@ namespace RecordHub.IdentityService.Infrastructure.Services
                 new Claim (JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim (JwtRegisteredClaimNames.Email, user.Email),
                 new Claim (JwtRegisteredClaimNames.NameId, user.Id.ToString()),
+                new Claim (JwtRegisteredClaimNames.Name, user.Name),
+                new Claim (ClaimTypes.Surname, user.Surname),
+                new Claim (ClaimTypes.MobilePhone, user.PhoneNumber),
             };
 
             if (additionalClaims != null)

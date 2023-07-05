@@ -1,6 +1,6 @@
 ﻿using MassTransit;
 using RecordHub.IdentityService.Core.Publishers;
-using RecordHub.Shared.Models;
+using RecordHub.Shared.MassTransit.Models;
 
 namespace RecordHub.IdentityService.Infrastructure.Publishers
 {

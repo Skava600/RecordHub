@@ -1,6 +1,6 @@
 ﻿namespace RecordHub.Shared.MassTransit.Models.Order
 {
-    public class OrderItem
+    public class OrderItemModel
     {
         public int Quantity { get; set; }
         public double Price { get; set; }

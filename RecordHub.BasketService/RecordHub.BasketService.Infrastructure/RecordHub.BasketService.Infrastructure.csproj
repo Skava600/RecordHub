@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="Google.Protobuf" Version="3.23.3" />
     <PackageReference Include="Grpc.Net.Client" Version="2.54.0" />
     <PackageReference Include="Grpc.Tools" Version="2.56.0">
@@ -27,7 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\RecordHub.Shared\RecordHub.Shared.csproj" />
     <ProjectReference Include="..\RecordHub.BasketService.Applicatation\RecordHub.BasketService.Applicatation.csproj" />
     <ProjectReference Include="..\RecordHub.BasketService.Domain\RecordHub.BasketService.Domain.csproj" />
   </ItemGroup>

@@ -9,7 +9,7 @@ service CatalogChecker {
   rpc CheckProductExisting (ProductRequest) returns (ProductReply);
 }
  
-// сообщение от клиента содержит name
+// сообщение от клиента содержит productId
 message ProductRequest {
   string productId = 1;
 }

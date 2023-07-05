@@ -3,10 +3,10 @@ using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
+using RecordHub.BasketService.Applicatation.Mappers;
 using RecordHub.BasketService.Applicatation.Services;
 using RecordHub.BasketService.Applicatation.Validators;
 using RecordHub.BasketService.Infrastructure.Config;
-using RecordHub.BasketService.Infrastructure.Consumers;
 using RecordHub.BasketService.Infrastructure.Data.Repositories;
 using RecordHub.Shared.Extensions;
 using StackExchange.Redis;
@@ -37,6 +37,7 @@ namespace RecordHub.BasketService.Infrastructure
             services.AddScoped<IBasketService, RecordHub.BasketService.Infrastructure.Services.BasketService>();
             services.AddValidatorsFromAssemblyContaining(typeof(ShoppingCartItemValidator));
             services.AddMassTransit(configuration, cfg.MassTransit);
+            services.AddAutoMapper(typeof(CheckoutProfile));
             return services;
         }
 
@@ -52,9 +53,6 @@ namespace RecordHub.BasketService.Infrastructure
         {
             services.AddMassTransit(x =>
             {
-                x.AddConsumer<BasketInfoRequestConsumer>()
-                 .Endpoint(e => e.Name = "basket-info");
-
                 x.AddBus(context => Bus.Factory.CreateUsingRabbitMq((cfg) =>
                 {
                     cfg.Host(transitOptions.Host, h =>
@@ -63,12 +61,6 @@ namespace RecordHub.BasketService.Infrastructure
                         h.Password("guest");
                     });
 
-                    cfg.ReceiveEndpoint(transitOptions.Queue, e =>
-                    {
-                        e.PrefetchCount = 16;
-                        e.UseMessageRetry(r => r.Interval(2, 3000));
-                        e.ConfigureConsumer<BasketInfoRequestConsumer>(context);
-                    });
 
                 }));
 

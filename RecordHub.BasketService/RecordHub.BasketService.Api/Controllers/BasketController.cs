@@ -19,30 +19,39 @@ namespace RecordHub.BasketService.Api.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> GetBasketAsync()
+        public async Task<IActionResult> GetBasketAsync(CancellationToken cancellationToken = default)
         {
             string? userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            return Ok(await basketService.GetBasketAsync(userId));
+            return Ok(await basketService.GetBasketAsync(userId, cancellationToken));
         }
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> UpdateBasketAsync([FromBody] ShoppingCartItemModel cartItem)
+        public async Task<IActionResult> UpdateBasketAsync([FromBody] ShoppingCartItemModel cartItem, CancellationToken cancellationToken = default)
         {
             string? userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            await basketService.UpdateCartItemAsync(userId, cartItem);
+            await basketService.UpdateCartItemAsync(userId, cartItem, cancellationToken);
 
             return Ok();
         }
 
         [HttpDelete]
         [Authorize]
-        public async Task<IActionResult> ClearBasketAsync()
+        public async Task<IActionResult> ClearBasketAsync(CancellationToken cancellationToken = default)
         {
             string? userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            await basketService.ClearBasketAsync(userId);
+            await basketService.ClearBasketAsync(userId, cancellationToken);
 
             return Ok();
+        }
+
+        [HttpPost("checkout")]
+        [Authorize]
+        public async Task<IActionResult> BasketCheckoutAsync([FromBody] BasketCheckoutModel model, CancellationToken cancellationToken = default)
+        {
+            await basketService.CheckoutAsync(model, cancellationToken);
+
+            return Accepted();
         }
     }
 }

@@ -6,11 +6,9 @@ namespace RecordHub.BasketService.Infrastructure.Data.Repositories
 {
     public class BasketRepository : IBasketRepository
     {
-        private readonly IConnectionMultiplexer _redisCache;
         private readonly IDatabase database;
         public BasketRepository(IConnectionMultiplexer redisCache)
         {
-            _redisCache = redisCache;
             database = redisCache.GetDatabase();
         }
 

@@ -34,10 +34,34 @@ namespace RecordHub.BasketService.Infrastructure
         {
             var cfg = configuration.Get<AppConfig>();
 
+            services.AddGrpcServices(cfg.GrpcConfig);
             services.AddScoped<IBasketService, RecordHub.BasketService.Infrastructure.Services.BasketService>();
             services.AddValidatorsFromAssemblyContaining(typeof(ShoppingCartItemValidator));
             services.AddMassTransit(configuration, cfg.MassTransit);
             services.AddAutoMapper(typeof(CheckoutProfile));
+            return services;
+        }
+
+        private static IServiceCollection AddGrpcServices(this IServiceCollection services, GrpcConfig config)
+        {
+            services
+                .AddGrpcClient<CatalogChecker.CatalogCheckerClient>(o =>
+                {
+                    o.Address = new Uri(config.CatalogUrl);
+                    o.ChannelOptionsActions.Clear();
+                    o.ChannelOptionsActions.Add((opt) =>
+                    {
+                        opt.UnsafeUseInsecureChannelCallCredentials = true;
+                    });
+                })
+                .ConfigurePrimaryHttpMessageHandler(() =>
+                {
+                    var handler = new HttpClientHandler();
+                    handler.ServerCertificateCustomValidationCallback =
+                        HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+                    return handler;
+                });
+
             return services;
         }
 

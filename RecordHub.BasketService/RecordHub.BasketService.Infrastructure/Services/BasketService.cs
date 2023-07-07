@@ -100,6 +100,24 @@ namespace RecordHub.BasketService.Infrastructure.Services
             await _repo.UpdateBasket(basket);
         }
 
+        public async Task CheckoutAsync(BasketCheckoutModel model, CancellationToken cancellationToken = default)
+        {
+            var basket = await _repo.GetBasketAsync(model.UserId);
+
+            if (basket == null)
+            {
+                throw new BasketIsEmptyException();
+            }
+
+            var checkoutMessage = _mapper.Map<BasketCheckoutMessage>(model);
+            checkoutMessage.TotalPrice = basket.TotalPrice;
+            checkoutMessage.Items = _mapper.Map<IEnumerable<OrderItemModel>>(basket.Items);
+
+            await _publishEndpoint.Publish(checkoutMessage);
+
+            await _repo.ClearBasketAsync(model.UserId);
+        }
+
         private async Task<ProductReply> CheckProductExistenceAsync(string productId, CancellationToken cancellationToken = default)
         {
             var reply = await _catalogCheckerClient.CheckProductExistingAsync(new ProductRequest { ProductId = productId });
@@ -133,24 +151,6 @@ namespace RecordHub.BasketService.Infrastructure.Services
                     Errors = validationResults.Errors.Select(e => e.ErrorMessage)
                 };
             }
-        }
-
-        public async Task CheckoutAsync(BasketCheckoutModel model, CancellationToken cancellationToken = default)
-        {
-            var basket = await _repo.GetBasketAsync(model.UserId);
-
-            if (basket == null)
-            {
-                throw new BasketIsEmptyException();
-            }
-
-            var checkoutMessage = _mapper.Map<BasketCheckoutMessage>(model);
-            checkoutMessage.TotalPrice = basket.TotalPrice;
-            checkoutMessage.Items = _mapper.Map<IEnumerable<OrderItemModel>>(basket.Items);
-
-            await _publishEndpoint.Publish(checkoutMessage);
-
-            await _repo.ClearBasketAsync(model.UserId);
         }
     }
 }

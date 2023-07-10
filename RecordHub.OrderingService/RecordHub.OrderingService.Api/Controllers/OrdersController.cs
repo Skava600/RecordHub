@@ -16,8 +16,8 @@ namespace RecordHub.OrderingService.Api.Controllers
             this.orderingService = orderingService;
         }
 
-        [Authorize(Roles = "admin")]
-        [HttpPut("change-state/{orderId}/{state}")]
+        [Authorize(Roles = "Admin")]
+        [HttpPut("{orderId}/{state}")]
         public async Task<IActionResult> ChangeOrderState([FromRoute] Guid orderId, [FromRoute] StatesEnum state)
         {
             await orderingService.ChangeOrderStateAsync(orderId, state);
@@ -25,13 +25,13 @@ namespace RecordHub.OrderingService.Api.Controllers
         }
 
         [Authorize]
-        [HttpGet("get-users_orders/{userId}")]
+        [HttpGet("{userId}")]
         public async Task<IActionResult> GetUsersOrders(string userId, CancellationToken cancellationToken = default)
         {
             var user = HttpContext.User;
-            await orderingService.GetUsersOrdersAsync(userId, user, cancellationToken);
+            var orders = await orderingService.GetUsersOrdersAsync(userId, user, cancellationToken);
 
-            return Ok();
+            return Ok(orders);
         }
 
     }

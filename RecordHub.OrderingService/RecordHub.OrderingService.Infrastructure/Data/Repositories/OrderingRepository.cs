@@ -41,7 +41,7 @@ namespace RecordHub.OrderingService.Infrastructure.Data.Repositories
 
         public async Task<IEnumerable<Order>> GetUsersOrdersAsync(string userId, CancellationToken cancellationToken = default)
         {
-            return await orders.Where(o => o.UserId.Equals(userId)).AsNoTracking().ToListAsync(cancellationToken);
+            return await orders.Where(o => o.UserId.Equals(userId)).Include(o => o.Items).AsNoTracking().ToListAsync(cancellationToken);
         }
 
         public async Task UpdateStateAsync(Guid orderId, StatesEnum state, CancellationToken cancellationToken = default)

@@ -14,7 +14,7 @@ namespace RecordHub.CatalogService.Infrastructure.Data.Repositories
 
         public override async Task<Artist?> GetBySlugAsync(string slug, CancellationToken cancellationToken = default)
         {
-            return await artists.Include(a => a.Records)
+            return await artists.Include(a => a.Records).ThenInclude(r => r.Styles)
                 .AsSplitQuery()
                 .AsNoTracking()
                 .FirstOrDefaultAsync(e => e.Slug.Equals(slug), cancellationToken);

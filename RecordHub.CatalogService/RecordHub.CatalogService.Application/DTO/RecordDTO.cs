@@ -11,7 +11,7 @@
         public double Price { get; set; }
         public LabelDTO Label { get; set; }
         public IList<StyleDTO> Styles { get; set; }
-        public string Country { get; set; }
+        public CountryDTO Country { get; set; }
         public ArtistDTO Artist { get; set; }
     }
 }

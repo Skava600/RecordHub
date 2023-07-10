@@ -55,7 +55,6 @@ namespace RecordHub.CatalogService.Application.Converters
             destination.Label = label;
             destination.Country = country;
             destination.ArtistId = artist.Id;
-
             return destination;
         }
     }

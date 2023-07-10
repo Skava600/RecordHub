@@ -9,7 +9,6 @@ namespace RecordHub.CatalogService.Application.Mappers
     {
         public ArtistProfile()
         {
-            CreateMap<Record, RecordDTO>().ForMember(r => r.Country, opt => opt.MapFrom(r => r.Country.Name));
             CreateMap<Artist, ArtistDTO>();
             CreateMap<ArtistModel, Artist>();
         }

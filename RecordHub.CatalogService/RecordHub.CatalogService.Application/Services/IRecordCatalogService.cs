@@ -13,5 +13,7 @@ namespace RecordHub.CatalogService.Application.Services
         Task UpdateAsync(Guid id, RecordModel model, CancellationToken cancellationToken = default);
         Task<IEnumerable<RecordDTO>> GetByPageAsync(int page, int pageSize, CancellationToken cancellationToken = default);
         Task<int> GetCountAsync(CancellationToken cancellationToken = default);
+        Task<IEnumerable<RecordDTO>> GetByPageAsync(RecordFilterModel filterModel, CancellationToken cancellationToken = default);
+        Task<IEnumerable<RecordDTO>> SearchAsync(string text, CancellationToken cancellationToken = default);
     }
 }

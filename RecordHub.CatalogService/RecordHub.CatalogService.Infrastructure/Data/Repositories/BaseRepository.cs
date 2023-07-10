@@ -20,7 +20,7 @@ namespace RecordHub.CatalogService.Infrastructure.Data.Repositories
 
         }
 
-        public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
+        public async Task<T?> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
         {
             var entity = await GetByIdAsync(id);
             if (entity != null)
@@ -31,6 +31,8 @@ namespace RecordHub.CatalogService.Infrastructure.Data.Repositories
                 }
                 _dbSet.Remove(entity);
             }
+
+            return entity;
         }
 
         public virtual async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default)

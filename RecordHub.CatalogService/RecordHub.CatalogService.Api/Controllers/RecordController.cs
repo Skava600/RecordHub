@@ -55,5 +55,21 @@ namespace RecordHub.CatalogService.Api.Controllers
         {
             return Ok(await recordCatalogService.GetByPageAsync(page, pageSize, cancellationToken));
         }
+
+        [HttpGet("filter")]
+        public async Task<IActionResult> SearchAsync(
+            [FromQuery] RecordFilterModel model,
+         CancellationToken cancellationToken = default)
+        {
+            return Ok(await recordCatalogService.GetByPageAsync(model, cancellationToken));
+        }
+
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchAsync(
+            [FromQuery] string text,
+         CancellationToken cancellationToken = default)
+        {
+            return Ok(await recordCatalogService.SearchAsync(text, cancellationToken));
+        }
     }
 }

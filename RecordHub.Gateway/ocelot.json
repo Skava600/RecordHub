@@ -47,7 +47,7 @@
       },
       {
         "UpstreamPathTemplate": "/api/Record/{endpoint}",
-        "UpstreamHttpMethod": [ "Put", "Delete" ],
+        "UpstreamHttpMethod": [ "Put", "Delete", "Get" ],
         "DownstreamScheme": "https",
         "DownstreamHostAndPorts": [
           {
@@ -175,9 +175,67 @@
         "DownstreamPathTemplate": "/api/Labels/{endpoint}",
         "DangerousAcceptAnyServerCertificateValidator": true,
         "SwaggerKey": "catalog"
+      },
+      //Basket service
+      {
+        "UpstreamPathTemplate": "/api/basket/{endpoint}",
+        "UpstreamHttpMethod": [ "Post" ],
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "recordhub.basketservice.api",
+            "Port": 443
+          }
+        ],
+        "DownstreamPathTemplate": "/api/basket/{endpoint}",
+        "DangerousAcceptAnyServerCertificateValidator": true,
+        "SwaggerKey": "basket"
+      },
+      {
+        "UpstreamPathTemplate": "/api/basket",
+        "UpstreamHttpMethod": [ "Post", "Get", "Put", "Delete" ],
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "recordhub.basketservice.api",
+            "Port": 443
+          }
+        ],
+        "DownstreamPathTemplate": "/api/basket",
+        "DangerousAcceptAnyServerCertificateValidator": true,
+        "SwaggerKey": "basket"
+      },
+      // Ordering Service
+      {
+        "UpstreamPathTemplate": "/api/orders/{endpoint}/{endpoint2}",
+        "UpstreamHttpMethod": [ "Put" ],
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "recordhub.orderingservice.api",
+            "Port": 443
+          }
+        ],
+        "DownstreamPathTemplate": "/api/orders/{endpoint}/{endpoint2}",
+        "DangerousAcceptAnyServerCertificateValidator": true,
+        "SwaggerKey": "orders"
+      },
+      {
+        "UpstreamPathTemplate": "/api/orders/{endpoint}",
+        "UpstreamHttpMethod": [ "Get" ],
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "recordhub.orderingservice.api",
+            "Port": 443
+          }
+        ],
+        "DownstreamPathTemplate": "/api/orders/{endpoint}",
+        "DangerousAcceptAnyServerCertificateValidator": true,
+        "SwaggerKey": "orders"
       }
     ],
-
+    
     "SwaggerEndPoints": [
       {
         "Key": "identity",
@@ -198,6 +256,28 @@
             "Name": "Catalog API",
             "Version": "v1",
             "Url": "https://recordhub.catalogservice.api:443/swagger/v1/swagger.json"
+          }
+        ]
+      },
+      {
+        "Key": "basket",
+        "TransformByOcelotConfig": false,
+        "Config": [
+          {
+            "Name": "Basket API",
+            "Version": "v1",
+            "Url": "https://recordhub.basketservice.api:443/swagger/v1/swagger.json"
+          }
+        ]
+      },
+      {
+        "Key": "orders",
+        "TransformByOcelotConfig": false,
+        "Config": [
+          {
+            "Name": "Ordering API",
+            "Version": "v1",
+            "Url": "https://recordhub.orderingservice.api:443/swagger/v1/swagger.json"
           }
         ]
       }

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using Nest;
 using RecordHub.CatalogService.Application.DTO;
 using RecordHub.CatalogService.Infrastructure.Config;
@@ -14,7 +13,10 @@ namespace RecordHub.CatalogService.Infrastructure.Extensions
             this IServiceCollection services, IConfiguration configuration)
         {
             var cfg = configuration.Get<AppConfig>();
-            services.AddSingleton<ElasticsearchConfig>(sp => sp.GetRequiredService<IOptions<ElasticsearchConfig>>().Value);
+            services.Configure<ElasticsearchConfig>(
+                     configuration.GetSection(
+                         key: nameof(ElasticsearchConfig)));
+
             services.AddScoped<IndexInitializer>();
 
             var settings = new ConnectionSettings(new Uri(cfg.ElasticsearchConfig.Url))
@@ -29,8 +31,8 @@ namespace RecordHub.CatalogService.Infrastructure.Extensions
         public static void CreateIndex(IElasticClient client, string indexName)
         {
             var createIndexResponse = client.Indices.Create(indexName,
-                index => index.Map<RecordDTO>(x => x.AutoMap().
-                Properties(p => p
+                index => index.Map<RecordDTO>(x => x.AutoMap()
+                .Properties(p => p
                 .Nested<LabelDTO>(n => n
                     .IncludeInRoot()
                     .Name(np => np.Label)
@@ -42,7 +44,8 @@ namespace RecordHub.CatalogService.Infrastructure.Extensions
                 .Nested<ArtistDTO>(n => n
                     .IncludeInRoot()
                     .Name(np => np.Artist)
-                    .AutoMap())
+                    .AutoMap()
+                    )
                 .Nested<CountryDTO>(n => n
                     .IncludeInRoot()
                     .Name(np => np.Country)

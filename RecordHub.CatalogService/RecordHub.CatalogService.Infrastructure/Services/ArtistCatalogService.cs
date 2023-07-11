@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using Microsoft.Extensions.Options;
+using Nest;
 using RecordHub.CatalogService.Application.Data;
 using RecordHub.CatalogService.Application.DTO;
 using RecordHub.CatalogService.Application.Services;
 using RecordHub.CatalogService.Domain.Entities;
 using RecordHub.CatalogService.Domain.Models;
+using RecordHub.CatalogService.Infrastructure.Config;
 using RecordHub.Shared.Exceptions;
 
 namespace RecordHub.CatalogService.Infrastructure.Services
@@ -15,11 +18,20 @@ namespace RecordHub.CatalogService.Infrastructure.Services
 
         private readonly IUnitOfWork _repository;
         private readonly IValidator<BaseEntity> _validator;
-        public ArtistCatalogService(IMapper mapper, IUnitOfWork repository, IValidator<BaseEntity> validator)
+        private readonly IElasticClient _elasticClient;
+        private readonly ElasticsearchConfig _elasticsearchConfig;
+        public ArtistCatalogService(
+            IMapper mapper,
+            IUnitOfWork repository,
+            IValidator<BaseEntity> validator,
+            IElasticClient elasticClient,
+            IOptions<ElasticsearchConfig> elasticsearchConfig)
         {
             _mapper = mapper;
             _repository = repository;
             _validator = validator;
+            _elasticClient = elasticClient;
+            _elasticsearchConfig = elasticsearchConfig.Value;
         }
 
         public async Task AddAsync(ArtistModel model, CancellationToken cancellationToken)
@@ -34,8 +46,18 @@ namespace RecordHub.CatalogService.Infrastructure.Services
 
         public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
         {
-            await _repository.Artists.DeleteAsync(id, cancellationToken);
-            await _repository.CommitAsync();
+            var artist = await _repository.Artists.DeleteAsync(id, cancellationToken);
+            if (artist != null)
+            {
+                await _repository.CommitAsync();
+
+                await _elasticClient.DeleteByQueryAsync<RecordDTO>(q => q.Query(rq => rq
+                        .Wildcard(t => t
+                        .Field(r => r.Artist.Slug.Suffix("keyword"))
+                        .Wildcard(artist.Slug)
+                        .Rewrite(MultiTermQueryRewrite.TopTermsBoost(10)))));
+            }
+
         }
 
         public async Task<ArtistDTO> GetBySlug(string slug, CancellationToken cancellationToken)
@@ -62,7 +84,14 @@ namespace RecordHub.CatalogService.Infrastructure.Services
             await _validator.ValidateAndThrowAsync(artist, cancellationToken);
 
             await _repository.Artists.UpdateAsync(artist, cancellationToken);
+
+
+            var records = await _repository.Records.GetArtistsRecordsAsync(artist.Id);
+            var recordsDTO = _mapper.Map<IEnumerable<RecordDTO>>(records);
+
             await _repository.CommitAsync();
+            if (recordsDTO.Any())
+                await _elasticClient.IndexManyAsync(recordsDTO);
         }
     }
 }

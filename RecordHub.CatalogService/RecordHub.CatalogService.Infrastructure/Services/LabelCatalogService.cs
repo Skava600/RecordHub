@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using Nest;
 using RecordHub.CatalogService.Application.Data;
 using RecordHub.CatalogService.Application.DTO;
 using RecordHub.CatalogService.Application.Services;
@@ -13,12 +14,18 @@ namespace RecordHub.CatalogService.Infrastructure.Services
         private readonly IMapper _mapper;
 
         private readonly IUnitOfWork _repository;
+        private readonly IElasticClient _elasticClient;
         private readonly IValidator<BaseEntity> _validator;
-        public LabelCatalogService(IMapper mapper, IUnitOfWork repository, IValidator<BaseEntity> validator)
+        public LabelCatalogService(
+            IMapper mapper,
+            IUnitOfWork repository,
+            IValidator<BaseEntity> validator,
+            IElasticClient elasticClient)
         {
             _mapper = mapper;
             _repository = repository;
             _validator = validator;
+            _elasticClient = elasticClient;
         }
 
         public async Task AddAsync(LabelModel model, CancellationToken cancellationToken)
@@ -33,8 +40,17 @@ namespace RecordHub.CatalogService.Infrastructure.Services
 
         public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
         {
-            await _repository.Labels.DeleteAsync(id, cancellationToken);
-            await _repository.CommitAsync();
+            var label = await _repository.Labels.DeleteAsync(id, cancellationToken);
+            if (label != null)
+            {
+                await _repository.CommitAsync();
+
+                await _elasticClient.DeleteByQueryAsync<RecordDTO>(q => q.Query(rq => rq
+                        .Wildcard(t => t
+                        .Field(r => r.Label.Slug.Suffix("keyword"))
+                        .Wildcard(label.Slug)
+                        .Rewrite(MultiTermQueryRewrite.TopTermsBoost(10)))));
+            }
         }
 
         public async Task<IEnumerable<LabelDTO>> GetAllAsync(CancellationToken cancellationToken)
@@ -56,6 +72,11 @@ namespace RecordHub.CatalogService.Infrastructure.Services
             _mapper.Map(model, label);
             await _repository.Labels.UpdateAsync(label, cancellationToken);
             await _repository.CommitAsync();
+
+            var records = await _repository.Records.GetLabelsRecordsAsync(label.Id);
+            var recordsDTO = _mapper.Map<IEnumerable<RecordDTO>>(records);
+            if (recordsDTO.Any())
+                await _elasticClient.IndexManyAsync(recordsDTO);
         }
     }
 }

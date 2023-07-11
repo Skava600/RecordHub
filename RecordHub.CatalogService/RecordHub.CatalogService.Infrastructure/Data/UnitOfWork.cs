@@ -19,11 +19,11 @@ namespace RecordHub.CatalogService.Infrastructure.Data
 
         public IArtistRepository Artists => new ArtistRepository(_context);
 
-        public IRepository<Style> Styles => new BaseRepository<Style>(_context);
+        public IStyleRepository Styles => new StyleRepository(_context);
 
         public IRepository<Country> Countries => new BaseRepository<Country>(_context);
 
-        public async Task CommitAsync()
+        public async Task CommitAsync(CancellationToken cancellationToken = default)
         {
             await _context.SaveChangesAsync();
         }

@@ -2,7 +2,6 @@
 using Nest;
 using RecordHub.CatalogService.Application.Data;
 using RecordHub.CatalogService.Application.DTO;
-using RecordHub.CatalogService.Infrastructure.Config;
 using RecordHub.CatalogService.Infrastructure.Extensions;
 
 namespace RecordHub.CatalogService.Infrastructure.Elasticsearch
@@ -11,13 +10,11 @@ namespace RecordHub.CatalogService.Infrastructure.Elasticsearch
     {
         private IElasticClient elasticClient;
         private IUnitOfWork repo;
-        private ElasticsearchConfig elasticsearchConfig;
         private IMapper mapper;
-        public IndexInitializer(IElasticClient elasticClient, IUnitOfWork repo, ElasticsearchConfig elasticsearchConfig, IMapper mapper)
+        public IndexInitializer(IElasticClient elasticClient, IUnitOfWork repo, IMapper mapper)
         {
             this.elasticClient = elasticClient;
             this.mapper = mapper;
-            this.elasticsearchConfig = elasticsearchConfig;
             this.repo = repo;
         }
 

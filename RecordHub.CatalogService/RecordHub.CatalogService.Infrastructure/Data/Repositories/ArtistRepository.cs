@@ -16,8 +16,12 @@ namespace RecordHub.CatalogService.Infrastructure.Data.Repositories
         {
             return await artists.Include(a => a.Records).ThenInclude(r => r.Styles)
                 .AsSplitQuery()
-                .AsNoTracking()
                 .FirstOrDefaultAsync(e => e.Slug.Equals(slug), cancellationToken);
+        }
+
+        public override Task<Artist?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+        {
+            return base.GetByIdAsync(id, cancellationToken);
         }
     }
 }

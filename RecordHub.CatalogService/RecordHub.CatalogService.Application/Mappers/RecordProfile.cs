@@ -12,10 +12,9 @@ namespace RecordHub.CatalogService.Application.Mappers
         public RecordProfile() { }
         public RecordProfile(IUnitOfWork unitOfWork) : base()
         {
-            CreateMap<Record, RecordDTO>().BeforeMap((r, _) =>
+            CreateMap<Record, RecordDTO>().AfterMap((_, dto) =>
             {
-                if (r.Artist != null)
-                    r.Artist.Records = null;
+                dto.Artist.Records = null;
             });
             CreateMap<Record, RecordSummaryDTO>();
             CreateMap<RecordModel, Record>().ConvertUsing(new RecordTypeConverter(unitOfWork));

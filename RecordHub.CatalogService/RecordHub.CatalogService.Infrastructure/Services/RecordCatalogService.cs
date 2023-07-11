@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FluentValidation;
 using MassTransit.Internals;
+using Microsoft.Extensions.Options;
 using Nest;
 using RecordHub.CatalogService.Application.Data;
 using RecordHub.CatalogService.Application.DTO;
@@ -24,13 +25,13 @@ namespace RecordHub.CatalogService.Infrastructure.Services
             IUnitOfWork repository,
             IValidator<Record> validator,
             IElasticClient elasticClient,
-            ElasticsearchConfig elasticsearchConfig)
+            IOptions<ElasticsearchConfig> elasticsearchConfig)
         {
             _mapper = mapper;
             _repository = repository;
             _validator = validator;
             _elasticClient = elasticClient;
-            _elasticsearchConfig = elasticsearchConfig;
+            _elasticsearchConfig = elasticsearchConfig.Value;
         }
 
         public async Task AddAsync(RecordModel model, CancellationToken cancellationToken = default)
@@ -43,8 +44,6 @@ namespace RecordHub.CatalogService.Infrastructure.Services
             await _repository.CommitAsync();
 
             var recordDTO = _mapper.Map<RecordDTO>(record);
-            var artist = _repository.Artists.GetBySlugAsync(model.Artist);
-            recordDTO.Artist = _mapper.Map<ArtistDTO>(artist);
             await _elasticClient.IndexAsync(recordDTO, i => i.Id(recordDTO.Id), cancellationToken);
         }
 
@@ -157,7 +156,7 @@ namespace RecordHub.CatalogService.Infrastructure.Services
 
         public async Task UpdateAsync(Guid id, RecordModel model, CancellationToken cancellationToken = default)
         {
-            var record = await _repository.Records.GetByIdAsync(id, cancellationToken);
+            var record = await _repository.Records.GetByIdGraphIncludedAsync(id, cancellationToken);
 
             if (record == null)
             {

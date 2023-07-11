@@ -8,8 +8,8 @@ namespace RecordHub.CatalogService.Application.Data
         IRecordRepository Records { get; }
         IRepository<Label> Labels { get; }
         IArtistRepository Artists { get; }
-        IRepository<Style> Styles { get; }
+        IStyleRepository Styles { get; }
         IRepository<Country> Countries { get; }
-        Task CommitAsync();
+        Task CommitAsync(CancellationToken cancellationToken = default);
     }
 }

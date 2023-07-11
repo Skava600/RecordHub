@@ -17,32 +17,40 @@ namespace RecordHub.CatalogService.Application.Converters
         public Record Convert(RecordModel source, Record destination, ResolutionContext context)
         {
             destination ??= new Record();
-            destination.Radius = source.Radius;
-            destination.Description = source.Description;
-            destination.Name = source.Name;
-            destination.Slug = source.Slug;
-            destination.Price = source.Price;
-            destination.Year = source.Year;
-
-            var artist = _repository.Artists.GetBySlugAsync(source.Artist).Result;
-            if (artist == null)
+            destination.Radius = source.Radius ?? destination.Radius;
+            destination.Description = source.Description ?? destination.Description;
+            destination.Name = source.Name ?? destination.Name;
+            destination.Slug = source.Slug ?? destination.Slug;
+            destination.Price = source.Price ?? destination.Price;
+            destination.Year = source.Year ?? destination.Year;
+            var artist =
+                    source.Artist != null ?
+                    _repository.Artists.GetBySlugAsync(source.Artist).Result : null;
+            if (artist == null && source.Artist != null)
             {
                 throw new EntityNotFoundException(nameof(source.Artist));
             }
 
-            var country = _repository.Countries.GetBySlugAsync(source.Country).Result;
-            if (country == null)
+            var country =
+                        source.Country != null ?
+                        _repository.Countries.GetBySlugAsync(source.Country).Result : null;
+            if (country == null && source.Country != null)
             {
                 throw new EntityNotFoundException(nameof(source.Country));
             }
 
-            var label = _repository.Labels.GetBySlugAsync(source.Label).Result;
-            if (label == null)
+            var label =
+                    source.Label != null ?
+                    _repository.Labels.GetBySlugAsync(source.Label).Result : null;
+            if (label == null && source.Label != null)
             {
                 throw new EntityNotFoundException(nameof(source.Label));
             }
 
-            destination.Styles = new List<Style>();
+            if (source.Styles.Count() > 0)
+            {
+                destination.Styles = new List<Style>();
+            }
             foreach (var styleSlug in source.Styles)
             {
                 var style = _repository.Styles.GetBySlugAsync(styleSlug).Result;
@@ -52,9 +60,10 @@ namespace RecordHub.CatalogService.Application.Converters
                 destination.Styles.Add(style);
             }
 
-            destination.Label = label;
-            destination.Country = country;
-            destination.ArtistId = artist.Id;
+            destination.Label = label ?? destination.Label;
+            destination.Country = country ?? destination.Country;
+            destination.Artist = artist ?? destination.Artist;
+            destination.ArtistId = artist != null ? artist.Id : destination.ArtistId;
             return destination;
         }
     }

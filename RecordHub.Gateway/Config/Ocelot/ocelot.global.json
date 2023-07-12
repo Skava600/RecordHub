@@ -1,0 +1,9 @@
+{
+
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:5001",
+    "HttpHandlerOptions": {
+      "AllowAutoRedirect": true
+    }
+  }
+}

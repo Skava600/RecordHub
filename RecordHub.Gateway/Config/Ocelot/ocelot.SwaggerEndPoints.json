@@ -1,0 +1,27 @@
+{
+  "SwaggerEndPoints": [
+    {
+      "Key": "identity",
+      "TransformByOcelotConfig": false,
+      "Config": [
+        {
+          "Name": "Identity API",
+          "Version": "v1",
+          "Url": "https://recordhub.identityservice.api:443/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "catalog",
+      "TransformByOcelotConfig": false,
+      "Config": [
+        {
+          "Name": "Catalog API",
+          "Version": "v1",
+          "Url": "https://recordhub.catalogservice.api:443/swagger/v1/swagger.json"
+        }
+      ]
+    }
+
+  ]
+}

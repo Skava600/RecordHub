@@ -2,6 +2,7 @@
 {
     public class MailData
     {
+
         // Receiver
         public List<string> To { get; }
 
@@ -19,7 +20,14 @@
 
         public string? Body { get; }
 
-        public MailData(List<string> to, string subject, string? body = null, string? from = null, string? displayName = null, string? replyTo = null, string? replyToName = null)
+        public MailData(
+            List<string> to,
+            string subject,
+            string? body = null,
+            string? from = null,
+            string? displayName = null,
+            string? replyTo = null,
+            string? replyToName = null)
         {
             // Receiver
             To = to;

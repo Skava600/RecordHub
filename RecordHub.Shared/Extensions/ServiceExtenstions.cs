@@ -14,6 +14,7 @@ namespace RecordHub.Shared.Extensions
         {
             services.Configure<JwtConfig>(configuration.GetSection("Jwt"));
             services.AddSingleton<JwtConfig>(sp => sp.GetRequiredService<IOptions<JwtConfig>>().Value);
+
             services.AddAuthentication(conf =>
             {
                 conf.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

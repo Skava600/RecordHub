@@ -38,8 +38,8 @@ services:
         ports:
             - 5003:443
         depends_on:
-          - recordhub.identityservice.api
-          - gateway
+            - recordhub.identityservice.api
+            - gateway
         environment:
             - ASPNETCORE_ENVIRONMENT=Docker
     
@@ -63,7 +63,7 @@ services:
             context: .
             dockerfile: RecordHub.Gateway/Dockerfile
         ports: 
-        - '5001:443'
+            - '5001:443'
         environment:
             - ASPNETCORE_ENVIRONMENT=Docker
         networks:
@@ -98,10 +98,10 @@ services:
         container_name: messagebus
         image: rabbitmq:management
         networks:
-        - recordhub
+            - recordhub
         ports:
-        - 5672:5672
-        - 15672:15672
+            - 5672:5672
+            - 15672:15672
         restart: on-failure
         healthcheck:
             test: rabbitmq-diagnostics -q ping
@@ -110,8 +110,8 @@ services:
             retries: 10
             start_period: 10s
         volumes:
-        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
-        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+            - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+            - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
     recordhub.basketservice.api:
         image: ${DOCKER_REGISTRY-}recordhubbasketserviceapi
         build:
@@ -137,6 +137,18 @@ services:
         depends_on:
             - identitydb
             - gateway
+    recordhub.chatservice.api:
+        image: ${DOCKER_REGISTRY-}recordhubchatserviceapi
+        build:
+            context: .
+            dockerfile: RecordHub.ChatService/RecordHub.ChatService.Api/Dockerfile
+        networks:
+            - recordhub
+        ports:
+            - 5008:443
+        depends_on:
+            - redis
+            - gateway
     redis:
         image: redis/redis-stack:latest
         ports:
@@ -148,20 +160,20 @@ services:
         volumes:
           - /local-data/:/data
         networks:
-        - recordhub
+            - recordhub
     elasticsearch:
         image: docker.elastic.co/elasticsearch/elasticsearch:8.8.2
         ports:
         - 9200:9200
         restart: always
         networks:
-        - recordhub
+            - recordhub
         volumes:
-        - elasticsearch-data:/usr/share/elasticsearch/data
+            - elasticsearch-data:/usr/share/elasticsearch/data
         environment:
-        - ELASTIC_PASSWORD=123456aA
-        - xpack.security.enabled=false
-        - discovery.type=single-node
+            - ELASTIC_PASSWORD=123456aA
+            - xpack.security.enabled=false
+            - discovery.type=single-node
         healthcheck:
             test:
                 [
@@ -173,18 +185,18 @@ services:
             retries: 120
     kibana:
         depends_on:
-          - elasticsearch
+            - elasticsearch
         image: kibana:8.8.1
         container_name: kibana
         volumes:
-          - kibana-data:/usr/share/kibana/data
+            - kibana-data:/usr/share/kibana/data
         ports:
-         - 5601:5601
+            - 5601:5601
         restart: always
         networks:
-        - recordhub
+            - recordhub
         environment:
-        - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+            - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
 volumes:
         pgdata:
         elasticsearch-data: 

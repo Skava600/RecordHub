@@ -10,6 +10,7 @@ namespace RecordHub.Shared.Services.Logging
         private readonly ILogger<T> _logger;
         private readonly IConfiguration _config;
         private readonly string _applicationName;
+
         public AppLogging(ILogger<T> logger, IConfiguration config)
         {
             logger = logger;
@@ -17,16 +18,18 @@ namespace RecordHub.Shared.Services.Logging
             _applicationName = config.GetValue<string>("ApplicationName");
         }
 
-        internal static void LogWithException(string memberName,
-           string sourceFilePath, int sourceLineNumber, Exception ex, string message,
-           Action<Exception, string, object[]> logAction)
+        internal static void LogWithException(
+            string memberName,
+            string sourceFilePath, int sourceLineNumber, Exception ex, string message,
+            Action<Exception, string, object[]> logAction)
         {
             var list = new List<IDisposable>
-        {
-            LogContext.PushProperty("MemberName", memberName),
-            LogContext.PushProperty("FilePath", sourceFilePath),
-            LogContext.PushProperty("LineNumber", sourceLineNumber),
-        };
+            {
+                LogContext.PushProperty("MemberName", memberName),
+                LogContext.PushProperty("FilePath", sourceFilePath),
+                LogContext.PushProperty("LineNumber", sourceLineNumber),
+            };
+
             logAction(ex, message, null);
             foreach (var item in list)
             {
@@ -34,16 +37,17 @@ namespace RecordHub.Shared.Services.Logging
             }
         }
 
-        internal static void LogWithoutException(string memberName,
+        internal static void LogWithoutException(
+            string memberName,
             string sourceFilePath, int sourceLineNumber, string message,
             Action<string, object[]> logAction)
         {
             var list = new List<IDisposable>
-        {
-            LogContext.PushProperty("MemberName", memberName),
-            LogContext.PushProperty("FilePath", sourceFilePath),
-            LogContext.PushProperty("LineNumber", sourceLineNumber),
-        };
+            {
+                LogContext.PushProperty("MemberName", memberName),
+                LogContext.PushProperty("FilePath", sourceFilePath),
+                LogContext.PushProperty("LineNumber", sourceLineNumber),
+            };
             logAction(message, null);
             foreach (var item in list)
             {
@@ -51,7 +55,8 @@ namespace RecordHub.Shared.Services.Logging
             }
         }
 
-        public void LogAppError(Exception exception, string message,
+        public void LogAppError(
+            Exception exception, string message,
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0)

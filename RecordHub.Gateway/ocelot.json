@@ -233,6 +233,21 @@
         "DownstreamPathTemplate": "/api/orders/{endpoint}",
         "DangerousAcceptAnyServerCertificateValidator": true,
         "SwaggerKey": "orders"
+      },
+      // Chat service
+      {
+        "UpstreamPathTemplate": "/api/chat",
+        "UpstreamHttpMethod": [ "get" ],
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "recordhub.chatservice.api",
+            "Port": 443
+          }
+        ],
+        "DownstreamPathTemplate": "/api/chat",
+        "DangerousAcceptAnyServerCertificateValidator": true,
+        "SwaggerKey": "chat"
       }
     ],
     
@@ -278,6 +293,17 @@
             "Name": "Ordering API",
             "Version": "v1",
             "Url": "https://recordhub.orderingservice.api:443/swagger/v1/swagger.json"
+          }
+        ]
+      },
+      {
+        "Key": "chat",
+        "TransformByOcelotConfig": false,
+        "Config": [
+          {
+            "Name": "Chat API",
+            "Version": "v1",
+            "Url": "https://recordhub.chatservice.api:443/swagger/v1/swagger.json"
           }
         ]
       }

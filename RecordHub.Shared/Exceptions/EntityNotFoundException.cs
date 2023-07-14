@@ -6,7 +6,6 @@
 
         public EntityNotFoundException(string paramname)
             : base(EntityNotFoundMessage, paramname)
-        {
-        }
+        { }
     }
 }

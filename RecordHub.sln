@@ -67,8 +67,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.ChatService.Domai
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.ChatService.Infrastructure", "RecordHub.ChatService\RecordHub.ChatService.Infrastructure\RecordHub.ChatService.Infrastructure.csproj", "{570880A7-367E-4721-AAE1-3E19A6BF3B00}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.BasketService.Application", "RecordHub.BasketService\RecordHub.BasketService.Application\RecordHub.BasketService.Application.csproj", "{B56BC54D-C383-4865-9E5E-B8196715F477}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -179,10 +177,6 @@ Global
 		{570880A7-367E-4721-AAE1-3E19A6BF3B00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{570880A7-367E-4721-AAE1-3E19A6BF3B00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{570880A7-367E-4721-AAE1-3E19A6BF3B00}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B56BC54D-C383-4865-9E5E-B8196715F477}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B56BC54D-C383-4865-9E5E-B8196715F477}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B56BC54D-C383-4865-9E5E-B8196715F477}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B56BC54D-C383-4865-9E5E-B8196715F477}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -211,7 +205,6 @@ Global
 		{0499261D-01CB-4E86-87AF-4960B5344F3D} = {1A638131-C350-4F56-B7BE-7BF182F2741C}
 		{4A14FCBB-5005-4C69-927D-D57EF5FD0BBC} = {1A638131-C350-4F56-B7BE-7BF182F2741C}
 		{570880A7-367E-4721-AAE1-3E19A6BF3B00} = {1A638131-C350-4F56-B7BE-7BF182F2741C}
-		{B56BC54D-C383-4865-9E5E-B8196715F477} = {FD42E63E-4F96-4177-BE06-C4A9F67AC7D0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BDD6659A-32F8-4085-AA8B-340D17435983}

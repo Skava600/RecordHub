@@ -1,6 +1,6 @@
 ﻿namespace RecordHub.BasketService.Domain.Entities
 {
-    public class ShoppingCartItem
+    public class BasketItem
     {
         public int Quantity { get; set; }
         public double Price { get; set; }

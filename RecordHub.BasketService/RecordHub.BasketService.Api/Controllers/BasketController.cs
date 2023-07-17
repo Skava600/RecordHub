@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using RecordHub.BasketService.Applicatation.Services;
+using RecordHub.BasketService.Application.Services;
 using RecordHub.BasketService.Domain.Models;
 using System.Security.Claims;
 
@@ -27,17 +27,20 @@ namespace RecordHub.BasketService.Api.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> UpdateBasketAsync([FromBody] ShoppingCartItemModel cartItem, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> UpdateBasketAsync(
+            [FromBody] BasketItemModel cartItem,
+            CancellationToken cancellationToken = default)
         {
             string? userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            await basketService.UpdateCartItemAsync(userId, cartItem, cancellationToken);
+            await basketService.UpdateBasketItemAsync(userId, cartItem, cancellationToken);
 
             return Ok();
         }
 
         [HttpDelete]
         [Authorize]
-        public async Task<IActionResult> ClearBasketAsync(CancellationToken cancellationToken = default)
+        public async Task<IActionResult> ClearBasketAsync(
+            CancellationToken cancellationToken = default)
         {
             string? userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             await basketService.ClearBasketAsync(userId, cancellationToken);
@@ -47,7 +50,9 @@ namespace RecordHub.BasketService.Api.Controllers
 
         [HttpPost("checkout")]
         [Authorize]
-        public async Task<IActionResult> BasketCheckoutAsync([FromBody] BasketCheckoutModel model, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> BasketCheckoutAsync(
+            [FromBody] BasketCheckoutModel model,
+            CancellationToken cancellationToken = default)
         {
             await basketService.CheckoutAsync(model, cancellationToken);
 

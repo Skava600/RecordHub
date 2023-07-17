@@ -4,8 +4,8 @@ namespace RecordHub.BasketService.Infrastructure.Data.Repositories
 {
     public interface IBasketRepository
     {
-        Task<ShoppingCart?> GetBasketAsync(string userId);
-        Task UpdateBasket(ShoppingCart basket);
+        Task<Basket?> GetBasketAsync(string userId);
+        Task UpdateBasket(Basket basket);
         Task<bool> ClearBasketAsync(string userName);
     }
 }

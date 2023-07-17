@@ -1,4 +1,4 @@
-﻿using RecordHub.BasketService.Applicatation.Exceptions;
+﻿using RecordHub.BasketService.Application.Exceptions;
 using RecordHub.Shared.DTO;
 using RecordHub.Shared.Exceptions;
 using System.Net;
@@ -10,6 +10,7 @@ namespace RecordHub.BasketService.Api.Middlewares
     {
         private readonly RequestDelegate _next;
         private readonly ILogger _logger;
+
         public GlobalExceptionHandlingMiddleware(RequestDelegate next, ILogger<GlobalExceptionHandlingMiddleware> logger)
         {
             _next = next;

@@ -2,12 +2,13 @@
 using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using RecordHub.BasketService.Applicatation.Mappers;
-using RecordHub.BasketService.Applicatation.Services;
-using RecordHub.BasketService.Applicatation.Validators;
+using RecordHub.BasketService.Application.Mappers;
+using RecordHub.BasketService.Application.Protos;
+using RecordHub.BasketService.Application.Services;
+using RecordHub.BasketService.Application.Validators;
 using RecordHub.BasketService.Infrastructure.Config;
 using RecordHub.BasketService.Infrastructure.Data.Repositories;
+using RecordHub.BasketService.Infrastructure.Services;
 using RecordHub.Shared.Extensions;
 using StackExchange.Redis;
 
@@ -18,27 +19,39 @@ namespace RecordHub.BasketService.Infrastructure
         public static IServiceCollection AddRedisPersistence(this IServiceCollection services, IConfiguration configuration)
         {
             var cfg = configuration.Get<AppConfig>();
-            services.AddSingleton<RedisConfig>(sp => sp.GetRequiredService<IOptions<RedisConfig>>().Value);
+            services.Configure<RedisConfig>(
+                    configuration.GetSection(
+                        key: nameof(RedisConfig)));
+
             services.AddSingleton<IConnectionMultiplexer>(sp =>
             {
                 var multConfig = ConfigurationOptions.Parse($"{cfg.RedisConfig.Host}:{cfg.RedisConfig.Port}", true);
                 multConfig.AbortOnConnectFail = false;
                 multConfig.Password = configuration.GetValue<string>("RedisConfig:password");
+
                 return ConnectionMultiplexer.Connect(multConfig);
             });
+
             services.AddScoped<IBasketRepository, BasketRepository>();
+
             return services;
         }
 
-        public static IServiceCollection AddCore(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             var cfg = configuration.Get<AppConfig>();
 
             services.AddGrpcServices(cfg.GrpcConfig);
+
             services.AddScoped<IBasketService, RecordHub.BasketService.Infrastructure.Services.BasketService>();
-            services.AddValidatorsFromAssemblyContaining(typeof(ShoppingCartItemValidator));
-            services.AddMassTransit(configuration, cfg.MassTransit);
+            services.AddScoped<ICatalogGrpcClient, CatalogGrpcClient>();
+
+            services.AddValidatorsFromAssemblyContaining(typeof(BasketItemValidator));
+
+            services.AddMassTransit(cfg.MassTransit);
+
             services.AddAutoMapper(typeof(CheckoutProfile));
+
             return services;
         }
 
@@ -73,7 +86,7 @@ namespace RecordHub.BasketService.Infrastructure
             return services;
         }
 
-        private static IServiceCollection AddMassTransit(this IServiceCollection services, IConfiguration configuration, MassTransitOptions transitOptions)
+        private static IServiceCollection AddMassTransit(this IServiceCollection services, MassTransitOptions transitOptions)
         {
             services.AddMassTransit(x =>
             {
@@ -81,11 +94,9 @@ namespace RecordHub.BasketService.Infrastructure
                 {
                     cfg.Host(transitOptions.Host, h =>
                     {
-                        h.Username("guest");
-                        h.Password("guest");
+                        h.Username(transitOptions.Username);
+                        h.Password(transitOptions.Password);
                     });
-
-
                 }));
 
             });

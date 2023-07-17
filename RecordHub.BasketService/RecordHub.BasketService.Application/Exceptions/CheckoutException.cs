@@ -1,4 +1,4 @@
-﻿namespace RecordHub.BasketService.Applicatation.Exceptions
+﻿namespace RecordHub.BasketService.Application.Exceptions
 {
     public class CheckoutException : Exception
     {

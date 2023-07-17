@@ -9,7 +9,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureSwagger();
 builder.Services.AddRedisPersistence(builder.Configuration);
 builder.Services.AddJwtAuth(builder.Configuration);
-builder.Services.AddCore(builder.Configuration);
+builder.Services.AddInfrastructure(builder.Configuration);
+
 var app = builder.Build();
 app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 if (!app.Environment.IsProduction())

@@ -25,11 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.MailService.Infra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.MailService.Application", "RecordHub.MailService\RecordHub.MailService.Application\RecordHub.MailService.Application.csproj", "{5ACA8124-CECE-4080-B383-E1A443B962B0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.MailService.Domain", "RecordHub.MailService\RecordHub.MailService.Domain\RecordHub.MailService.Domain.csproj", "{2DEEB7AA-2AA6-40D7-93FA-019C8D2A6362}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.Gateway", "RecordHub.Gateway\RecordHub.Gateway.csproj", "{66123DEB-6B9C-4B94-8F8F-ACDF7D7BBCAA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.Shared", "RecordHub.Shared\RecordHub.Shared.csproj", "{FFC40D15-5BB4-4FA4-B325-06776786F5C5}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RecordHub.CatalogService", "RecordHub.CatalogService", "{ABD4F5C0-98D7-4516-9755-2BFC2A89333F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.CatalogService.Api", "RecordHub.CatalogService\RecordHub.CatalogService.Api\RecordHub.CatalogService.Api.csproj", "{5CBF074E-7B34-4E35-8DA9-33C8EAC2EE20}"
 EndProject
@@ -38,6 +36,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.CatalogService.Domain", "RecordHub.CatalogService\RecordHub.CatalogService.Domain\RecordHub.CatalogService.Domain.csproj", "{6F5A771A-F69A-4EC7-8AAF-19F475B61828}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.CatalogService.Infrastructure", "RecordHub.CatalogService\RecordHub.CatalogService.Infrastructure\RecordHub.CatalogService.Infrastructure.csproj", "{FBEFD793-FA06-47C3-B435-2877CCE5B4FD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.Shared", "RecordHub.Shared\RecordHub.Shared.csproj", "{76E50B8A-CE1B-4CF1-8C1E-69A67F8BAD05}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RecordHub.BasketService", "RecordHub.BasketService", "{FD42E63E-4F96-4177-BE06-C4A9F67AC7D0}"
 EndProject
@@ -111,18 +111,10 @@ Global
 		{5ACA8124-CECE-4080-B383-E1A443B962B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5ACA8124-CECE-4080-B383-E1A443B962B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5ACA8124-CECE-4080-B383-E1A443B962B0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2DEEB7AA-2AA6-40D7-93FA-019C8D2A6362}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2DEEB7AA-2AA6-40D7-93FA-019C8D2A6362}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2DEEB7AA-2AA6-40D7-93FA-019C8D2A6362}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2DEEB7AA-2AA6-40D7-93FA-019C8D2A6362}.Release|Any CPU.Build.0 = Release|Any CPU
 		{66123DEB-6B9C-4B94-8F8F-ACDF7D7BBCAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{66123DEB-6B9C-4B94-8F8F-ACDF7D7BBCAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66123DEB-6B9C-4B94-8F8F-ACDF7D7BBCAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66123DEB-6B9C-4B94-8F8F-ACDF7D7BBCAA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FFC40D15-5BB4-4FA4-B325-06776786F5C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FFC40D15-5BB4-4FA4-B325-06776786F5C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FFC40D15-5BB4-4FA4-B325-06776786F5C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FFC40D15-5BB4-4FA4-B325-06776786F5C5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5CBF074E-7B34-4E35-8DA9-33C8EAC2EE20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5CBF074E-7B34-4E35-8DA9-33C8EAC2EE20}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CBF074E-7B34-4E35-8DA9-33C8EAC2EE20}.Release|Any CPU.ActiveCfg = Release|Any CPU

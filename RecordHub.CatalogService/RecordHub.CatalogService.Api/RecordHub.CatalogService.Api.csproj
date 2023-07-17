@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>ea30873c-e802-4b3e-abe6-62a35fe41378</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..</DockerfileContext>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.55.0" />
+    <PackageReference Include="Grpc.AspNetCore.Server" Version="2.55.0" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\RecordHub.CatalogService.Application\RecordHub.CatalogService.Application.csproj" />
+        <ProjectReference Include="..\RecordHub.CatalogService.Infrastructure\RecordHub.CatalogService.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+		<Protobuf Include="Protos\product_request.proto" GrpcServices="Server" />
+	</ItemGroup>
+
+</Project>

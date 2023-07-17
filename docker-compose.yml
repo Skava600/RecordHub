@@ -24,17 +24,11 @@ services:
             - recordhub
         ports:
             - '5002:443'
-        environment:
-            DB_HOST: identitydb
-            DB_PORT: 5432
-            DB_USER: postgres
-            DB_PASSWORD: 123456
-            DB_NAME: RecordHub.Identity
-            ASPNETCORE_ENVIRONMENT: Docker
         depends_on:
             - identitydb
             - gateway
     recordhub.mailservice.api:
+        container_name: recordhub.mailservice.api
         image: ${DOCKER_REGISTRY-}recordhubmailserviceapi
         build:
             context: .
@@ -75,6 +69,20 @@ services:
         networks:
             - recordhub
         restart: unless-stopped
+    recordhub.catalogservice.api:
+        image: ${DOCKER_REGISTRY-}recordhubcatalogserviceapi
+        build:
+            context: .
+            dockerfile: RecordHub.CatalogService/RecordHub.CatalogService.Api/Dockerfile
+        networks:
+            - recordhub
+        ports:
+            - '5004:5004'
+            - '5005:5005'
+        depends_on:
+            - identitydb
+            - elasticsearch
+            - gateway
     messagebus:
         container_name: messagebus
         image: rabbitmq:management
@@ -105,7 +113,6 @@ services:
         depends_on:
             - redis
             - gateway
-
     recordhub.orderingservice.api:
         image: ${DOCKER_REGISTRY-}recordhuborderingserviceapi
         build:
@@ -137,7 +144,6 @@ services:
           - 6379:6379
         command:  bash -c "redis-server --loglevel warning  --requirepass password"
         restart: unless-stopped
-
         volumes:
           - /local-data/:/data
         networks:
@@ -179,4 +185,6 @@ services:
         environment:
             - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
 volumes:
-        pgdata:   
+        pgdata:
+        elasticsearch-data: 
+        kibana-data:

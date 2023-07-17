@@ -17,8 +17,8 @@ namespace RecordHub.IdentityService.Core.Validators
 
             RuleFor(r => r.PhoneNumber)
                 .NotEmpty()
-                .Matches("@\"^\\+375\\d{9}$")
-                .WithMessage("Invalid Belasrus phone number");
+                .Matches(@"^\+375\d{9}$")
+                .WithMessage("Invalid Belarus phone number");
 
             RuleFor(r => r.Name)
                 .NotEmpty()

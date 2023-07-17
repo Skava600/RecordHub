@@ -26,7 +26,6 @@ namespace RecordHub.IdentityService.Api.Middlewares
                 var code = HttpStatusCode.InternalServerError;
                 var message = ex.Message + string.Join("\n", ex.Errors.Select(e => $"{e.Code}: {e.Description}"));
 
-
                 await HandleExceptionAsync(context, code, message);
             }
             catch (Exception ex)

@@ -1,4 +1,10 @@
-﻿namespace RecordHub.IdentityService.Api.Controllers
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using RecordHub.IdentityService.Core.Services;
+using RecordHub.IdentityService.Domain.Models;
+using System.Security.Claims;
+
+namespace RecordHub.IdentityService.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

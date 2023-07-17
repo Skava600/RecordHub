@@ -53,7 +53,6 @@ namespace RecordHub.OrderingService.Infrastructure.Data.Repositories
                 orders.Update(order);
                 await _context.SaveChangesAsync(cancellationToken);
             }
-
         }
     }
 }

@@ -6,7 +6,7 @@ namespace RecordHub.IdentityService.Persistence.Data.Repositories.Implementation
 {
     public abstract class BaseRepository<T> : IRepository<T> where T : class, IBaseEntity
     {
-        private AccountDbContext _context { get; }
+        private readonly AccountDbContext _context;
         private readonly DbSet<T> _dbSet;
         protected BaseRepository(AccountDbContext context)
         {
@@ -42,6 +42,7 @@ namespace RecordHub.IdentityService.Persistence.Data.Repositories.Implementation
         public async Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             var x = await _dbSet.FindAsync(id);
+
             return x;
         }
 

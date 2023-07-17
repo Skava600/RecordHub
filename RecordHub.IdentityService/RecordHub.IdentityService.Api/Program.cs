@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using RecordHub.IdentityService.Api;
 using RecordHub.IdentityService.Api.Middlewares;
 using RecordHub.IdentityService.Infrastructure;
@@ -7,12 +8,14 @@ using RecordHub.Shared.Config;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureSwagger();
 
 builder.ConfigureSerilog();
-builder.Services.AddCore(builder.Configuration);
+builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddPersistence(builder.Configuration);
+builder.Services.AddFluentValidationAutoValidation();
 
 var app = builder.Build();
 app.UseMiddleware<GlobalExceptionHandlingMiddleware>();

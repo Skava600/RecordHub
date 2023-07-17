@@ -20,14 +20,15 @@ namespace RecordHub.IdentityService.Infrastructure
 {
     public static class ServiceExtensions
     {
-        public static IServiceCollection AddCore(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
+            var cfg = configuration.Get<AppConfig>();
             services.AddJwtBearerAuth(configuration);
             services.RegisterLoggingInterfaces();
-            services.InjectCoreServices();
+            services.InjectInfrastructureServices(configuration);
+            services.AddMassTransit(cfg.MassTransit);
 
             return services;
-
         }
 
         private static IServiceCollection AddJwtBearerAuth(this IServiceCollection services, IConfiguration configuration)
@@ -51,7 +52,7 @@ namespace RecordHub.IdentityService.Infrastructure
                     ValidateAudience = true,
                     ValidAudience = configuration.GetValue<string>("Jwt:Audience"),
                     ValidateLifetime = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetValue<string>("Jwt:Key") ?? "mysecretkey123")),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetValue<string>("Jwt:Key"))),
                     ValidateIssuerSigningKey = true,
                 };
                 options.Events = new JwtBearerEvents
@@ -71,36 +72,43 @@ namespace RecordHub.IdentityService.Infrastructure
             return services;
         }
 
-        private static IServiceCollection InjectCoreServices(this IServiceCollection services)
+        private static IServiceCollection InjectInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IAddressService, AddressService>();
             services.AddScoped<ITokenService, TokenService>();
-
-            services.AddScoped<IPublisher<MailData>, SendEmailPublisher>();
 
             services.AddAutoMapper(typeof(UserProfile));
             services.AddAutoMapper(typeof(AddressProfile));
 
             services.AddValidatorsFromAssemblyContaining(typeof(AddressValidator));
 
+            return services;
+        }
+
+        private static IServiceCollection AddMassTransit(this IServiceCollection services, MassTransitOptions transitOptions)
+        {
+            services.AddScoped<IPublisher<MailData>, SendEmailPublisher>();
+
             services.AddMassTransit(x =>
             {
                 x.UsingRabbitMq((context, cfg) =>
                 {
-                    cfg.Host("rabbitmq://messagebus", h =>
+                    cfg.Host(transitOptions.Host, h =>
                     {
-                        h.Username("guest");
-                        h.Password("guest");
+                        h.Username(transitOptions.Username);
+                        h.Password(transitOptions.Password);
                     });
                 });
             });
+
             return services;
         }
 
         private static IServiceCollection RegisterLoggingInterfaces(this IServiceCollection services)
         {
             services.AddScoped(typeof(IAppLogging<>), typeof(AppLogging<>));
+
             return services;
         }
     }

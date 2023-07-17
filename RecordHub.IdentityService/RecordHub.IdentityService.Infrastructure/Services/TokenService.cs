@@ -1,5 +1,4 @@
 ﻿using RecordHub.IdentityService.Core.Services;
-using RecordHub.IdentityService.Domain.Constants;
 using RecordHub.IdentityService.Domain.Data.Entities;
 using RecordHub.IdentityService.Infrastructure.Configuration;
 using System.IdentityModel.Tokens.Jwt;
@@ -33,7 +32,7 @@ namespace RecordHub.IdentityService.Infrastructure.Services
             JwtSecurityToken token = new TokenBuilder()
               .AddAudience(_config.Audience)
               .AddIssuer(_config.Issuer)
-              .AddExpiry(Constants.TokenLifeTime)
+              .AddExpiry(_config.TokenLifeTime)
               .AddKey(_config.Key)
               .AddClaims(claims)
               .Build();

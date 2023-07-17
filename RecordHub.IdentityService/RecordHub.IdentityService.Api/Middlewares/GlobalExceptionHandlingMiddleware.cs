@@ -8,6 +8,7 @@ namespace RecordHub.IdentityService.Api.Middlewares
     {
         private readonly RequestDelegate _next;
         private readonly ILogger _logger;
+
         public GlobalExceptionHandlingMiddleware(RequestDelegate next, ILogger<GlobalExceptionHandlingMiddleware> logger)
         {
             _next = next;

@@ -19,7 +19,9 @@ namespace RecordHub.IdentityService.Api.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> AddAddressAsync([FromBody] AddressModel model, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> AddAddressAsync(
+            [FromBody] AddressModel model,
+            CancellationToken cancellationToken = default)
         {
             string? userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             await _addressService.AddAsync(userId, model, cancellationToken);
@@ -29,7 +31,10 @@ namespace RecordHub.IdentityService.Api.Controllers
 
         [HttpPut("{id:Guid}")]
         [Authorize]
-        public async Task<IActionResult> UpdateAddressAsync(Guid id, [FromBody] AddressModel model, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> UpdateAddressAsync(
+            Guid id,
+            [FromBody] AddressModel model,
+            CancellationToken cancellationToken = default)
         {
             await _addressService.UpdateAsync(id, model, cancellationToken);
 
@@ -38,7 +43,9 @@ namespace RecordHub.IdentityService.Api.Controllers
 
         [HttpDelete("{id:Guid}")]
         [Authorize]
-        public async Task<IActionResult> DeleteAddressAsync(Guid id, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> DeleteAddressAsync(
+            Guid id,
+            CancellationToken cancellationToken = default)
         {
             await _addressService.DeleteAsync(id, cancellationToken);
 

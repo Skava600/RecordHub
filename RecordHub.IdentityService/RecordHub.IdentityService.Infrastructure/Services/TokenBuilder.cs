@@ -37,18 +37,21 @@ namespace RecordHub.IdentityService.Infrastructure.Services
         public TokenBuilder AddIssuer(string issuer)
         {
             _issuer = issuer;
+
             return this;
         }
 
         public TokenBuilder AddAudience(string audience)
         {
             _audience = audience;
+
             return this;
         }
 
         public TokenBuilder AddExpiry(int minutes)
         {
             _expires = DateTime.Now.AddMinutes(minutes);
+
             return this;
         }
 
@@ -56,6 +59,7 @@ namespace RecordHub.IdentityService.Infrastructure.Services
         {
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key));
             _credentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha256);
+
             return this;
         }
 

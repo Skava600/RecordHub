@@ -9,21 +9,21 @@ namespace RecordHub.IdentityService.Persistence
     {
         private readonly RoleManager<IdentityRole<Guid>> _roleManager;
         private readonly UserManager<User> _userManager;
-        private readonly AccountDbContext ctx;
+        private readonly AccountDbContext _dbContext;
         public DbInitializer(RoleManager<IdentityRole<Guid>> roleManager, UserManager<User> userManager, AccountDbContext dbContext)
         {
             _roleManager = roleManager;
             _userManager = userManager;
-            ctx = dbContext;
+            _dbContext = dbContext;
         }
 
         public async Task Initialize()
         {
-            var pendingMigrations = await ctx.Database.GetPendingMigrationsAsync();
+            var pendingMigrations = await _dbContext.Database.GetPendingMigrationsAsync();
 
             if (pendingMigrations.Any())
             {
-                await ctx.Database.MigrateAsync();
+                await _dbContext.Database.MigrateAsync();
             }
             var user = new User
             {
@@ -36,7 +36,7 @@ namespace RecordHub.IdentityService.Persistence
                 PhoneNumber = "123",
             };
 
-            if (!ctx.Users.Any(u => u.UserName.Equals(user.UserName)))
+            if (!_dbContext.Users.Any(u => u.UserName.Equals(user.UserName)))
             {
                 var result = await _userManager.CreateAsync(user, "123456aA.");
                 await _userManager.AddToRoleAsync(user, nameof(Roles.Admin));

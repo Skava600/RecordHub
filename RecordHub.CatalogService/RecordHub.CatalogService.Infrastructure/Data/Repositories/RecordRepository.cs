@@ -30,8 +30,8 @@ namespace RecordHub.CatalogService.Infrastructure.Data.Repositories
                 .FirstOrDefaultAsync(r => r.Slug.Equals(slug, StringComparison.OrdinalIgnoreCase));
         }
 
-        public async Task<IEnumerable<Record>> GetByPageAsync
-            (int page,
+        public async Task<IEnumerable<Record>> GetByPageAsync(
+            int page,
             int pageSize,
             CancellationToken cancellationToken = default)
         {

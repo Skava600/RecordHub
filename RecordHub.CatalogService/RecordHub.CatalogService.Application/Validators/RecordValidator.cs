@@ -20,9 +20,9 @@ namespace RecordHub.CatalogService.Application.Validators
                 .Must(x => x > 0)
                 .WithMessage("Radius should be greater than zero.");
 
-            RuleFor(x => x.Price
-            ).NotEmpty()
-            .GreaterThan(0);
+            RuleFor(x => x.Price)
+                .NotEmpty()
+                .GreaterThan(0);
 
             RuleFor(x => x.Slug)
                 .NotEmpty()

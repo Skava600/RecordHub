@@ -45,13 +45,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RecordHub.BasketService", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.BasketService.Api", "RecordHub.BasketService\RecordHub.BasketService.Api\RecordHub.BasketService.Api.csproj", "{BC49E11A-77C4-4664-A302-B5AF867F3BFD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.BasketService.Applicatation", "RecordHub.BasketService\RecordHub.BasketService.Applicatation\RecordHub.BasketService.Applicatation.csproj", "{C62B9624-5B02-4338-9E35-C922C806D076}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.BasketService.Domain", "RecordHub.BasketService\RecordHub.BasketService.Domain\RecordHub.BasketService.Domain.csproj", "{F756041F-7F94-4EC1-931E-8EECFCE4B6FB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.BasketService.Infrastructure", "RecordHub.BasketService\RecordHub.BasketService.Infrastructure\RecordHub.BasketService.Infrastructure.csproj", "{2BA80EDA-DF90-41AE-9367-27F61169A20A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.CatalogService.Grpc", "RecordHub.CatalogService\RecordHub.CatalogService.Grpc\RecordHub.CatalogService.Grpc.csproj", "{9875D49A-13B6-4B37-9221-C91B570D53AD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RecordHub.OrderingService", "RecordHub.OrderingService", "{7D2CC435-9AD5-40BA-B651-540ACE9D0879}"
 EndProject
@@ -72,6 +68,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.ChatService.Domain", "RecordHub.ChatService\RecordHub.ChatService.Domain\RecordHub.ChatService.Domain.csproj", "{4A14FCBB-5005-4C69-927D-D57EF5FD0BBC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.ChatService.Infrastructure", "RecordHub.ChatService\RecordHub.ChatService.Infrastructure\RecordHub.ChatService.Infrastructure.csproj", "{570880A7-367E-4721-AAE1-3E19A6BF3B00}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.BasketService.Application", "RecordHub.BasketService\RecordHub.BasketService.Application\RecordHub.BasketService.Application.csproj", "{B56BC54D-C383-4865-9E5E-B8196715F477}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -147,10 +145,6 @@ Global
 		{BC49E11A-77C4-4664-A302-B5AF867F3BFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC49E11A-77C4-4664-A302-B5AF867F3BFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC49E11A-77C4-4664-A302-B5AF867F3BFD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C62B9624-5B02-4338-9E35-C922C806D076}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C62B9624-5B02-4338-9E35-C922C806D076}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C62B9624-5B02-4338-9E35-C922C806D076}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C62B9624-5B02-4338-9E35-C922C806D076}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F756041F-7F94-4EC1-931E-8EECFCE4B6FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F756041F-7F94-4EC1-931E-8EECFCE4B6FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F756041F-7F94-4EC1-931E-8EECFCE4B6FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -159,10 +153,6 @@ Global
 		{2BA80EDA-DF90-41AE-9367-27F61169A20A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BA80EDA-DF90-41AE-9367-27F61169A20A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BA80EDA-DF90-41AE-9367-27F61169A20A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9875D49A-13B6-4B37-9221-C91B570D53AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9875D49A-13B6-4B37-9221-C91B570D53AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9875D49A-13B6-4B37-9221-C91B570D53AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9875D49A-13B6-4B37-9221-C91B570D53AD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{18A1EB10-F3A4-48A7-A432-91A7C5F49085}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{18A1EB10-F3A4-48A7-A432-91A7C5F49085}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18A1EB10-F3A4-48A7-A432-91A7C5F49085}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -195,6 +185,10 @@ Global
 		{570880A7-367E-4721-AAE1-3E19A6BF3B00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{570880A7-367E-4721-AAE1-3E19A6BF3B00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{570880A7-367E-4721-AAE1-3E19A6BF3B00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B56BC54D-C383-4865-9E5E-B8196715F477}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B56BC54D-C383-4865-9E5E-B8196715F477}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B56BC54D-C383-4865-9E5E-B8196715F477}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B56BC54D-C383-4865-9E5E-B8196715F477}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -213,10 +207,8 @@ Global
 		{6F5A771A-F69A-4EC7-8AAF-19F475B61828} = {ABD4F5C0-98D7-4516-9755-2BFC2A89333F}
 		{FBEFD793-FA06-47C3-B435-2877CCE5B4FD} = {ABD4F5C0-98D7-4516-9755-2BFC2A89333F}
 		{BC49E11A-77C4-4664-A302-B5AF867F3BFD} = {FD42E63E-4F96-4177-BE06-C4A9F67AC7D0}
-		{C62B9624-5B02-4338-9E35-C922C806D076} = {FD42E63E-4F96-4177-BE06-C4A9F67AC7D0}
 		{F756041F-7F94-4EC1-931E-8EECFCE4B6FB} = {FD42E63E-4F96-4177-BE06-C4A9F67AC7D0}
 		{2BA80EDA-DF90-41AE-9367-27F61169A20A} = {FD42E63E-4F96-4177-BE06-C4A9F67AC7D0}
-		{9875D49A-13B6-4B37-9221-C91B570D53AD} = {ABD4F5C0-98D7-4516-9755-2BFC2A89333F}
 		{18A1EB10-F3A4-48A7-A432-91A7C5F49085} = {7D2CC435-9AD5-40BA-B651-540ACE9D0879}
 		{ABCBFA5D-A454-4737-AC89-A26ED8008B8A} = {7D2CC435-9AD5-40BA-B651-540ACE9D0879}
 		{DA056435-4B05-4230-B7B8-B1C1278791EE} = {7D2CC435-9AD5-40BA-B651-540ACE9D0879}
@@ -225,6 +217,7 @@ Global
 		{0499261D-01CB-4E86-87AF-4960B5344F3D} = {1A638131-C350-4F56-B7BE-7BF182F2741C}
 		{4A14FCBB-5005-4C69-927D-D57EF5FD0BBC} = {1A638131-C350-4F56-B7BE-7BF182F2741C}
 		{570880A7-367E-4721-AAE1-3E19A6BF3B00} = {1A638131-C350-4F56-B7BE-7BF182F2741C}
+		{B56BC54D-C383-4865-9E5E-B8196715F477} = {FD42E63E-4F96-4177-BE06-C4A9F67AC7D0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BDD6659A-32F8-4085-AA8B-340D17435983}

@@ -1,0 +1,317 @@
+  {
+    "Routes": [
+      // Identity service
+      {
+        "UpstreamPathTemplate": "/api/Auth/{endpoint}",
+        "UpstreamHttpMethod": [ "Get", "Post" ],
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "recordhub.identityservice.api",
+            "Port": 443
+          }
+        ],
+        "DownstreamPathTemplate": "/api/Auth/{endpoint}",
+        "DangerousAcceptAnyServerCertificateValidator": true,
+        "SwaggerKey": "identity"
+      },
+      {
+        "UpstreamPathTemplate": "/api/Auth",
+        "UpstreamHttpMethod": [ "Get", "Put" ],
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "recordhub.identityservice.api",
+            "Port": 443
+          }
+        ],
+        "DownstreamPathTemplate": "/api/Auth",
+        "DangerousAcceptAnyServerCertificateValidator": true,
+        "SwaggerKey": "identity"
+      },
+      // Catalog service
+      // Records
+      {
+        "UpstreamPathTemplate": "/api/Record",
+        "UpstreamHttpMethod": [ "Get", "Post" ],
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "recordhub.catalogservice.api",
+            "Port": 5004
+          }
+        ],
+        "DownstreamPathTemplate": "/api/Record/",
+        "DangerousAcceptAnyServerCertificateValidator": true,
+        "SwaggerKey": "catalog"
+      },
+      {
+        "UpstreamPathTemplate": "/api/Record/{endpoint}",
+        "UpstreamHttpMethod": [ "Put", "Delete", "Get" ],
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "recordhub.catalogservice.api",
+            "Port": 5004
+          }
+        ],
+        "DownstreamPathTemplate": "/api/Record/{endpoint}",
+        "DangerousAcceptAnyServerCertificateValidator": true,
+        "SwaggerKey": "catalog"
+      },
+      //Artists
+      {
+        "UpstreamPathTemplate": "/api/Artists",
+        "UpstreamHttpMethod": [ "Post" ],
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "recordhub.catalogservice.api",
+            "Port": 5004
+          }
+        ],
+        "DownstreamPathTemplate": "/api/Artists",
+        "DangerousAcceptAnyServerCertificateValidator": true,
+        "SwaggerKey": "catalog"
+      },
+      {
+        "UpstreamPathTemplate": "/api/Artists/{endpoint}",
+        "UpstreamHttpMethod": [ "Put", "Get", "Delete" ],
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "recordhub.catalogservice.api",
+            "Port": 5004
+          }
+        ],
+        "DownstreamPathTemplate": "/api/Artists/{endpoint}",
+        "DangerousAcceptAnyServerCertificateValidator": true,
+        "SwaggerKey": "catalog"
+      },
+      //Styles
+      {
+        "UpstreamPathTemplate": "/api/Styles",
+        "UpstreamHttpMethod": [ "Get", "Post" ],
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "recordhub.catalogservice.api",
+            "Port": 5004
+          }
+        ],
+        "DownstreamPathTemplate": "/api/Styles",
+        "DangerousAcceptAnyServerCertificateValidator": true,
+        "SwaggerKey": "catalog"
+      },
+      {
+        "UpstreamPathTemplate": "/api/Styles/{endpoint}",
+        "UpstreamHttpMethod": [ "Put", "Delete" ],
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "recordhub.catalogservice.api",
+            "Port": 5004
+          }
+        ],
+        "DownstreamPathTemplate": "/api/Styles/{endpoint}",
+        "DangerousAcceptAnyServerCertificateValidator": true,
+        "SwaggerKey": "catalog"
+      },
+      //Countries
+      {
+        "UpstreamPathTemplate": "/api/Countries",
+        "UpstreamHttpMethod": [ "Get", "Post" ],
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "recordhub.catalogservice.api",
+            "Port": 5004
+          }
+        ],
+        "DownstreamPathTemplate": "/api/Countries",
+        "DangerousAcceptAnyServerCertificateValidator": true,
+        "SwaggerKey": "catalog"
+      },
+      {
+        "UpstreamPathTemplate": "/api/Countries/{endpoint}",
+        "UpstreamHttpMethod": [ "Put", "Delete" ],
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "recordhub.catalogservice.api",
+            "Port": 5004
+          }
+        ],
+        "DownstreamPathTemplate": "/api/Countries/{endpoint}",
+        "DangerousAcceptAnyServerCertificateValidator": true,
+        "SwaggerKey": "catalog"
+      },
+
+      //Labels
+      {
+        "UpstreamPathTemplate": "/api/Labels",
+        "UpstreamHttpMethod": [ "Get", "Post" ],
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "recordhub.catalogservice.api",
+            "Port": 5004
+          }
+        ],
+        "DownstreamPathTemplate": "/api/Labels",
+        "DangerousAcceptAnyServerCertificateValidator": true,
+        "SwaggerKey": "catalog"
+      },
+      {
+        "UpstreamPathTemplate": "/api/Labels/{endpoint}",
+        "UpstreamHttpMethod": [ "Put", "Delete" ],
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "recordhub.catalogservice.api",
+            "Port": 5004
+          }
+        ],
+        "DownstreamPathTemplate": "/api/Labels/{endpoint}",
+        "DangerousAcceptAnyServerCertificateValidator": true,
+        "SwaggerKey": "catalog"
+      },
+      //Basket service
+      {
+        "UpstreamPathTemplate": "/api/basket/{endpoint}",
+        "UpstreamHttpMethod": [ "Post" ],
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "recordhub.basketservice.api",
+            "Port": 443
+          }
+        ],
+        "DownstreamPathTemplate": "/api/basket/{endpoint}",
+        "DangerousAcceptAnyServerCertificateValidator": true,
+        "SwaggerKey": "basket"
+      },
+      {
+        "UpstreamPathTemplate": "/api/basket",
+        "UpstreamHttpMethod": [ "Post", "Get", "Put", "Delete" ],
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "recordhub.basketservice.api",
+            "Port": 443
+          }
+        ],
+        "DownstreamPathTemplate": "/api/basket",
+        "DangerousAcceptAnyServerCertificateValidator": true,
+        "SwaggerKey": "basket"
+      },
+      // Ordering Service
+      {
+        "UpstreamPathTemplate": "/api/orders/{endpoint}/{endpoint2}",
+        "UpstreamHttpMethod": [ "Put" ],
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "recordhub.orderingservice.api",
+            "Port": 443
+          }
+        ],
+        "DownstreamPathTemplate": "/api/orders/{endpoint}/{endpoint2}",
+        "DangerousAcceptAnyServerCertificateValidator": true,
+        "SwaggerKey": "orders"
+      },
+      {
+        "UpstreamPathTemplate": "/api/orders/{endpoint}",
+        "UpstreamHttpMethod": [ "Get" ],
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "recordhub.orderingservice.api",
+            "Port": 443
+          }
+        ],
+        "DownstreamPathTemplate": "/api/orders/{endpoint}",
+        "DangerousAcceptAnyServerCertificateValidator": true,
+        "SwaggerKey": "orders"
+      },
+      // Chat service
+      {
+        "UpstreamPathTemplate": "/api/chat",
+        "UpstreamHttpMethod": [ "get" ],
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "recordhub.chatservice.api",
+            "Port": 443
+          }
+        ],
+        "DownstreamPathTemplate": "/api/chat",
+        "DangerousAcceptAnyServerCertificateValidator": true,
+        "SwaggerKey": "chat"
+      }
+    ],
+    
+    "SwaggerEndPoints": [
+      {
+        "Key": "identity",
+        "TransformByOcelotConfig": false,
+        "Config": [
+          {
+            "Name": "Identity API",
+            "Version": "v1",
+            "Url": "https://recordhub.identityservice.api:443/swagger/v1/swagger.json"
+          }
+        ]
+      },
+      {
+        "Key": "catalog",
+        "TransformByOcelotConfig": false,
+        "Config": [
+          {
+            "Name": "Catalog API",
+            "Version": "v1",
+            "Url": "https://recordhub.catalogservice.api:5004/swagger/v1/swagger.json"
+          }
+        ]
+      },
+      {
+        "Key": "basket",
+        "TransformByOcelotConfig": false,
+        "Config": [
+          {
+            "Name": "Basket API",
+            "Version": "v1",
+            "Url": "https://recordhub.basketservice.api:443/swagger/v1/swagger.json"
+          }
+        ]
+      },
+      {
+        "Key": "orders",
+        "TransformByOcelotConfig": false,
+        "Config": [
+          {
+            "Name": "Ordering API",
+            "Version": "v1",
+            "Url": "https://recordhub.orderingservice.api:443/swagger/v1/swagger.json"
+          }
+        ]
+      },
+      {
+        "Key": "chat",
+        "TransformByOcelotConfig": false,
+        "Config": [
+          {
+            "Name": "Chat API",
+            "Version": "v1",
+            "Url": "https://recordhub.chatservice.api:443/swagger/v1/swagger.json"
+          }
+        ]
+      }
+    ],
+    "GlobalConfiguration": {
+      "BaseUrl": "https://localhost:5001",
+      "HttpHandlerOptions": {
+        "AllowAutoRedirect": true
+      }
+    }
+  }

@@ -8,11 +8,11 @@ builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
                 .Build();
 
-
 builder.Services.ConfigureMail(builder.Configuration);
 builder.Services.AddInfrastructureServices(builder.Configuration);
-builder.Services.AddMassTransit();
+builder.Services.AddMassTransit(builder.Configuration);
 builder.ConfigureSerilog();
+
 var app = builder.Build();
 app.UseHangfireDashboard();
 app.UseHttpsRedirection();

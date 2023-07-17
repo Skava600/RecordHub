@@ -7,16 +7,17 @@ namespace RecordHub.MailService.Infrastructure.Consumers
 {
     public class SendEmailConsumer : IConsumer<MailData>
     {
-        private readonly IMailService mailService;
+        private readonly IMailService _mailService;
+
         public SendEmailConsumer(IMailService mailService)
         {
-            this.mailService = mailService;
+            this._mailService = mailService;
         }
 
         public Task Consume(ConsumeContext<MailData> context)
         {
             BackgroundJob.Enqueue(
-                () => mailService.SendAsync(context.Message, context.CancellationToken));
+                () => _mailService.SendAsync(context.Message, context.CancellationToken));
 
             return Task.CompletedTask;
         }

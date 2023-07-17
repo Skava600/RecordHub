@@ -17,7 +17,7 @@ namespace RecordHub.MailService.Infrastructure.Services
             _settings = settings.Value;
         }
 
-        public async Task<bool> SendAsync(MailData mailData, CancellationToken ct = default)
+        public async Task SendAsync(MailData mailData, CancellationToken ct = default)
         {
             var mail = new MimeMessage();
 
@@ -28,7 +28,9 @@ namespace RecordHub.MailService.Infrastructure.Services
 
             // Receiver
             foreach (string mailAddress in mailData.To)
+            {
                 mail.To.Add(MailboxAddress.Parse(mailAddress));
+            }
             #endregion
 
             #region Content
@@ -53,13 +55,12 @@ namespace RecordHub.MailService.Infrastructure.Services
             {
                 await smtp.ConnectAsync(_settings.Host, _settings.Port, SecureSocketOptions.StartTls, ct);
             }
+
             await smtp.AuthenticateAsync(_settings.UserName, _settings.Password, ct);
             await smtp.SendAsync(mail, ct);
             await smtp.DisconnectAsync(true, ct);
 
             #endregion
-
-            return true;
         }
     }
 }

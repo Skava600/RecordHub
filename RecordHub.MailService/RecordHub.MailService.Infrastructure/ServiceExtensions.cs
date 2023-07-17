@@ -1,11 +1,4 @@
-﻿using Hangfire;
-using Hangfire.PostgreSql;
-using MassTransit;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using RecordHub.MailService.Application.Services;
-using RecordHub.MailService.Infrastructure.Consumers;
-namespace RecordHub.MailService.Infrastructure
+﻿namespace RecordHub.MailService.Infrastructure
 {
     public static class ServiceExtensions
     {
@@ -26,30 +19,28 @@ namespace RecordHub.MailService.Infrastructure
             return services;
         }
 
-        public static IServiceCollection AddMassTransit(this IServiceCollection services)
+        public static IServiceCollection AddMassTransit(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddMassTransit(x =>
             {
                 x.AddConsumer<SendEmailConsumer>();
                 x.UsingRabbitMq((context, cfg) =>
                 {
-                    cfg.Host("messagebus", "/", h =>
+                    cfg.Host(configuration.GetValue<string>("MassTransit:Host"), h =>
                     {
-                        h.Username("guest");
-                        h.Password("guest");
+                        h.Username(configuration.GetValue<string>("MassTransit:Username"));
+                        h.Password(configuration.GetValue<string>("MassTransit:Password"));
                     });
 
 
-                    cfg.ReceiveEndpoint("send-email", ep =>
+                    cfg.ReceiveEndpoint(configuration.GetValue<string>("MassTransit:EmailQueue"), ep =>
                     {
                         ep.ConfigureConsumer<SendEmailConsumer>(context);
-                        ep.Bind("RecordHub.Shared.Models:MailData");
                     });
                 });
             });
 
             return services;
         }
-
     }
 }

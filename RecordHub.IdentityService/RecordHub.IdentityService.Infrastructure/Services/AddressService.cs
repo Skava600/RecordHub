@@ -15,7 +15,12 @@ namespace RecordHub.IdentityService.Infrastructure.Services
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
         private readonly IValidator<AddressModel> _validator;
-        public AddressService(IAddressRepository repo, UserManager<User> userManager, IMapper mapper, IValidator<AddressModel> validator)
+
+        public AddressService(
+            IAddressRepository repo,
+            UserManager<User> userManager,
+            IMapper mapper, IValidator<AddressModel>
+            validator)
         {
             _repo = repo;
             _userManager = userManager;
@@ -23,7 +28,10 @@ namespace RecordHub.IdentityService.Infrastructure.Services
             _validator = validator;
         }
 
-        public async Task AddAsync(string? userId, AddressModel model, CancellationToken cancellationToken = default)
+        public async Task AddAsync(
+            string? userId,
+            AddressModel model,
+            CancellationToken cancellationToken = default)
         {
             await _validator.ValidateAndThrowAsync(model, cancellationToken);
             var user = await _userManager.FindByIdAsync(userId);
@@ -43,7 +51,10 @@ namespace RecordHub.IdentityService.Infrastructure.Services
             return _repo.DeleteAsync(id, cancellationToken);
         }
 
-        public async Task UpdateAsync(Guid id, AddressModel model, CancellationToken cancellationToken = default)
+        public async Task UpdateAsync(
+            Guid id,
+            AddressModel model,
+            CancellationToken cancellationToken = default)
         {
             await _validator.ValidateAndThrowAsync(model, cancellationToken);
 

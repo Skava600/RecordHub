@@ -5,7 +5,8 @@ namespace RecordHub.IdentityService.Persistence.Data.Repositories.Implementation
 {
     public class UserRepository : BaseRepository<User>, IUserRepository
     {
-        public UserRepository(AccountDbContext context) : base(context)
+        public UserRepository(AccountDbContext context)
+            : base(context)
         {
         }
     }

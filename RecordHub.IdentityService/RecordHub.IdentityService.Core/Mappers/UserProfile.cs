@@ -6,11 +6,9 @@ namespace RecordHub.IdentityService.Core.Mappers
 {
     public class UserProfile : Profile
     {
-
         public UserProfile()
         {
             CreateMap<User, UserDTO>();
-
         }
     }
 }

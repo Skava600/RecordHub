@@ -12,10 +12,12 @@ namespace RecordHub.IdentityService.Persistence
     {
         public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDatabaseContext(configuration).AddRepositories();
-            services.AddAspIdentity();
+            services.AddDatabaseContext(configuration)
+                .AddRepositories();
+            services.AddAspIdentity(configuration);
             services.AddScoped<DbInitializer, DbInitializer>();
             services.Configure<IdentityOptions>(options => options.User.RequireUniqueEmail = true);
+
             return services;
         }
         private static IServiceCollection AddDatabaseContext(this IServiceCollection services, IConfiguration configuration)
@@ -26,10 +28,11 @@ namespace RecordHub.IdentityService.Persistence
         private static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services.AddScoped<IAddressRepository, AddressRepository>();
+
             return services.AddScoped<IUserRepository, UserRepository>();
         }
 
-        private static void AddAspIdentity(this IServiceCollection services)
+        private static void AddAspIdentity(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddIdentityCore<User>(opt =>
             {
@@ -47,10 +50,11 @@ namespace RecordHub.IdentityService.Persistence
                 .AddEntityFrameworkStores<AccountDbContext>()
                 .AddDefaultTokenProviders()
                 .AddTokenProvider<EmailConfirmationTokenProvider<User>>("emailconfirmation");
+
             services.Configure<DataProtectionTokenProviderOptions>(opt =>
-    opt.TokenLifespan = TimeSpan.FromHours(2));
+                opt.TokenLifespan = TimeSpan.FromHours(configuration.GetValue<int>("Identity:DataProtectionTokenLifeSpanHours")));
             services.Configure<EmailConfirmationTokenProviderOptions>(opt =>
-                opt.TokenLifespan = TimeSpan.FromDays(3));
+                opt.TokenLifespan = TimeSpan.FromDays(configuration.GetValue<int>("Identity:EmailConfirmationTokenLifeSpanDays")));
         }
     }
 }

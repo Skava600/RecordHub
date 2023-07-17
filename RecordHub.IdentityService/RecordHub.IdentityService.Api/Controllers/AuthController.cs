@@ -41,28 +41,35 @@ namespace RecordHub.IdentityService.Api.Controllers
 
         [HttpGet("info")]
         [Authorize]
-        public async Task<IActionResult> UserInfo(CancellationToken cancellationToken = default)
+        public async Task<IActionResult> UserInfo(
+            CancellationToken cancellationToken = default)
         {
             string? userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var user = await accountService.GetUserInfoAsync(userId, cancellationToken);
+
             return Ok(user);
         }
 
-        [HttpPut]
+        [HttpPost]
         [Authorize]
-        public async Task<IActionResult> VerifyEmailAsync([FromBody] string token, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> VerifyEmailAsync(
+            [FromBody] string token,
+            CancellationToken cancellationToken = default)
         {
             string? userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             await accountService.VerifyEmailAsync(token, userId, cancellationToken);
+
             return Ok();
         }
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> VerifyEmailAsync(CancellationToken cancellationToken = default)
+        public async Task<IActionResult> SendVerificationEmail(
+            CancellationToken cancellationToken = default)
         {
             string? userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             await accountService.SendEmailVerificationAsync(userId, cancellationToken);
+
             return Ok();
         }
     }

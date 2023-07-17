@@ -20,20 +20,17 @@ namespace RecordHub.IdentityService.Infrastructure.Services
         private readonly IAddressRepository _addressRepo;
         private readonly IPublisher<MailData> _mailPublisher;
         private readonly IMapper _mapper;
-        private readonly RoleManager<IdentityRole<Guid>> _roleManager;
         private readonly ITokenService tokenService;
+
         public AccountService(
           UserManager<User> userManager,
-          RoleManager<IdentityRole<Guid>> roleManager,
           IMapper mapper,
           ITokenService tokenService,
           IPublisher<MailData> mailPublisher,
-          IAddressRepository addressRepository
-          )
+          IAddressRepository addressRepository)
         {
             this._userManager = userManager;
             this.tokenService = tokenService;
-            this._roleManager = roleManager;
             _mapper = mapper;
             this._mailPublisher = mailPublisher;
             _addressRepo = addressRepository;
@@ -97,16 +94,16 @@ namespace RecordHub.IdentityService.Infrastructure.Services
 
             cancellationToken.ThrowIfCancellationRequested();
 
-            var result = await _userManager.CreateAsync(user, model.Password);
-            if (!result.Succeeded)
+            var creatingUserResult = await _userManager.CreateAsync(user, model.Password);
+            if (!creatingUserResult.Succeeded)
             {
-                throw new InvalidPasswordRequirementsExceptions(result.Errors);
+                throw new InvalidPasswordRequirementsExceptions(creatingUserResult.Errors);
             }
 
-            result = await _userManager.AddToRoleAsync(user, nameof(Roles.User));
-            if (!result.Succeeded)
+            var addingToRoleResult = await _userManager.AddToRoleAsync(user, nameof(Roles.User));
+            if (!addingToRoleResult.Succeeded)
             {
-                throw new AddingToRoleException(result.Errors);
+                throw new AddingToRoleException(creatingUserResult.Errors);
             }
         }
 
@@ -130,6 +127,7 @@ namespace RecordHub.IdentityService.Infrastructure.Services
                   "Confirm your email address\n" +
                   "Your confirmation code is below - enter it in your open browser window.\n" +
                   $"{token}");
+
             await _mailPublisher.PublishMessage(mailData);
 
         }

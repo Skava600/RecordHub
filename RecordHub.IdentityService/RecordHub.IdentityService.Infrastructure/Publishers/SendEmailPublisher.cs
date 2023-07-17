@@ -18,7 +18,6 @@ namespace RecordHub.IdentityService.Infrastructure.Publishers
             await _publishEndpoint.Publish<MailData>(mailData, context =>
             {
                 context.SetRoutingKey("send-email");
-
             });
         }
     }

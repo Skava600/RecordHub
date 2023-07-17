@@ -15,7 +15,6 @@ builder.Services.ConfigureSwagger();
 builder.ConfigureSerilog();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddPersistence(builder.Configuration);
-builder.Services.AddFluentValidationAutoValidation();
 
 var app = builder.Build();
 app.UseMiddleware<GlobalExceptionHandlingMiddleware>();

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using RecordHub.IdentityService.Core.Services;
 using RecordHub.IdentityService.Domain.Data.Entities;
@@ -14,18 +13,15 @@ namespace RecordHub.IdentityService.Infrastructure.Services
         private readonly IAddressRepository _repo;
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
-        private readonly IValidator<AddressModel> _validator;
 
         public AddressService(
             IAddressRepository repo,
             UserManager<User> userManager,
-            IMapper mapper, IValidator<AddressModel>
-            validator)
+            IMapper mapper)
         {
             _repo = repo;
             _userManager = userManager;
             _mapper = mapper;
-            _validator = validator;
         }
 
         public async Task AddAsync(
@@ -33,7 +29,6 @@ namespace RecordHub.IdentityService.Infrastructure.Services
             AddressModel model,
             CancellationToken cancellationToken = default)
         {
-            await _validator.ValidateAndThrowAsync(model, cancellationToken);
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
             {
@@ -56,8 +51,6 @@ namespace RecordHub.IdentityService.Infrastructure.Services
             AddressModel model,
             CancellationToken cancellationToken = default)
         {
-            await _validator.ValidateAndThrowAsync(model, cancellationToken);
-
             var address = await _repo.GetByIdAsync(id, cancellationToken);
             if (address == null)
             {

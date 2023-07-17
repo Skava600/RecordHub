@@ -15,6 +15,5 @@
             public string Schema { get; set; }
             public string ConnectionStringName { get; set; }
         }
-
     }
 }

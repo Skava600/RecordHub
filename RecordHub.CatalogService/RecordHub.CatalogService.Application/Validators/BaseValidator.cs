@@ -7,8 +7,15 @@ namespace RecordHub.CatalogService.Application.Validators
     {
         public BaseValidator()
         {
-            RuleFor(x => x.Name).NotEmpty().Length(2, 100);
-            RuleFor(x => x.Slug).NotEmpty().Matches($"^[a-z-]+$").WithMessage("Slug is latin string with length from 2 to 100").Length(2, 100);
+            RuleFor(x => x.Name)
+                .NotEmpty()
+                .Length(2, 100);
+
+            RuleFor(x => x.Slug)
+                .NotEmpty()
+                .Matches($"^[a-z-]+$")
+                .WithMessage("Slug is latin string with length from 2 to 100")
+                .Length(2, 100);
         }
     }
 }

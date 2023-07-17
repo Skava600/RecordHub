@@ -16,11 +16,11 @@ namespace RecordHub.CatalogService.Infrastructure.Services
     public class RecordCatalogService : IRecordCatalogService
     {
         private readonly IMapper _mapper;
-
         private readonly IUnitOfWork _repository;
         private readonly IValidator<Record> _validator;
         private readonly IElasticClient _elasticClient;
         private readonly ElasticsearchConfig _elasticsearchConfig;
+
         public RecordCatalogService(IMapper mapper,
             IUnitOfWork repository,
             IValidator<Record> validator,
@@ -108,44 +108,60 @@ namespace RecordHub.CatalogService.Infrastructure.Services
                  .Bool(b => b
                      .Must(
                          // Price range query
-                         q => q.Range(r => r.Field(f => f.Price)
-                             .GreaterThanOrEquals(filterModel.MinPrice)
-                             .LessThanOrEquals(filterModel.MaxPrice)
+                         q => q.Range(r => r
+                            .Field(f => f.Price)
+                            .GreaterThanOrEquals(filterModel.MinPrice)
+                            .LessThanOrEquals(filterModel.MaxPrice)
                          ),
                          // Year range query
-                         q => q.Range(r => r.Field(f => f.Year)
-                             .GreaterThanOrEquals(filterModel.MinYear)
-                             .LessThanOrEquals(filterModel.MaxYear)
+                         q => q.Range(r => r
+                            .Field(f => f.Year)
+                            .GreaterThanOrEquals(filterModel.MinYear)
+                            .LessThanOrEquals(filterModel.MaxYear)
                          ),
                          // Radiuses query
                          q => filterModel.Radiuses == null
                              ? null
-                             : q.Terms(t => t.Field(f => f.Radius).Terms(filterModel.Radiuses)),
+                             : q.Terms(t => t
+                                    .Field(f => f.Radius)
+                                    .Terms(filterModel.Radiuses)),
                          // Styles query
                          q => filterModel.Styles == null
                              ? null
                              : q.Nested(c => c
                                 .Path(e => e.Styles)
-                                .Query(q => q.Terms(terms => terms.Field(field => field.Styles.First().Slug.Suffix("keyword")).Terms(filterModel.Styles)))),
+                                .Query(q => q
+                                    .Terms(terms => terms
+                                        .Field(field => field.Styles.First().Slug.Suffix("keyword"))
+                                        .Terms(filterModel.Styles)))),
                          // Artist query
                          q => filterModel.Artists == null
                              ? null
                              : q.Nested(c => c
                                 .Path(e => e.Artist)
-                                .Query(q => q.Terms(terms => terms.Field(field => field.Artist.Slug.Suffix("keyword")).Terms(filterModel.Artists)))
+                                .Query(q => q
+                                    .Terms(terms => terms
+                                        .Field(field => field.Artist.Slug.Suffix("keyword"))
+                                        .Terms(filterModel.Artists)))
                                ),
                          // Countries query
                          q => filterModel.Countries == null
                              ? null
                              : q.Nested(c => c
                                 .Path(e => e.Country)
-                                .Query(q => q.Terms(terms => terms.Field(field => field.Country.Slug.Suffix("keyword")).Terms(filterModel.Countries)))),
+                                .Query(q => q
+                                    .Terms(terms => terms
+                                        .Field(field => field.Country.Slug.Suffix("keyword"))
+                                        .Terms(filterModel.Countries)))),
                          // Labels query
                          q => filterModel.Labels == null
                              ? null
                              : q.Nested(c => c
                                 .Path(e => e.Label)
-                                .Query(q => q.Terms(terms => terms.Field(field => field.Label.Slug.Suffix("keyword")).Terms(filterModel.Labels))))
+                                .Query(q => q
+                                    .Terms(terms => terms
+                                        .Field(field => field.Label.Slug.Suffix("keyword"))
+                                        .Terms(filterModel.Labels))))
                      )
                  )
              )

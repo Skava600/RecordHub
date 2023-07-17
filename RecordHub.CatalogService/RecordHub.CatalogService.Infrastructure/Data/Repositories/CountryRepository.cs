@@ -3,9 +3,9 @@ using RecordHub.CatalogService.Domain.Entities;
 
 namespace RecordHub.CatalogService.Infrastructure.Data.Repositories
 {
-    public class LabelRepository : BaseRepository<Label>, ILabelRepository
+    public class CountryRepository : BaseRepository<Country>, ICountryRepository
     {
-        public LabelRepository(ApplicationDbContext context)
+        public CountryRepository(ApplicationDbContext context)
             : base(context)
         {
         }

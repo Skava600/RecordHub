@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using Microsoft.Extensions.Options;
 using Nest;
 using RecordHub.CatalogService.Application.Data;
 using RecordHub.CatalogService.Application.DTO;
 using RecordHub.CatalogService.Application.Services;
 using RecordHub.CatalogService.Domain.Entities;
 using RecordHub.CatalogService.Domain.Models;
-using RecordHub.CatalogService.Infrastructure.Config;
 using RecordHub.Shared.Exceptions;
 
 namespace RecordHub.CatalogService.Infrastructure.Services
@@ -15,23 +13,20 @@ namespace RecordHub.CatalogService.Infrastructure.Services
     public class ArtistCatalogService : IArtistCatalogService
     {
         private readonly IMapper _mapper;
-
         private readonly IUnitOfWork _repository;
         private readonly IValidator<BaseEntity> _validator;
         private readonly IElasticClient _elasticClient;
-        private readonly ElasticsearchConfig _elasticsearchConfig;
+
         public ArtistCatalogService(
             IMapper mapper,
             IUnitOfWork repository,
             IValidator<BaseEntity> validator,
-            IElasticClient elasticClient,
-            IOptions<ElasticsearchConfig> elasticsearchConfig)
+            IElasticClient elasticClient)
         {
             _mapper = mapper;
             _repository = repository;
             _validator = validator;
             _elasticClient = elasticClient;
-            _elasticsearchConfig = elasticsearchConfig.Value;
         }
 
         public async Task AddAsync(ArtistModel model, CancellationToken cancellationToken)
@@ -67,10 +62,14 @@ namespace RecordHub.CatalogService.Infrastructure.Services
             {
                 throw new EntityNotFoundException(nameof(slug));
             }
+
             return _mapper.Map<ArtistDTO>(artist);
         }
 
-        public async Task UpdateAsync(Guid id, ArtistModel model, CancellationToken cancellationToken)
+        public async Task UpdateAsync(
+            Guid id,
+            ArtistModel model,
+            CancellationToken cancellationToken)
         {
             var artist = await _repository.Artists.GetByIdAsync(id, cancellationToken);
 
@@ -91,7 +90,9 @@ namespace RecordHub.CatalogService.Infrastructure.Services
 
             await _repository.CommitAsync();
             if (recordsDTO.Any())
+            {
                 await _elasticClient.IndexManyAsync(recordsDTO);
+            }
         }
     }
 }

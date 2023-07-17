@@ -5,9 +5,15 @@ namespace RecordHub.CatalogService.Application.Services
 {
     public interface ILabelCatalogService
     {
-        Task UpdateAsync(Guid id, LabelModel model, CancellationToken cancellationToken);
+        Task UpdateAsync(
+            Guid id,
+            LabelModel model,
+            CancellationToken cancellationToken);
+
         Task DeleteAsync(Guid id, CancellationToken cancellationToken);
+
         Task AddAsync(LabelModel model, CancellationToken cancellationToken);
+
         Task<IEnumerable<LabelDTO>> GetAllAsync(CancellationToken cancellationToken);
     }
 }

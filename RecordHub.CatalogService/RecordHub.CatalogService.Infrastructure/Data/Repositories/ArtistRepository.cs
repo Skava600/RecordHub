@@ -7,21 +7,20 @@ namespace RecordHub.CatalogService.Infrastructure.Data.Repositories
     public class ArtistRepository : BaseRepository<Artist>, IArtistRepository
     {
         private readonly DbSet<Artist> artists;
-        public ArtistRepository(ApplicationDbContext context) : base(context)
+
+        public ArtistRepository(ApplicationDbContext context)
+            : base(context)
         {
             artists = context.Artists;
         }
 
         public override async Task<Artist?> GetBySlugAsync(string slug, CancellationToken cancellationToken = default)
         {
-            return await artists.Include(a => a.Records).ThenInclude(r => r.Styles)
+            return await artists
+                .Include(a => a.Records)
+                    .ThenInclude(r => r.Styles)
                 .AsSplitQuery()
                 .FirstOrDefaultAsync(e => e.Slug.Equals(slug), cancellationToken);
-        }
-
-        public override Task<Artist?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
-        {
-            return base.GetByIdAsync(id, cancellationToken);
         }
     }
 }

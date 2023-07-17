@@ -1,32 +1,31 @@
 ﻿using AutoMapper;
 using FluentValidation;
-using Microsoft.Extensions.Options;
 using Nest;
 using RecordHub.CatalogService.Application.Data;
 using RecordHub.CatalogService.Application.DTO;
 using RecordHub.CatalogService.Application.Services;
 using RecordHub.CatalogService.Domain.Entities;
 using RecordHub.CatalogService.Domain.Models;
-using RecordHub.CatalogService.Infrastructure.Config;
 
 namespace RecordHub.CatalogService.Infrastructure.Services
 {
     public class CountryCatalogService : ICountryCatalogService
     {
         private readonly IMapper _mapper;
-
         private readonly IUnitOfWork _repository;
         private readonly IValidator<BaseEntity> _validator;
         private readonly IElasticClient _elasticClient;
-        private readonly ElasticsearchConfig _elasticsearchConfig;
-        public CountryCatalogService(IMapper mapper, IUnitOfWork repository, IValidator<BaseEntity> validator, IElasticClient elasticClient,
-            IOptions<ElasticsearchConfig> elasticsearchConfig)
+
+        public CountryCatalogService(
+            IMapper mapper,
+            IUnitOfWork repository,
+            IValidator<BaseEntity> validator,
+            IElasticClient elasticClient)
         {
             _mapper = mapper;
             _repository = repository;
             _validator = validator;
             _elasticClient = elasticClient;
-            _elasticsearchConfig = elasticsearchConfig.Value;
         }
 
         public async Task AddAsync(CountryModel model, CancellationToken cancellationToken)
@@ -76,13 +75,15 @@ namespace RecordHub.CatalogService.Infrastructure.Services
 
             await _repository.Countries.UpdateAsync(country, cancellationToken);
 
-
             var records = await _repository.Records.GetCountrysRecordsAsync(country.Id);
             var recordsDTO = _mapper.Map<IEnumerable<RecordDTO>>(records);
 
             await _repository.CommitAsync();
+
             if (recordsDTO.Any())
+            {
                 await _elasticClient.IndexManyAsync(recordsDTO);
+            }
         }
     }
 }

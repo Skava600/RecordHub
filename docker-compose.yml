@@ -77,22 +77,11 @@ services:
         networks:
             - recordhub
         ports:
-            - '5004:443'
+            - '5004:5004'
+            - '5005:5005'
         depends_on:
             - identitydb
             - elasticsearch
-            - gateway
-    recordhub.catalogservice.grpc:
-        image: ${DOCKER_REGISTRY-}recordhubcatalogservicegrpc
-        build:
-            context: .
-            dockerfile: RecordHub.CatalogService/RecordHub.CatalogService.Grpc/Dockerfile
-        networks:
-            - recordhub
-        ports:
-            - '5005:443'
-        depends_on:
-            - identitydb
             - gateway
     messagebus:
         container_name: messagebus

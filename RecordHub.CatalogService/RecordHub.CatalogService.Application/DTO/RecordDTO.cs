@@ -10,8 +10,8 @@
         public string Description { get; set; }
         public double Price { get; set; }
         public LabelDTO Label { get; set; }
-        public IList<StyleDTO> Styles { get; set; }
         public CountryDTO Country { get; set; }
         public ArtistDTO Artist { get; set; }
+        public IList<StyleDTO> Styles { get; set; }
     }
 }

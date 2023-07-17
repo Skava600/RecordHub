@@ -9,10 +9,9 @@ using RecordHub.CatalogService.Domain.Models;
 
 namespace RecordHub.CatalogService.Infrastructure.Services
 {
-    internal class LabelCatalogService : ILabelCatalogService
+    public class LabelCatalogService : ILabelCatalogService
     {
         private readonly IMapper _mapper;
-
         private readonly IUnitOfWork _repository;
         private readonly IElasticClient _elasticClient;
         private readonly IValidator<BaseEntity> _validator;
@@ -76,7 +75,9 @@ namespace RecordHub.CatalogService.Infrastructure.Services
             var records = await _repository.Records.GetLabelsRecordsAsync(label.Id);
             var recordsDTO = _mapper.Map<IEnumerable<RecordDTO>>(records);
             if (recordsDTO.Any())
+            {
                 await _elasticClient.IndexManyAsync(recordsDTO);
+            }
         }
     }
 }

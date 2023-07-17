@@ -18,7 +18,9 @@ namespace RecordHub.CatalogService.Api.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<IActionResult> CreateAsync([FromBody] LabelModel model, CancellationToken cancellationToken)
+        public async Task<IActionResult> CreateAsync(
+            [FromBody] LabelModel model,
+            CancellationToken cancellationToken)
         {
             await _labelService.AddAsync(model, cancellationToken);
 
@@ -27,9 +29,10 @@ namespace RecordHub.CatalogService.Api.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPut("{id:Guid}")]
-        public async Task<IActionResult> UpdateAsync([FromRoute] Guid id,
-           [FromBody] LabelModel model,
-           CancellationToken cancellationToken = default)
+        public async Task<IActionResult> UpdateAsync(
+            [FromRoute] Guid id,
+            [FromBody] LabelModel model,
+            CancellationToken cancellationToken = default)
         {
             await _labelService.UpdateAsync(id, model, cancellationToken);
 
@@ -38,8 +41,9 @@ namespace RecordHub.CatalogService.Api.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id:Guid}")]
-        public async Task<IActionResult> DeleteAsync([FromRoute] Guid id,
-           CancellationToken cancellationToken = default)
+        public async Task<IActionResult> DeleteAsync(
+            [FromRoute] Guid id,
+            CancellationToken cancellationToken = default)
         {
             await _labelService.DeleteAsync(id, cancellationToken);
 

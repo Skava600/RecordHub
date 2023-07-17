@@ -12,10 +12,10 @@ namespace RecordHub.CatalogService.Infrastructure.Services
     public class StyleCatalogService : IStyleCatalogService
     {
         private readonly IMapper _mapper;
-
         private readonly IUnitOfWork _repository;
         private readonly IValidator<BaseEntity> _validator;
         private readonly IElasticClient _elasticClient;
+
         public StyleCatalogService(
             IMapper mapper,
             IUnitOfWork repository,
@@ -43,7 +43,7 @@ namespace RecordHub.CatalogService.Infrastructure.Services
             var style = await _repository.Styles.DeleteAsync(id, cancellationToken);
             if (style != null)
             {
-                //await _repository.CommitAsync();
+                await _repository.CommitAsync();
 
                 await _elasticClient.DeleteByQueryAsync<RecordDTO>(q => q.Query(rq => rq
                         .Wildcard(t => t
@@ -60,7 +60,10 @@ namespace RecordHub.CatalogService.Infrastructure.Services
             return _mapper.Map<IEnumerable<StyleDTO>>(styles);
         }
 
-        public async Task UpdateAsync(Guid id, StyleModel model, CancellationToken cancellationToken)
+        public async Task UpdateAsync(
+            Guid id,
+            StyleModel model,
+            CancellationToken cancellationToken)
         {
             var style = await _repository.Styles.GetByIdIncludedGraph(id, cancellationToken);
 
@@ -81,6 +84,7 @@ namespace RecordHub.CatalogService.Infrastructure.Services
 
                 await _elasticClient.IndexManyAsync(recordsDto);
             }
+
             await _repository.CommitAsync();
         }
     }

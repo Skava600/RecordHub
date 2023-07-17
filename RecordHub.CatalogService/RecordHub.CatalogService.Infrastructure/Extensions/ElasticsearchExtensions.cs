@@ -10,7 +10,8 @@ namespace RecordHub.CatalogService.Infrastructure.Extensions
     public static class ElasticsearchExtensions
     {
         public static void AddElasticsearch(
-            this IServiceCollection services, IConfiguration configuration)
+            this IServiceCollection services,
+            IConfiguration configuration)
         {
             var cfg = configuration.Get<AppConfig>();
             services.Configure<ElasticsearchConfig>(
@@ -31,7 +32,8 @@ namespace RecordHub.CatalogService.Infrastructure.Extensions
         public static void CreateIndex(IElasticClient client, string indexName)
         {
             var createIndexResponse = client.Indices.Create(indexName,
-                index => index.Map<RecordDTO>(x => x.AutoMap()
+                index => index.Map<RecordDTO>(x => x
+                .AutoMap()
                 .Properties(p => p
                 .Nested<LabelDTO>(n => n
                     .IncludeInRoot()
@@ -49,19 +51,14 @@ namespace RecordHub.CatalogService.Infrastructure.Extensions
                 .Nested<CountryDTO>(n => n
                     .IncludeInRoot()
                     .Name(np => np.Country)
-                    .AutoMap())
-                )
-            ));
+                    .AutoMap()))));
         }
 
         private static void AddDefaultMappings(ConnectionSettings settings)
         {
             settings
                 .DefaultMappingFor<RecordDTO>(m => m
-                    .Ignore(p => p.Slug)
-                );
+                    .Ignore(p => p.Slug));
         }
-
-
     }
 }

@@ -7,24 +7,33 @@ namespace RecordHub.CatalogService.Infrastructure.Data.Repositories
     public class RecordRepository : BaseRepository<Record>, IRecordRepository
     {
         private readonly DbSet<Record> records;
-        public RecordRepository(ApplicationDbContext context) : base(context)
+
+        public RecordRepository(ApplicationDbContext context)
+            : base(context)
         {
             records = context.Records;
         }
 
         public Task<int> GetCountAsync(CancellationToken cancellationToken = default)
         {
-            return records.AsNoTracking().CountAsync(cancellationToken);
+            return records
+                .AsNoTracking()
+                .CountAsync(cancellationToken);
         }
 
-        public override async Task<Record?> GetBySlugAsync(string slug, CancellationToken cancellationToken = default)
+        public override async Task<Record?> GetBySlugAsync(
+            string slug,
+            CancellationToken cancellationToken = default)
         {
             return await GetAllQueryIncludeGraph()
                 .AsNoTracking()
                 .FirstOrDefaultAsync(r => r.Slug.Equals(slug, StringComparison.OrdinalIgnoreCase));
         }
 
-        public async Task<IEnumerable<Record>> GetByPageAsync(int page, int pageSize, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Record>> GetByPageAsync
+            (int page,
+            int pageSize,
+            CancellationToken cancellationToken = default)
         {
             return await GetAllQueryIncludeGraph()
                 .Skip((page - 1) * pageSize)
@@ -39,22 +48,31 @@ namespace RecordHub.CatalogService.Infrastructure.Data.Repositories
                 .Where(r => r.Id.Equals(id)).FirstAsync(cancellationToken);
         }
 
-        public async Task<IEnumerable<Record>> GetArtistsRecordsAsync(Guid artistId, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Record>> GetArtistsRecordsAsync(
+            Guid artistId,
+            CancellationToken cancellationToken = default)
         {
             return await GetAllQueryIncludeGraph()
-                .Where(r => r.ArtistId.Equals(artistId)).ToListAsync(cancellationToken);
+                .Where(r => r.ArtistId.Equals(artistId))
+                .ToListAsync(cancellationToken);
         }
 
-        public async Task<IEnumerable<Record>> GetCountrysRecordsAsync(Guid countryId, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Record>> GetCountrysRecordsAsync(
+            Guid countryId,
+            CancellationToken cancellationToken = default)
         {
             return await GetAllQueryIncludeGraph()
-              .Where(r => r.CountryId.Equals(countryId)).ToListAsync(cancellationToken);
+              .Where(r => r.CountryId.Equals(countryId))
+              .ToListAsync(cancellationToken);
         }
 
-        public async Task<IEnumerable<Record>> GetLabelsRecordsAsync(Guid labelId, CancellationToken cancellationToken = default)
+        public async Task<IEnumerable<Record>> GetLabelsRecordsAsync(
+            Guid labelId,
+            CancellationToken cancellationToken = default)
         {
             return await GetAllQueryIncludeGraph()
-             .Where(r => r.LabelId.Equals(labelId)).ToListAsync(cancellationToken);
+             .Where(r => r.LabelId.Equals(labelId))
+             .ToListAsync(cancellationToken);
         }
 
         private IQueryable<Record> GetAllQueryIncludeGraph()
@@ -64,7 +82,6 @@ namespace RecordHub.CatalogService.Infrastructure.Data.Repositories
                 .Include(r => r.Country)
                 .Include(r => r.Styles)
                 .Include(r => r.Artist)
-
                 .AsSplitQuery();
         }
     }

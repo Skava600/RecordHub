@@ -1,6 +1,6 @@
 syntax = "proto3";
  
-option csharp_namespace = "RecordHub.CatalogService.Infrastructure";
+option csharp_namespace = "RecordHub.CatalogService.Api.Protos";
  
 package catalog;
  

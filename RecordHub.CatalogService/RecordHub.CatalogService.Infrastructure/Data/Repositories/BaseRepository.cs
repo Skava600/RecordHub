@@ -8,6 +8,7 @@ namespace RecordHub.CatalogService.Infrastructure.Data.Repositories
     {
         private ApplicationDbContext _context { get; }
         private readonly DbSet<T> _dbSet;
+
         public BaseRepository(ApplicationDbContext context)
         {
             _context = context;
@@ -17,7 +18,6 @@ namespace RecordHub.CatalogService.Infrastructure.Data.Repositories
         public async Task AddAsync(T entity, CancellationToken cancellationToken = default)
         {
             await _dbSet.AddAsync(entity);
-
         }
 
         public async Task<T?> DeleteAsync(Guid id, CancellationToken cancellationToken = default)
@@ -29,6 +29,7 @@ namespace RecordHub.CatalogService.Infrastructure.Data.Repositories
                 {
                     _dbSet.Attach(entity);
                 }
+
                 _dbSet.Remove(entity);
             }
 
@@ -37,12 +38,15 @@ namespace RecordHub.CatalogService.Infrastructure.Data.Repositories
 
         public virtual async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            return await _dbSet.AsNoTracking().ToListAsync(cancellationToken);
+            return await _dbSet
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
         }
 
         public virtual async Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
             var x = await _dbSet.FindAsync(id);
+
             return x;
         }
 
@@ -54,6 +58,7 @@ namespace RecordHub.CatalogService.Infrastructure.Data.Repositories
         public virtual async Task<T?> GetBySlugAsync(string slug, CancellationToken cancellationToken = default)
         {
             var x = await _dbSet.FirstOrDefaultAsync(e => e.Slug.Equals(slug), cancellationToken);
+
             return x;
         }
     }

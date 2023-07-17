@@ -16,12 +16,15 @@ namespace RecordHub.CatalogService.Infrastructure.Extensions
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
             services.AddAutoMapperProfiles();
+
             services.AddValidatorsFromAssemblyContaining(typeof(RecordValidator));
+
             services.AddScoped<IRecordCatalogService, RecordCatalogService>();
             services.AddScoped<IArtistCatalogService, ArtistCatalogService>();
             services.AddScoped<IStyleCatalogService, StyleCatalogService>();
             services.AddScoped<ILabelCatalogService, LabelCatalogService>();
             services.AddScoped<ICountryCatalogService, CountryCatalogService>();
+
             return services;
         }
 
@@ -46,6 +49,7 @@ namespace RecordHub.CatalogService.Infrastructure.Extensions
                    cfg.AddProfile(new LabelProfile());
                })
                .CreateMapper());
+
             return services;
         }
 

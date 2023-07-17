@@ -18,8 +18,9 @@ namespace RecordHub.CatalogService.Api.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<IActionResult> CreateAsync([FromBody] RecordModel model,
-          CancellationToken cancellationToken = default)
+        public async Task<IActionResult> CreateAsync(
+            [FromBody] RecordModel model,
+            CancellationToken cancellationToken = default)
         {
             await recordCatalogService.AddAsync(model, cancellationToken);
 
@@ -28,9 +29,10 @@ namespace RecordHub.CatalogService.Api.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPut("{id:Guid}")]
-        public async Task<IActionResult> UpdateAsync([FromRoute] Guid id,
-           [FromBody] RecordModel model,
-           CancellationToken cancellationToken = default)
+        public async Task<IActionResult> UpdateAsync(
+            [FromRoute] Guid id,
+            [FromBody] RecordModel model,
+            CancellationToken cancellationToken = default)
         {
             await recordCatalogService.UpdateAsync(id, model, cancellationToken);
 
@@ -39,8 +41,9 @@ namespace RecordHub.CatalogService.Api.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id:Guid}")]
-        public async Task<IActionResult> DeleteAsync([FromRoute] Guid id,
-           CancellationToken cancellationToken = default)
+        public async Task<IActionResult> DeleteAsync(
+            [FromRoute] Guid id,
+            CancellationToken cancellationToken = default)
         {
             await recordCatalogService.DeleteAsync(id, cancellationToken);
 
@@ -51,7 +54,7 @@ namespace RecordHub.CatalogService.Api.Controllers
         public async Task<IActionResult> GetByPageAsync(
             [FromQuery] int page,
             [FromQuery] int pageSize,
-         CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default)
         {
             return Ok(await recordCatalogService.GetByPageAsync(page, pageSize, cancellationToken));
         }
@@ -59,7 +62,7 @@ namespace RecordHub.CatalogService.Api.Controllers
         [HttpGet("filter")]
         public async Task<IActionResult> SearchAsync(
             [FromQuery] RecordFilterModel model,
-         CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default)
         {
             return Ok(await recordCatalogService.GetByPageAsync(model, cancellationToken));
         }
@@ -67,7 +70,7 @@ namespace RecordHub.CatalogService.Api.Controllers
         [HttpGet("search")]
         public async Task<IActionResult> SearchAsync(
             [FromQuery] string text,
-         CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default)
         {
             return Ok(await recordCatalogService.SearchAsync(text, cancellationToken));
         }

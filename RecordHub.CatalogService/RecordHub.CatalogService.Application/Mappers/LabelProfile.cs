@@ -12,6 +12,5 @@ namespace RecordHub.CatalogService.Application.Mappers
             CreateMap<Label, LabelDTO>();
             CreateMap<LabelModel, Label>();
         }
-
     }
 }

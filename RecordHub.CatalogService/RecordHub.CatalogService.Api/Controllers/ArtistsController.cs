@@ -18,7 +18,9 @@ namespace RecordHub.CatalogService.Api.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        public async Task<IActionResult> CreateAsync([FromBody] ArtistModel model, CancellationToken cancellationToken)
+        public async Task<IActionResult> CreateAsync(
+            [FromBody] ArtistModel model,
+            CancellationToken cancellationToken)
         {
             await _artistService.AddAsync(model, cancellationToken);
 
@@ -27,9 +29,10 @@ namespace RecordHub.CatalogService.Api.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpPut("{id:Guid}")]
-        public async Task<IActionResult> UpdateAsync([FromRoute] Guid id,
-           [FromBody] ArtistModel model,
-           CancellationToken cancellationToken = default)
+        public async Task<IActionResult> UpdateAsync(
+            [FromRoute] Guid id,
+            [FromBody] ArtistModel model,
+            CancellationToken cancellationToken = default)
         {
             await _artistService.UpdateAsync(id, model, cancellationToken);
 
@@ -38,8 +41,9 @@ namespace RecordHub.CatalogService.Api.Controllers
 
         [Authorize(Roles = "Admin")]
         [HttpDelete("{id:Guid}")]
-        public async Task<IActionResult> DeleteAsync([FromRoute] Guid id,
-           CancellationToken cancellationToken = default)
+        public async Task<IActionResult> DeleteAsync(
+            [FromRoute] Guid id,
+            CancellationToken cancellationToken = default)
         {
             await _artistService.DeleteAsync(id, cancellationToken);
 
@@ -47,7 +51,9 @@ namespace RecordHub.CatalogService.Api.Controllers
         }
 
         [HttpGet("{slug}")]
-        public async Task<IActionResult> GetBySlug([FromRoute] string slug, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetBySlug(
+            [FromRoute] string slug,
+            CancellationToken cancellationToken)
         {
             var artist = await _artistService.GetBySlug(slug, cancellationToken);
 

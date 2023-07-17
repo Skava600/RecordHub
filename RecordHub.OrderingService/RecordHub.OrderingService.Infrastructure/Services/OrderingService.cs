@@ -3,7 +3,6 @@ using RecordHub.OrderingService.Application.Services;
 using RecordHub.OrderingService.Domain.Entities;
 using RecordHub.OrderingService.Infrastructure.Data.Repositories;
 using RecordHub.Shared.Enums;
-using RecordHub.Shared.Exceptions;
 using RecordHub.Shared.MassTransit.Models.Order;
 using System.Security.Claims;
 
@@ -51,7 +50,8 @@ namespace RecordHub.OrderingService.Infrastructure.Services
             ClaimsPrincipal user,
             CancellationToken cancellationToken = default)
         {
-            if (!user.IsInRole("Admin") && !userId.Equals(user.FindFirstValue(ClaimTypes.NameIdentifier)))
+            if (!user.IsInRole("Admin") &&
+                !userId.Equals(user.FindFirstValue(ClaimTypes.NameIdentifier)))
             {
                 throw new UnauthorizedAccessException(nameof(userId));
             }

@@ -1,10 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using RecordHub.IdentityService.Core.Services;
-using RecordHub.IdentityService.Domain.Models;
-using System.Security.Claims;
-
-namespace RecordHub.IdentityService.Api.Controllers
+﻿namespace RecordHub.IdentityService.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -14,7 +8,7 @@ namespace RecordHub.IdentityService.Api.Controllers
 
         public AuthController(IAccountService accountService)
         {
-            this._accountService = accountService;
+            _accountService = accountService;
         }
 
         [HttpPost("login")]

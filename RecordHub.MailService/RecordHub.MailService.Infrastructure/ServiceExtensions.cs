@@ -1,4 +1,12 @@
-﻿namespace RecordHub.MailService.Infrastructure
+﻿using Hangfire;
+using Hangfire.PostgreSql;
+using MassTransit;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using RecordHub.MailService.Application.Services;
+using RecordHub.MailService.Infrastructure.Consumers;
+
+namespace RecordHub.MailService.Infrastructure
 {
     public static class ServiceExtensions
     {

@@ -24,17 +24,11 @@ services:
             - recordhub
         ports:
             - '5002:443'
-        environment:
-            DB_HOST: identitydb
-            DB_PORT: 5432
-            DB_USER: postgres
-            DB_PASSWORD: 123456
-            DB_NAME: RecordHub.Identity
-            ASPNETCORE_ENVIRONMENT: Docker
         depends_on:
             - identitydb
             - gateway
     recordhub.mailservice.api:
+        container_name: recordhub.mailservice.api
         image: ${DOCKER_REGISTRY-}recordhubmailserviceapi
         build:
             context: .
@@ -44,8 +38,8 @@ services:
         ports:
             - 5003:443
         depends_on:
-          - recordhub.identityservice.api
-          - gateway
+            - recordhub.identityservice.api
+            - gateway
         environment:
             - ASPNETCORE_ENVIRONMENT=Docker
     
@@ -69,12 +63,130 @@ services:
             context: .
             dockerfile: RecordHub.Gateway/Dockerfile
         ports: 
-        - '5001:443'
+            - '5001:443'
         environment:
             - ASPNETCORE_ENVIRONMENT=Docker
         networks:
             - recordhub
         restart: unless-stopped
+    recordhub.catalogservice.api:
+        image: ${DOCKER_REGISTRY-}recordhubcatalogserviceapi
+        build:
+            context: .
+            dockerfile: RecordHub.CatalogService/RecordHub.CatalogService.Api/Dockerfile
+        networks:
+            - recordhub
+        ports:
+            - '5004:5004'
+            - '5005:5005'
+        depends_on:
+            - identitydb
+            - elasticsearch
+            - gateway
+    messagebus:
+        container_name: messagebus
+        image: rabbitmq:management
+        networks:
+            - recordhub
+        ports:
+            - 5672:5672
+            - 15672:15672
+        restart: on-failure
+        healthcheck:
+            test: rabbitmq-diagnostics -q ping
+            interval: 10s
+            timeout: 10s
+            retries: 10
+            start_period: 10s
+        volumes:
+            - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+            - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    recordhub.basketservice.api:
+        image: ${DOCKER_REGISTRY-}recordhubbasketserviceapi
+        build:
+            context: .
+            dockerfile: RecordHub.BasketService/RecordHub.BasketService.Api/Dockerfile
+        networks:
+            - recordhub
+        ports:
+            - 5006:443
+        depends_on:
+            - redis
+            - gateway
 
+    recordhub.orderingservice.api:
+        image: ${DOCKER_REGISTRY-}recordhuborderingserviceapi
+        build:
+            context: .
+            dockerfile: RecordHub.OrderingService/RecordHub.OrderingService.Api/Dockerfile
+        networks:
+            - recordhub
+        ports:
+            - 5007:443
+        depends_on:
+            - identitydb
+            - gateway
+    recordhub.chatservice.api:
+        image: ${DOCKER_REGISTRY-}recordhubchatserviceapi
+        build:
+            context: .
+            dockerfile: RecordHub.ChatService/RecordHub.ChatService.Api/Dockerfile
+        networks:
+            - recordhub
+        ports:
+            - 5008:443
+        depends_on:
+            - redis
+            - gateway
+    redis:
+        image: redis/redis-stack:latest
+        ports:
+          - 8001:8001
+          - 6379:6379
+        command:  bash -c "redis-server --loglevel warning  --requirepass password"
+        restart: unless-stopped
+
+        volumes:
+          - /local-data/:/data
+        networks:
+            - recordhub
+    elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:8.8.2
+        ports:
+        - 9200:9200
+        restart: always
+        networks:
+            - recordhub
+        volumes:
+            - elasticsearch-data:/usr/share/elasticsearch/data
+        environment:
+            - ELASTIC_PASSWORD=123456aA
+            - xpack.security.enabled=false
+            - discovery.type=single-node
+        healthcheck:
+            test:
+                [
+                    "CMD-SHELL",
+                    "curl -s --cacert config/certs/ca/ca.crt https://localhost:9200 | grep -q 'missing authentication credentials'",
+                ]
+            interval: 10s
+            timeout: 10s
+            retries: 120
+    kibana:
+        depends_on:
+            - elasticsearch
+        image: kibana:8.8.1
+        container_name: kibana
+        volumes:
+            - kibana-data:/usr/share/kibana/data
+        ports:
+            - 5601:5601
+        restart: always
+        networks:
+            - recordhub
+        environment:
+            - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
 volumes:
-        pgdata:   
+        pgdata:
+        elasticsearch-data: 
+        kibana-data:

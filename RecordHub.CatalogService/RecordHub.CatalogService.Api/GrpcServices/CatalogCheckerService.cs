@@ -21,7 +21,14 @@ namespace RecordHub.CatalogService.Api.GrpcServices
 
             _logger.LogInformation($"Grpc call existing of product {request.ProductId}, Existing - {isExisting}");
 
-            return new ProductReply { IsExisting = isExisting, Name = record?.Name ?? null, Price = record?.Price ?? 0 };
+            var product = new ProductReply
+            {
+                IsExisting = isExisting,
+                Name = record?.Name ?? null,
+                Price = record?.Price ?? 0
+            };
+
+            return product;
         }
     }
 }

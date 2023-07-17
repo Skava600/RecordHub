@@ -38,6 +38,5 @@ namespace RecordHub.OrderingService.Api.Controllers
 
             return Ok(orders);
         }
-
     }
 }

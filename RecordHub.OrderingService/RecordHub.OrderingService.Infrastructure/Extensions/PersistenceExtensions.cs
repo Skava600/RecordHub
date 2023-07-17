@@ -9,7 +9,10 @@ namespace RecordHub.OrderingService.Infrastructure.Extensions
     {
         public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDatabaseContext(configuration).AddRepositories();
+            services
+                .AddDatabaseContext(configuration)
+                .AddRepositories();
+
             return services;
         }
         private static IServiceCollection AddDatabaseContext(this IServiceCollection services, IConfiguration configuration)

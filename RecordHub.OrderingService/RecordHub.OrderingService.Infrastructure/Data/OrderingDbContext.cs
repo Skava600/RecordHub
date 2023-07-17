@@ -7,9 +7,10 @@ namespace RecordHub.OrderingService.Infrastructure.Data
     {
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> Items { get; set; }
-        public OrderingDbContext(DbContextOptions<OrderingDbContext> options) : base(options)
-        {
 
+        public OrderingDbContext(DbContextOptions<OrderingDbContext> options)
+            : base(options)
+        {
         }
     }
 }

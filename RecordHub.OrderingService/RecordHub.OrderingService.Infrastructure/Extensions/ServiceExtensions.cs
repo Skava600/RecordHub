@@ -16,6 +16,7 @@ namespace RecordHub.OrderingService.Infrastructure.Extensions
             var cfg = configuration.Get<AppConfig>();
             services.AddScoped<IOrderingService, RecordHub.OrderingService.Infrastructure.Services.OrderingService>();
             services.AddAutoMapper(typeof(OrderProfile));
+
             return services.AddMassTransit(cfg.MassTransit);
         }
         public static IServiceCollection AddJwtAuth(this IServiceCollection services, IConfiguration configuration)
@@ -35,8 +36,8 @@ namespace RecordHub.OrderingService.Infrastructure.Extensions
                 {
                     cfg.Host(massTransitOptions.Host, h =>
                     {
-                        h.Username("guest");
-                        h.Password("guest");
+                        h.Username(massTransitOptions.Username);
+                        h.Password(massTransitOptions.Password);
                     });
 
                     cfg.ReceiveEndpoint(massTransitOptions.BasketCheckoutQueue, c =>

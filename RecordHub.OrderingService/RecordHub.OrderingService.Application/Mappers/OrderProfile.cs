@@ -9,6 +9,7 @@ namespace RecordHub.OrderingService.Application.Mappers
         public OrderProfile()
         {
             CreateMap<BasketCheckoutMessage, Order>();
+
             CreateMap<OrderItemModel, OrderItem>();
         }
     }

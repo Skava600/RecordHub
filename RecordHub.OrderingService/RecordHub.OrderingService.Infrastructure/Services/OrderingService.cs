@@ -13,13 +13,18 @@ namespace RecordHub.OrderingService.Infrastructure.Services
     {
         private readonly IMapper _mapper;
         private readonly IOrderingRepository _repository;
-        public OrderingService(IMapper mapper, IOrderingRepository repository)
+
+        public OrderingService(
+            IMapper mapper,
+            IOrderingRepository repository)
         {
             _mapper = mapper;
             _repository = repository;
         }
 
-        public async Task AddOrderAsync(BasketCheckoutMessage message, CancellationToken cancellationToken = default)
+        public async Task AddOrderAsync(
+            BasketCheckoutMessage message,
+            CancellationToken cancellationToken = default)
         {
             var order = _mapper.Map<Order>(message);
             order.State = StatesEnum.Submitted;
@@ -27,7 +32,10 @@ namespace RecordHub.OrderingService.Infrastructure.Services
             await _repository.AddAsync(order, cancellationToken);
         }
 
-        public async Task ChangeOrderStateAsync(Guid orderId, StatesEnum state, CancellationToken cancellationToken = default)
+        public async Task ChangeOrderStateAsync(
+            Guid orderId,
+            StatesEnum state,
+            CancellationToken cancellationToken = default)
         {
             var order = await _repository.GetAsync(orderId, cancellationToken);
             if (order == null)
@@ -38,9 +46,12 @@ namespace RecordHub.OrderingService.Infrastructure.Services
             await _repository.UpdateStateAsync(orderId, state, cancellationToken);
         }
 
-        public Task<IEnumerable<Order>> GetUsersOrdersAsync(string userId, ClaimsPrincipal user, CancellationToken cancellationToken = default)
+        public Task<IEnumerable<Order>> GetUsersOrdersAsync(
+            string userId,
+            ClaimsPrincipal user,
+            CancellationToken cancellationToken = default)
         {
-            if (!user.IsInRole("admin") && !userId.Equals(user.FindFirstValue(ClaimTypes.NameIdentifier)))
+            if (!user.IsInRole("Admin") && !userId.Equals(user.FindFirstValue(ClaimTypes.NameIdentifier)))
             {
                 throw new UnauthorizedAccessException(nameof(userId));
             }

@@ -7,7 +7,6 @@ using RecordHub.Shared.Config;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -16,6 +15,7 @@ builder.Services.ConfigureSwagger();
 builder.Services.AddCore(builder.Configuration);
 builder.Services.AddPersistence(builder.Configuration);
 builder.ConfigureSerilog();
+
 var app = builder.Build();
 app.UseMiddleware<GlobalExceptionHandlingMiddleware>();
 if (app.Environment.IsDevelopment())
@@ -23,6 +23,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -34,6 +35,7 @@ using (var scope = app.Services.CreateScope())
         await dbContext.Database.MigrateAsync();
     }
 }
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

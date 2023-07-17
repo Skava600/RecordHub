@@ -6,13 +6,15 @@ namespace RecordHub.OrderingService.Infrastructure.Data.Repositories
 {
     public class OrderingRepository : IOrderingRepository
     {
-        private OrderingDbContext _context { get; }
+        private readonly OrderingDbContext _context;
         private readonly DbSet<Order> orders;
+
         public OrderingRepository(OrderingDbContext context)
         {
             orders = context.Orders;
             _context = context;
         }
+
         public async Task AddAsync(Order order, CancellationToken cancellationToken = default)
         {
             await orders.AddAsync(order, cancellationToken);
@@ -28,6 +30,7 @@ namespace RecordHub.OrderingService.Infrastructure.Data.Repositories
                 {
                     orders.Attach(order);
                 }
+
                 orders.Remove(order);
                 await _context.SaveChangesAsync();
             }
@@ -36,12 +39,17 @@ namespace RecordHub.OrderingService.Infrastructure.Data.Repositories
         public async Task<Order?> GetAsync(Guid id, CancellationToken cancellationToken = default)
         {
             var order = await orders.FindAsync(id);
+
             return order;
         }
 
         public async Task<IEnumerable<Order>> GetUsersOrdersAsync(string userId, CancellationToken cancellationToken = default)
         {
-            return await orders.Where(o => o.UserId.Equals(userId)).Include(o => o.Items).AsNoTracking().ToListAsync(cancellationToken);
+            return await orders
+                .Where(o => o.UserId.Equals(userId))
+                .Include(o => o.Items)
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
         }
 
         public async Task UpdateStateAsync(Guid orderId, StatesEnum state, CancellationToken cancellationToken = default)

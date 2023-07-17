@@ -7,6 +7,7 @@ namespace RecordHub.OrderingService.Api.Middlewares
     {
         private readonly RequestDelegate _next;
         private readonly ILogger _logger;
+
         public GlobalExceptionHandlingMiddleware(RequestDelegate next, ILogger<GlobalExceptionHandlingMiddleware> logger)
         {
             _next = next;
@@ -19,7 +20,6 @@ namespace RecordHub.OrderingService.Api.Middlewares
             {
                 await _next(context);
             }
-
             catch (Exception ex)
             {
                 var code = HttpStatusCode.InternalServerError;

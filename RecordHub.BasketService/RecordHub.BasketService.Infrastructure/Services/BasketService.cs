@@ -52,7 +52,6 @@ namespace RecordHub.BasketService.Infrastructure.Services
             CancellationToken cancellationToken = default)
         {
             var basket = await _repo.GetBasketAsync(userName);
-
             if (basket == null)
             {
                 throw new BasketIsEmptyException();

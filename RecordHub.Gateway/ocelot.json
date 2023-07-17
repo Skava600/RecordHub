@@ -38,7 +38,7 @@
         "DownstreamHostAndPorts": [
           {
             "Host": "recordhub.catalogservice.api",
-            "Port": 443
+            "Port": 5004
           }
         ],
         "DownstreamPathTemplate": "/api/Record/",
@@ -52,7 +52,7 @@
         "DownstreamHostAndPorts": [
           {
             "Host": "recordhub.catalogservice.api",
-            "Port": 443
+            "Port": 5004
           }
         ],
         "DownstreamPathTemplate": "/api/Record/{endpoint}",
@@ -67,7 +67,7 @@
         "DownstreamHostAndPorts": [
           {
             "Host": "recordhub.catalogservice.api",
-            "Port": 443
+            "Port": 5004
           }
         ],
         "DownstreamPathTemplate": "/api/Artists",
@@ -81,7 +81,7 @@
         "DownstreamHostAndPorts": [
           {
             "Host": "recordhub.catalogservice.api",
-            "Port": 443
+            "Port": 5004
           }
         ],
         "DownstreamPathTemplate": "/api/Artists/{endpoint}",
@@ -96,7 +96,7 @@
         "DownstreamHostAndPorts": [
           {
             "Host": "recordhub.catalogservice.api",
-            "Port": 443
+            "Port": 5004
           }
         ],
         "DownstreamPathTemplate": "/api/Styles",
@@ -110,7 +110,7 @@
         "DownstreamHostAndPorts": [
           {
             "Host": "recordhub.catalogservice.api",
-            "Port": 443
+            "Port": 5004
           }
         ],
         "DownstreamPathTemplate": "/api/Styles/{endpoint}",
@@ -125,7 +125,7 @@
         "DownstreamHostAndPorts": [
           {
             "Host": "recordhub.catalogservice.api",
-            "Port": 443
+            "Port": 5004
           }
         ],
         "DownstreamPathTemplate": "/api/Countries",
@@ -139,7 +139,7 @@
         "DownstreamHostAndPorts": [
           {
             "Host": "recordhub.catalogservice.api",
-            "Port": 443
+            "Port": 5004
           }
         ],
         "DownstreamPathTemplate": "/api/Countries/{endpoint}",
@@ -155,7 +155,7 @@
         "DownstreamHostAndPorts": [
           {
             "Host": "recordhub.catalogservice.api",
-            "Port": 443
+            "Port": 5004
           }
         ],
         "DownstreamPathTemplate": "/api/Labels",
@@ -169,7 +169,7 @@
         "DownstreamHostAndPorts": [
           {
             "Host": "recordhub.catalogservice.api",
-            "Port": 443
+            "Port": 5004
           }
         ],
         "DownstreamPathTemplate": "/api/Labels/{endpoint}",
@@ -270,7 +270,7 @@
           {
             "Name": "Catalog API",
             "Version": "v1",
-            "Url": "https://recordhub.catalogservice.api:443/swagger/v1/swagger.json"
+            "Url": "https://recordhub.catalogservice.api:5004/swagger/v1/swagger.json"
           }
         ]
       },

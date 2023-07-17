@@ -14,7 +14,6 @@ builder.Services.AddCors(options => options.AddPolicy("CorsPolicy", corsbuilder 
     .WithOrigins(builder.Configuration.GetValue<string>("ClientHost"))
     .AllowCredentials();
 }));
-builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 app.UseRouting();

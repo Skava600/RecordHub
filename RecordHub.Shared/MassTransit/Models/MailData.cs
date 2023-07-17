@@ -1,4 +1,4 @@
-﻿namespace RecordHub.Shared.Models
+﻿namespace RecordHub.Shared.MassTransit.Models
 {
     public class MailData
     {

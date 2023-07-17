@@ -29,7 +29,6 @@ namespace RecordHub.Shared.Config
             { "machine_name", new SinglePropertyColumnWriter("MachineName", PropertyWriteMethod.ToString, NpgsqlDbType.Text, "l") },
         };
 
-
         public static void ConfigureSerilog(this WebApplicationBuilder builder)
         {
             builder.Logging.ClearProviders();

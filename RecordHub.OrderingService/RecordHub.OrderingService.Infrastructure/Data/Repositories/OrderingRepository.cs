@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RecordHub.OrderingService.Domain.Entities;
-using RecordHub.Shared.Enums;
 
 namespace RecordHub.OrderingService.Infrastructure.Data.Repositories
 {
@@ -52,15 +51,11 @@ namespace RecordHub.OrderingService.Infrastructure.Data.Repositories
                 .ToListAsync(cancellationToken);
         }
 
-        public async Task UpdateStateAsync(Guid orderId, StatesEnum state, CancellationToken cancellationToken = default)
+        public async Task UpdateAsync(Order order, CancellationToken cancellationToken = default)
         {
-            var order = await GetAsync(orderId, cancellationToken);
-            if (order != null)
-            {
-                order.State = state;
-                orders.Update(order);
-                await _context.SaveChangesAsync(cancellationToken);
-            }
+            orders.Update(order);
+
+            await _context.SaveChangesAsync(cancellationToken);
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using RecordHub.OrderingService.Domain.Entities;
-using RecordHub.Shared.Enums;
 
 namespace RecordHub.OrderingService.Infrastructure.Data.Repositories
 {
@@ -9,9 +8,8 @@ namespace RecordHub.OrderingService.Infrastructure.Data.Repositories
             Order order,
             CancellationToken cancellationToken = default);
 
-        Task UpdateStateAsync(
-            Guid orderId,
-            StatesEnum state,
+        Task UpdateAsync(
+           Order order,
             CancellationToken cancellationToken = default);
 
         Task DeleteAsync(

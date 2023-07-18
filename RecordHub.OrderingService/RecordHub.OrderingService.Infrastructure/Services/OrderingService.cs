@@ -42,10 +42,12 @@ namespace RecordHub.OrderingService.Infrastructure.Services
                 throw new EntityNotFoundException(nameof(orderId));
             }
 
-            await _repository.UpdateStateAsync(orderId, state, cancellationToken);
+            order.State = state;
+
+            await _repository.UpdateAsync(order, cancellationToken);
         }
 
-        public Task<IEnumerable<Order>> GetUsersOrdersAsync(
+        public async Task<IEnumerable<Order>> GetUsersOrdersAsync(
             string userId,
             ClaimsPrincipal user,
             CancellationToken cancellationToken = default)
@@ -56,7 +58,7 @@ namespace RecordHub.OrderingService.Infrastructure.Services
                 throw new UnauthorizedAccessException(nameof(userId));
             }
 
-            return _repository.GetUsersOrdersAsync(userId, cancellationToken);
+            return await _repository.GetUsersOrdersAsync(userId, cancellationToken);
         }
     }
 }

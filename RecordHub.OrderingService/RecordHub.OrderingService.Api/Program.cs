@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using RecordHub.OrderingService.Api;
 using RecordHub.OrderingService.Api.Middlewares;
 using RecordHub.OrderingService.Infrastructure.Data;
@@ -24,17 +23,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    var dbContext = services.GetRequiredService<OrderingDbContext>();
-    var pendingMigrations = await dbContext.Database.GetPendingMigrationsAsync();
-
-    if (pendingMigrations.Any())
-    {
-        await dbContext.Database.MigrateAsync();
-    }
-}
+await DbMigration.MigrateDatabase(app);
 
 app.UseHttpsRedirection();
 

@@ -57,18 +57,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.OrderingService.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.OrderingService.Infrastructure", "RecordHub.OrderingService\RecordHub.OrderingService.Infrastructure\RecordHub.OrderingService.Infrastructure.csproj", "{0146AA25-697F-4FA0-88C6-793257C925F1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RecordHub.ChatService", "RecordHub.ChatService", "{1A638131-C350-4F56-B7BE-7BF182F2741C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.ChatService.Api", "RecordHub.ChatService\RecordHub.ChatService.Api\RecordHub.ChatService.Api.csproj", "{40BB295B-B4F7-4423-B036-338842A0C2C0}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.ChatService.Application", "RecordHub.ChatService\RecordHub.ChatService.Application\RecordHub.ChatService.Application.csproj", "{0499261D-01CB-4E86-87AF-4960B5344F3D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.ChatService.Domain", "RecordHub.ChatService\RecordHub.ChatService.Domain\RecordHub.ChatService.Domain.csproj", "{4A14FCBB-5005-4C69-927D-D57EF5FD0BBC}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.ChatService.Infrastructure", "RecordHub.ChatService\RecordHub.ChatService.Infrastructure\RecordHub.ChatService.Infrastructure.csproj", "{570880A7-367E-4721-AAE1-3E19A6BF3B00}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.BasketService.Application", "RecordHub.BasketService\RecordHub.BasketService.Application\RecordHub.BasketService.Application.csproj", "{B56BC54D-C383-4865-9E5E-B8196715F477}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -163,26 +151,6 @@ Global
 		{0146AA25-697F-4FA0-88C6-793257C925F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0146AA25-697F-4FA0-88C6-793257C925F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0146AA25-697F-4FA0-88C6-793257C925F1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{40BB295B-B4F7-4423-B036-338842A0C2C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{40BB295B-B4F7-4423-B036-338842A0C2C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{40BB295B-B4F7-4423-B036-338842A0C2C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{40BB295B-B4F7-4423-B036-338842A0C2C0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0499261D-01CB-4E86-87AF-4960B5344F3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0499261D-01CB-4E86-87AF-4960B5344F3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0499261D-01CB-4E86-87AF-4960B5344F3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0499261D-01CB-4E86-87AF-4960B5344F3D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4A14FCBB-5005-4C69-927D-D57EF5FD0BBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4A14FCBB-5005-4C69-927D-D57EF5FD0BBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4A14FCBB-5005-4C69-927D-D57EF5FD0BBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4A14FCBB-5005-4C69-927D-D57EF5FD0BBC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{570880A7-367E-4721-AAE1-3E19A6BF3B00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{570880A7-367E-4721-AAE1-3E19A6BF3B00}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{570880A7-367E-4721-AAE1-3E19A6BF3B00}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{570880A7-367E-4721-AAE1-3E19A6BF3B00}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B56BC54D-C383-4865-9E5E-B8196715F477}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B56BC54D-C383-4865-9E5E-B8196715F477}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B56BC54D-C383-4865-9E5E-B8196715F477}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B56BC54D-C383-4865-9E5E-B8196715F477}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

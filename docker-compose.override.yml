@@ -52,7 +52,6 @@ services:
     volumes:
       - $APPDATA/Microsoft/UserSecrets/$USER_SECRETS_ID:/root/.microsoft/usersecrets/$USER_SECRETS_ID
       - $HOME/.microsoft/usersecrets/$USER_SECRETS_ID:/root/.microsoft/usersecrets/$USER_SECRETS_ID
-
   recordhub.orderingservice.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development

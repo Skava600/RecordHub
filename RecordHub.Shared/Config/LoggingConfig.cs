@@ -28,8 +28,7 @@ namespace RecordHub.Shared.Config
             { "props_test", new PropertiesColumnWriter(NpgsqlDbType.Jsonb) },
             { "machine_name", new SinglePropertyColumnWriter("MachineName", PropertyWriteMethod.ToString, NpgsqlDbType.Text, "l") },
         };
-
-
+      
         public static void ConfigureSerilog(this WebApplicationBuilder builder)
         {
             builder.Logging.ClearProviders();
@@ -40,9 +39,13 @@ namespace RecordHub.Shared.Config
             var schema = settings.PostgresSettings.Schema;
             LogEventLevel logLevel;
             if (builder.Environment.IsProduction())
+            {
                 logLevel = LogEventLevel.Information;
+            }
             else
+            {
                 logLevel = LogEventLevel.Debug;
+            }
 
             var sqlOptions = new PostgreSqlOptions
             {
@@ -66,7 +69,7 @@ namespace RecordHub.Shared.Config
                 .WriteTo.Console(restrictedToMinimumLevel: logLevel)
                 .WriteTo.PostgreSQL(
                     connectionString: connectionString,
-                   needAutoCreateTable: true,
+                    needAutoCreateTable: true,
                     schemaName: schema,
                     tableName: tableName,
                     restrictedToMinimumLevel: logLevel,

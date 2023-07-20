@@ -1,0 +1,34 @@
+  {
+    "Routes": [
+      // Identity service
+      {
+        "UpstreamPathTemplate": "/api/Auth/{endpoint}",
+        "UpstreamHttpMethod": [ "Get", "Post" ],
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "recordhub.identityservice.api",
+            "Port": 443
+          }
+        ],
+        "DownstreamPathTemplate": "/api/Auth/{endpoint}",
+        "DangerousAcceptAnyServerCertificateValidator": true,
+        "SwaggerKey": "identity"
+      },
+      {
+        "UpstreamPathTemplate": "/api/Auth",
+        "UpstreamHttpMethod": [ "Get", "Put" ],
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "recordhub.identityservice.api",
+            "Port": 443
+          }
+        ],
+        "DownstreamPathTemplate": "/api/Auth",
+        "DangerousAcceptAnyServerCertificateValidator": true,
+        "SwaggerKey": "identity"
+      }
+      
+    ]
+  }

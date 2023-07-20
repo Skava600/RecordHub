@@ -475,3 +475,5 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+Buffer-*.txt
+/RecordHub.MailService/RecordHub.MailService.Api/Buffer.bookmark

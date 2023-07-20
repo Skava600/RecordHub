@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33103.201
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.IdentityService.Api", "RecordHub.IdentityService.Api\RecordHub.IdentityService.Api.csproj", "{E3690A8B-2144-467C-96A8-2F329DEFDC36}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.IdentityService.Core", "RecordHub.IdentityService.Core\RecordHub.IdentityService.Core.csproj", "{F3C6DEC7-D4BE-4BE1-B5D1-C89BE535EDCB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.IdentityService.Domain", "RecordHub.IdentityService.Domain\RecordHub.IdentityService.Domain.csproj", "{882FB56E-4C4D-4544-BE3D-2F36C8F46D67}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.IdentityService.Infrastructure", "RecordHub.IdentityService.Infrastructure\RecordHub.IdentityService.Infrastructure.csproj", "{D2C6A994-2C03-460C-8F8E-A74F10E6E351}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.IdentityService.Persistence", "RecordHub.IdentityService.Persistence\RecordHub.IdentityService.Persistence.csproj", "{E49220A5-74A0-40E8-A83A-F6B38F002D26}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.Shared", "..\RecordHub.Shared\RecordHub.Shared.csproj", "{F3FF4CFB-04B4-46A9-BC6F-810C216D9088}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E3690A8B-2144-467C-96A8-2F329DEFDC36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3690A8B-2144-467C-96A8-2F329DEFDC36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3690A8B-2144-467C-96A8-2F329DEFDC36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3690A8B-2144-467C-96A8-2F329DEFDC36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3C6DEC7-D4BE-4BE1-B5D1-C89BE535EDCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3C6DEC7-D4BE-4BE1-B5D1-C89BE535EDCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3C6DEC7-D4BE-4BE1-B5D1-C89BE535EDCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3C6DEC7-D4BE-4BE1-B5D1-C89BE535EDCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{882FB56E-4C4D-4544-BE3D-2F36C8F46D67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{882FB56E-4C4D-4544-BE3D-2F36C8F46D67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{882FB56E-4C4D-4544-BE3D-2F36C8F46D67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{882FB56E-4C4D-4544-BE3D-2F36C8F46D67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2C6A994-2C03-460C-8F8E-A74F10E6E351}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2C6A994-2C03-460C-8F8E-A74F10E6E351}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2C6A994-2C03-460C-8F8E-A74F10E6E351}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2C6A994-2C03-460C-8F8E-A74F10E6E351}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E49220A5-74A0-40E8-A83A-F6B38F002D26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E49220A5-74A0-40E8-A83A-F6B38F002D26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E49220A5-74A0-40E8-A83A-F6B38F002D26}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E49220A5-74A0-40E8-A83A-F6B38F002D26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F3FF4CFB-04B4-46A9-BC6F-810C216D9088}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3FF4CFB-04B4-46A9-BC6F-810C216D9088}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3FF4CFB-04B4-46A9-BC6F-810C216D9088}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3FF4CFB-04B4-46A9-BC6F-810C216D9088}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {31CABCD3-7B33-4EA0-AE00-F4D2A2051AD2}
+	EndGlobalSection
+EndGlobal

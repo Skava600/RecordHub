@@ -9,7 +9,7 @@ namespace RecordHub.OrderingService.Infrastructure.Data.Repositories
             CancellationToken cancellationToken = default);
 
         Task UpdateAsync(
-           Order order,
+            Order order,
             CancellationToken cancellationToken = default);
 
         Task DeleteAsync(

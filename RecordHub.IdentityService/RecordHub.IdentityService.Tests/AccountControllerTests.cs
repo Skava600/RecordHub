@@ -72,7 +72,7 @@ namespace RecordHub.IdentityService.Tests
         {
             // Arrange
             var cancellationToken = CancellationToken.None;
-            var userId = "userId";
+            var userId = Guid.Empty;
             var expectedUser = new UserDTO
             {
                 Email = "test@example.com",
@@ -81,17 +81,40 @@ namespace RecordHub.IdentityService.Tests
                 Surname = "Doe",
                 Addresses = new List<Address>
                 {
-                    // Add test addresses here
+                new Address
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = userId,
+                    State = "State 1",
+                    City = "City 1",
+                    Street = "Street 1",
+                    HouseNumber = "1",
+                    Korpus = "K1",
+                    Appartment = "A1",
+                    Postcode = "12345"
+                },
+                new Address
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = userId,
+                    State = "State 2",
+                    City = "City 2",
+                    Street = "Street 2",
+                    HouseNumber = "2",
+                    Korpus = "K2",
+                    Appartment = "A2",
+                    Postcode = "23456"
                 }
+            }
             };
 
             var accountServiceMock = new Mock<IAccountService>();
             accountServiceMock
-                .Setup(m => m.GetUserInfoAsync(userId, cancellationToken))
+                .Setup(m => m.GetUserInfoAsync(userId.ToString(), cancellationToken))
                 .ReturnsAsync(expectedUser);
 
             var controller = new AuthController(accountServiceMock.Object);
-            controller.ControllerContext = GetMockControllerContextWithUser(userId);
+            controller.ControllerContext = GetMockControllerContextWithUser(userId.ToString());
 
             // Act
             var result = await controller.UserInfo(cancellationToken);

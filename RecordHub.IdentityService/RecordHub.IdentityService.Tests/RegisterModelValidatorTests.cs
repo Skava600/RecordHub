@@ -160,7 +160,7 @@ namespace RecordHub.IdentityService.Tests
         }
 
         [Fact]
-        public void ShortName_ShouldFailValidation()
+        public void Validate_ShortName_ShouldFailValidation()
         {
             // Arrange
             var registerModel = new RegisterModel
@@ -181,7 +181,7 @@ namespace RecordHub.IdentityService.Tests
         }
 
         [Fact]
-        public void ShortSurname_ShouldFailValidation()
+        public void Validate_ShortSurname_ShouldFailValidation()
         {
             // Arrange
             var registerModel = new RegisterModel

@@ -376,8 +376,7 @@ namespace RecordHub.IdentityService.Tests
                     Korpus = "K2",
                     Appartment = "A2",
                     Postcode = "23456"
-                },
-                // Add more addresses as needed
+                }
             };
 
             _mockUserManager

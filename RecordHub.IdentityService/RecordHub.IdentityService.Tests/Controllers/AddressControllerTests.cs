@@ -1,14 +1,23 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FluentAssertions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RecordHub.IdentityService.Api.Controllers;
 using RecordHub.IdentityService.Core.Services;
-using RecordHub.IdentityService.Domain.Models;
+using RecordHub.IdentityService.Tests.Generators;
 using System.Security.Claims;
 
-namespace RecordHub.IdentityService.Tests
+namespace RecordHub.IdentityService.Tests.Controllers
 {
     public class AddressesControllerTests
     {
+        private AddressGenerator _addressGenerator;
+        private Mock<IAddressService> _addressServiceMock;
+
+        public AddressesControllerTests()
+        {
+            _addressServiceMock = new Mock<IAddressService>();
+            _addressGenerator = new AddressGenerator();
+        }
 
         [Fact]
         public async Task AddAddressAsync_AuthorizedUser_ReturnsOkResult()
@@ -16,30 +25,18 @@ namespace RecordHub.IdentityService.Tests
             // Arrange
             var cancellationToken = CancellationToken.None;
             var userId = "userId";
-            var model = new AddressModel
-            {
-                State = "State",
-                City = "City",
-                Street = "Street",
-                HouseNumber = "HouseNumber",
-                Korpus = "Korpus",
-                Appartment = "Appartment",
-                Postcode = "Postcode"
-            };
+            var model = _addressGenerator.GenerateModel();
 
-            var addressServiceMock = new Mock<IAddressService>();
-            addressServiceMock
-                .Setup(m => m.AddAsync(userId, model, cancellationToken))
-                .Returns(Task.CompletedTask);
+            _addressServiceMock.SetupAddAsync();
 
-            var controller = new AddressesController(addressServiceMock.Object);
+            var controller = new AddressesController(_addressServiceMock.Object);
             controller.ControllerContext = GetMockControllerContextWithUser(userId);
 
             // Act
             var result = await controller.AddAddressAsync(model, cancellationToken);
 
             // Assert
-            var okResult = Assert.IsType<OkResult>(result);
+            result.Should().BeOfType<OkResult>();
         }
 
         [Fact]
@@ -48,29 +45,17 @@ namespace RecordHub.IdentityService.Tests
             // Arrange
             var cancellationToken = CancellationToken.None;
             var id = Guid.NewGuid();
-            var model = new AddressModel
-            {
-                State = "State",
-                City = "City",
-                Street = "Street",
-                HouseNumber = "HouseNumber",
-                Korpus = "Korpus",
-                Appartment = "Appartment",
-                Postcode = "Postcode"
-            };
+            var model = _addressGenerator.GenerateModel();
 
-            var addressServiceMock = new Mock<IAddressService>();
-            addressServiceMock
-                .Setup(m => m.UpdateAsync(id, model, cancellationToken))
-                .Returns(Task.CompletedTask);
+            _addressServiceMock.SetupUpdateAsync();
 
-            var controller = new AddressesController(addressServiceMock.Object);
+            var controller = new AddressesController(_addressServiceMock.Object);
 
             // Act
             var result = await controller.UpdateAddressAsync(id, model, cancellationToken);
 
             // Assert
-            var okResult = Assert.IsType<OkResult>(result);
+            result.Should().BeOfType<OkResult>();
         }
 
         [Fact]
@@ -80,18 +65,15 @@ namespace RecordHub.IdentityService.Tests
             var cancellationToken = CancellationToken.None;
             var id = Guid.NewGuid();
 
-            var addressServiceMock = new Mock<IAddressService>();
-            addressServiceMock
-                .Setup(m => m.DeleteAsync(id, cancellationToken))
-                .Returns(Task.CompletedTask);
+            _addressServiceMock.SetupDeleteAsync();
 
-            var controller = new AddressesController(addressServiceMock.Object);
+            var controller = new AddressesController(_addressServiceMock.Object);
 
             // Act
             var result = await controller.DeleteAddressAsync(id, cancellationToken);
 
             // Assert
-            var okResult = Assert.IsType<OkResult>(result);
+            result.Should().BeOfType<OkResult>();
         }
 
         private static ControllerContext GetMockControllerContextWithUser(string userId)

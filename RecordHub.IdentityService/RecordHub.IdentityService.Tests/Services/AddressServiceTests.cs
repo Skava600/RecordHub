@@ -6,7 +6,7 @@ using RecordHub.IdentityService.Infrastructure.Services;
 using RecordHub.IdentityService.Persistence.Data.Repositories.Generic;
 using RecordHub.Shared.Exceptions;
 
-namespace RecordHub.IdentityService.Tests
+namespace RecordHub.IdentityService.Tests.Services
 {
     public class AddressServiceTests
     {
@@ -18,7 +18,16 @@ namespace RecordHub.IdentityService.Tests
         public AddressServiceTests()
         {
             _addressRepositoryMock = new Mock<IAddressRepository>();
-            _userManagerMock = new Mock<UserManager<User>>(Mock.Of<IUserStore<User>>(), null, null, null, null, null, null, null, null);
+            _userManagerMock = new Mock<UserManager<User>>(
+                Mock.Of<IUserStore<User>>(),
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
             _mapperMock = new Mock<IMapper>();
             _addressService = new AddressService(
                 _addressRepositoryMock.Object,

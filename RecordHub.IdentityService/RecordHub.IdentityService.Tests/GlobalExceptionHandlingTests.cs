@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FluentAssertions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using RecordHub.IdentityService.Api.Middlewares;
 using RecordHub.IdentityService.Core.Exceptions;
@@ -29,8 +30,8 @@ namespace RecordHub.IdentityService.Tests
 
             // Assert
             var response = context.Response;
-            Assert.Equal((int)HttpStatusCode.InternalServerError, response.StatusCode);
-            Assert.Equal("application/json", response.ContentType);
+            response.StatusCode.Should().Be((int)HttpStatusCode.InternalServerError);
+            response.ContentType.Should().Be("application/json");
         }
 
         [Fact]
@@ -54,8 +55,8 @@ namespace RecordHub.IdentityService.Tests
 
             // Assert
             var response = context.Response;
-            Assert.Equal((int)HttpStatusCode.InternalServerError, response.StatusCode);
-            Assert.Equal("application/json", response.ContentType);
+            response.StatusCode.Should().Be((int)HttpStatusCode.InternalServerError);
+            response.ContentType.Should().Be("application/json");
         }
     }
 }

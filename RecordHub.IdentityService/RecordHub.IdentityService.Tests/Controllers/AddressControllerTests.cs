@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using RecordHub.IdentityService.Api.Controllers;
 using RecordHub.IdentityService.Core.Services;
 using RecordHub.IdentityService.Tests.Generators;
+using RecordHub.IdentityService.Tests.Setups;
 using System.Security.Claims;
 
 namespace RecordHub.IdentityService.Tests.Controllers

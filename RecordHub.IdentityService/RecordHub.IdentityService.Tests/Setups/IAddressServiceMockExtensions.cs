@@ -1,9 +1,9 @@
 ﻿using RecordHub.IdentityService.Core.Services;
 using RecordHub.IdentityService.Domain.Models;
 
-namespace RecordHub.IdentityService.Tests.Controllers
+namespace RecordHub.IdentityService.Tests.Setups
 {
-    public static class AddressControllerSetup
+    internal static class IAddressServiceMockExtensions
     {
         public static void SetupAddAsync(this Mock<IAddressService> addressServiceMock)
         {

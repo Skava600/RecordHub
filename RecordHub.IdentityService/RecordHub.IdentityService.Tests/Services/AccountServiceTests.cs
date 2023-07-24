@@ -10,6 +10,7 @@ using RecordHub.IdentityService.Domain.Models;
 using RecordHub.IdentityService.Infrastructure.Services;
 using RecordHub.IdentityService.Persistence.Data.Repositories.Generic;
 using RecordHub.IdentityService.Tests.Generators;
+using RecordHub.IdentityService.Tests.Setups;
 using RecordHub.Shared.Exceptions;
 using RecordHub.Shared.MassTransit.Models;
 
@@ -208,7 +209,7 @@ namespace RecordHub.IdentityService.Tests.Services
 
             _mockUserManager.SetupFindByIdAsync(user);
 
-            _mockMapper.SetupMapUserToUserDTO(user, userDTO);
+            _mockMapper.SetupMap(user, userDTO);
 
             _mockAddressRepository.SetupGetAddressesByUserId(userDTO.Addresses);
 

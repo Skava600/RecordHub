@@ -5,6 +5,7 @@ using RecordHub.IdentityService.Api.Controllers;
 using RecordHub.IdentityService.Core.Services;
 using RecordHub.IdentityService.Domain.Models;
 using RecordHub.IdentityService.Tests.Generators;
+using RecordHub.IdentityService.Tests.Setups;
 using System.Security.Claims;
 
 namespace RecordHub.IdentityService.Tests.Controllers

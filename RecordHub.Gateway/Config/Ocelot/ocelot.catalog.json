@@ -1,0 +1,152 @@
+{
+  "Routes": [
+    // Catalog service
+    // Records
+    {
+      "UpstreamPathTemplate": "/api/Record",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "recordhub.catalogservice.api",
+          "Port": 443
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Record/",
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "catalog"
+    },
+    {
+      "UpstreamPathTemplate": "/api/Record/{endpoint}",
+      "UpstreamHttpMethod": [ "Put", "Delete" ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "recordhub.catalogservice.api",
+          "Port": 443
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Record/{endpoint}",
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "catalog"
+    },
+    //Artists
+    {
+      "UpstreamPathTemplate": "/api/Artists",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "recordhub.catalogservice.api",
+          "Port": 443
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Artists",
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "catalog"
+    },
+    {
+      "UpstreamPathTemplate": "/api/Artists/{endpoint}",
+      "UpstreamHttpMethod": [ "Put", "Get", "Delete" ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "recordhub.catalogservice.api",
+          "Port": 443
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Artists/{endpoint}",
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "catalog"
+    },
+    //Styles
+    {
+      "UpstreamPathTemplate": "/api/Styles",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "recordhub.catalogservice.api",
+          "Port": 443
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Styles",
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "catalog"
+    },
+    {
+      "UpstreamPathTemplate": "/api/Styles/{endpoint}",
+      "UpstreamHttpMethod": [ "Put", "Delete" ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "recordhub.catalogservice.api",
+          "Port": 443
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Styles/{endpoint}",
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "catalog"
+    },
+    //Countries
+    {
+      "UpstreamPathTemplate": "/api/Countries",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "recordhub.catalogservice.api",
+          "Port": 443
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Countries",
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "catalog"
+    },
+    {
+      "UpstreamPathTemplate": "/api/Countries/{endpoint}",
+      "UpstreamHttpMethod": [ "Put", "Delete" ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "recordhub.catalogservice.api",
+          "Port": 443
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Countries/{endpoint}",
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "catalog"
+    },
+
+    //Labels
+    {
+      "UpstreamPathTemplate": "/api/Labels",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "recordhub.catalogservice.api",
+          "Port": 443
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Labels",
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "catalog"
+    },
+    {
+      "UpstreamPathTemplate": "/api/Labels/{endpoint}",
+      "UpstreamHttpMethod": [ "Put", "Delete" ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "recordhub.catalogservice.api",
+          "Port": 443
+        }
+      ],
+      "DownstreamPathTemplate": "/api/Labels/{endpoint}",
+      "DangerousAcceptAnyServerCertificateValidator": true,
+      "SwaggerKey": "catalog"
+    }
+  ]
+  }
+}

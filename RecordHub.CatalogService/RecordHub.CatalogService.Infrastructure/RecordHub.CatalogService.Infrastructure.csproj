@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Configs\**" />
+    <EmbeddedResource Remove="Configs\**" />
+    <None Remove="Configs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+    <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="NEST" Version="7.17.5" />
+    <PackageReference Include="Ninject" Version="3.3.6" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\RecordHub.Shared\RecordHub.Shared.csproj" />
+    <ProjectReference Include="..\RecordHub.CatalogService.Application\RecordHub.CatalogService.Application.csproj" />
+    <ProjectReference Include="..\RecordHub.CatalogService.Domain\RecordHub.CatalogService.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

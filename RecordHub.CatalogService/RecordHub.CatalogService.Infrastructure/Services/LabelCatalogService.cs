@@ -69,6 +69,7 @@ namespace RecordHub.CatalogService.Infrastructure.Services
             }
 
             _mapper.Map(model, label);
+            await _validator.ValidateAndThrowAsync(label, cancellationToken);
             await _repository.Labels.UpdateAsync(label, cancellationToken);
             await _repository.CommitAsync();
 

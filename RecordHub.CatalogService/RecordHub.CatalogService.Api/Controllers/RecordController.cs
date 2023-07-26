@@ -59,6 +59,14 @@ namespace RecordHub.CatalogService.Api.Controllers
             return Ok(await recordCatalogService.GetByPageAsync(page, pageSize, cancellationToken));
         }
 
+        [HttpGet("{slug}")]
+        public async Task<IActionResult> GetBySlugAsync(
+          [FromRoute] string slug,
+          CancellationToken cancellationToken = default)
+        {
+            return Ok(await recordCatalogService.GetBySlugAsync(slug, cancellationToken));
+        }
+
         [HttpGet("filter")]
         public async Task<IActionResult> SearchAsync(
             [FromQuery] RecordFilterModel model,

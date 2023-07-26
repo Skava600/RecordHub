@@ -11,5 +11,13 @@ namespace RecordHub.CatalogService.Tests.Setups
                 .Returns(destination)
                 .Verifiable();
         }
+
+        public static void SetupMap<TSource, TDestination>(this Mock<IMapper> mapperMock, IEnumerable<TSource> source, IEnumerable<TDestination> destination)
+        {
+            mapperMock
+                .Setup(m => m.Map<IEnumerable<TDestination>>(It.IsAny<IEnumerable<TSource>>()))
+                .Returns(destination)
+                .Verifiable();
+        }
     }
 }

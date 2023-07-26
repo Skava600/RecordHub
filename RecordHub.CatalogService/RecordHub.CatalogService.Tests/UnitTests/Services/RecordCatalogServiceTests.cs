@@ -331,14 +331,14 @@ public class RecordCatalogServiceTests
             Styles = model.Styles.Select(style => new StyleDTO { Name = style }).ToList()
         };
 
-        _unitOfWorkMock.SetupGetByIdGraphIncludedAsync(record, cancellationToken);
+        _unitOfWorkMock.SetupGetByIdRecordGraphIncludedAsync(record, cancellationToken);
 
         _mapperMock.SetupMap(model, record);
 
         var validResult = new ValidationResult();
         _validatorMock.SetupValidatorMock(validResult, cancellationToken);
 
-        _unitOfWorkMock.SetupUnitOfWorkRecordUpdateAsync(record, cancellationToken);
+        _unitOfWorkMock.SetupUnitOfWorkRecordUpdateAsync(cancellationToken);
 
         var updateResponseMock = new Mock<UpdateResponse<RecordDTO>>();
         _elasticClientMock.SetupUpdateAsync(updateResponseMock.Object, cancellationToken);
@@ -366,7 +366,7 @@ public class RecordCatalogServiceTests
         {
         };
 
-        _unitOfWorkMock.SetupGetByIdGraphIncludedAsync(null, cancellationToken); // Return null to simulate record not found
+        _unitOfWorkMock.SetupGetByIdRecordGraphIncludedAsync(null, cancellationToken); // Return null to simulate record not found
 
         // Act
         Func<Task> act = async () => await _recordCatalogService.UpdateAsync(recordId, model, cancellationToken);

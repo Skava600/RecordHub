@@ -10,28 +10,27 @@ using RecordHub.CatalogService.Domain.Models;
 using RecordHub.CatalogService.Infrastructure.Services;
 using RecordHub.CatalogService.Tests.Generators;
 using RecordHub.CatalogService.Tests.Setups;
-using RecordHub.Shared.Exceptions;
 using Record = RecordHub.CatalogService.Domain.Entities.Record;
 
 namespace RecordHub.CatalogService.Tests.UnitTests.Services
 {
-    public class ArtistCatalogServiceTests
+    public class CountryCatalogServiceTests
     {
         private readonly Mock<IMapper> _mapperMock;
         private readonly Mock<IUnitOfWork> _unitOfWorkMock;
         private readonly Mock<IElasticClient> _elasticClientMock;
         private readonly Mock<IValidator<BaseEntity>> _validatorMock;
-        private readonly ArtistCatalogService _artistCatalogService;
-        private readonly ArtistGenerator _artistGenerator;
+        private readonly CountryCatalogService _countryCatalogService;
+        private readonly BaseEntityGenerator _baseEntityGenerator;
 
-        public ArtistCatalogServiceTests()
+        public CountryCatalogServiceTests()
         {
-            _artistGenerator = new ArtistGenerator();
+            _baseEntityGenerator = new BaseEntityGenerator();
             _mapperMock = new Mock<IMapper>();
             _unitOfWorkMock = new Mock<IUnitOfWork>();
             _validatorMock = new Mock<IValidator<BaseEntity>>();
             _elasticClientMock = new Mock<IElasticClient>();
-            _artistCatalogService = new ArtistCatalogService(
+            _countryCatalogService = new CountryCatalogService(
                 _mapperMock.Object,
                 _unitOfWorkMock.Object,
                 _validatorMock.Object,
@@ -39,41 +38,40 @@ namespace RecordHub.CatalogService.Tests.UnitTests.Services
         }
 
         [Fact]
-        public async Task AddAsync_ValidModel_AddsArtistAndCommitsUnitOfWork()
+        public async Task AddAsync_ValidModel_AddsCountryAndCommitsUnitOfWork()
         {
             // Arrange
             var cancellationToken = CancellationToken.None;
-            var model = _artistGenerator.GenerateModel();
+            var model = _baseEntityGenerator.GenerateCountryModel();
 
-            var artist = new Artist
+            var country = new Country
             {
                 Id = Guid.NewGuid(),
                 Name = model.Name,
                 Slug = model.Slug,
             };
 
-            _mapperMock.SetupMap(model, artist);
+            _mapperMock.SetupMap(model, country);
             var validResult = new ValidationResult();
             _validatorMock.SetupValidatorMock(validResult, cancellationToken);
 
-            _unitOfWorkMock.SetupUnitOfWorkMockAddArtistAsync(cancellationToken);
+            _unitOfWorkMock.SetupUnitOfWorkMockAddCountryAsync(cancellationToken);
 
             // Act
-            await _artistCatalogService.AddAsync(model, cancellationToken);
+            await _countryCatalogService.AddAsync(model, cancellationToken);
 
             // Assert
             _validatorMock.Verify(); // Verify that ValidateAndThrowAsync was called
 
             _unitOfWorkMock
-                .Verify(uow => uow.Artists
-                .AddAsync(artist, cancellationToken),
+                .Verify(uow => uow.Countries
+                .AddAsync(country, cancellationToken),
                 Times.Once); // Verify AddAsync was called
 
             _unitOfWorkMock
                 .Verify(uow => uow
                 .CommitAsync(cancellationToken),
                 Times.Once); // Verify CommitAsync was called
-
         }
 
         [Fact]
@@ -81,22 +79,22 @@ namespace RecordHub.CatalogService.Tests.UnitTests.Services
         {
             // Arrange
             var cancellationToken = CancellationToken.None;
-            var model = _artistGenerator.GenerateModel();
+            var model = _baseEntityGenerator.GenerateCountryModel();
 
-            var artist = new Artist
+            var country = new Country
             {
                 Id = Guid.NewGuid(),
                 Name = model.Name,
                 Slug = model.Slug
             };
 
-            _mapperMock.SetupMap(model, artist);
+            _mapperMock.SetupMap(model, country);
 
             var validationException = new ValidationException("Validation error");
             _validatorMock.SetupValidatorMockThrowsException(validationException);
 
             // Act and Assert
-            await _artistCatalogService
+            await _countryCatalogService
                 .Invoking(async service => await service
                 .AddAsync(model, cancellationToken))
                 .Should()
@@ -104,8 +102,8 @@ namespace RecordHub.CatalogService.Tests.UnitTests.Services
                 .WithMessage(validationException.Message);
 
             _unitOfWorkMock
-                .Verify(uow => uow.Artists
-                .AddAsync(It.IsAny<Artist>(), cancellationToken),
+                .Verify(uow => uow.Countries
+                .AddAsync(It.IsAny<Country>(), cancellationToken),
                 Times.Never); // Verify AddAsync was not called
 
             _unitOfWorkMock
@@ -115,63 +113,56 @@ namespace RecordHub.CatalogService.Tests.UnitTests.Services
         }
 
         [Fact]
-        public async Task GetBySlug_ArtistNotFound_ThrowsEntityNotFoundException()
+        public async Task GetAllAsync_ReturnsAllCountries()
         {
             // Arrange
             var cancellationToken = CancellationToken.None;
-            var slug = "sample-slug";
+            var entities = _baseEntityGenerator.GenerateBaseEntities();
 
-            _unitOfWorkMock.SetupUnitOfWorkMockArtistGetBySlugAsync(null, cancellationToken);
-
-            // Act and Assert
-            await _artistCatalogService
-                .Invoking(async service => await service
-                .GetBySlug(slug, cancellationToken))
-                .Should()
-                .ThrowAsync<EntityNotFoundException>();
-        }
-
-        [Fact]
-        public async Task GetBySlug_ArtistFound_ReturnsArtistDTO()
-        {
-            // Arrange
-            var cancellationToken = CancellationToken.None;
-
-            var artist = _artistGenerator.GenerateEntity();
-
-            var expectedArtistDTO = new ArtistDTO
+            var countries = entities.Select(e => new Country
             {
-                Slug = artist.Slug,
-                Name = artist.Name,
-            };
+                Id = e.Id,
+                Name = e.Name,
+                Slug = e.Slug
+            });
 
-            _unitOfWorkMock.SetupUnitOfWorkMockArtistGetBySlugAsync(artist, cancellationToken);
+            var expectedCountryDTOs = countries.Select(c => new CountryDTO
+            {
+                Name = c.Name,
+                Slug = c.Slug
+            });
 
-            _mapperMock.SetupMap(artist, expectedArtistDTO);
+            _unitOfWorkMock.SetupUnitOfWorkMockGetAllCountriesAsync(countries, cancellationToken);
+            _mapperMock.SetupMap(countries, expectedCountryDTOs);
 
             // Act
-            var result = await _artistCatalogService.GetBySlug(artist.Slug, cancellationToken);
+            var result = await _countryCatalogService.GetAllAsync(cancellationToken);
 
             // Assert
             result
                 .Should()
-                .BeEquivalentTo(expectedArtistDTO);
+                .BeEquivalentTo(expectedCountryDTOs);
         }
 
-
         [Fact]
-        public async Task DeleteAsync_ArtistFound_DeletesArtistAndIndexesInElasticsearch()
+        public async Task DeleteAsync_CountryFound_DeletesCountryAndIndexesInElasticsearch()
         {
             // Arrange
             var cancellationToken = CancellationToken.None;
 
-            var artist = _artistGenerator.GenerateEntity();
+            var baseEntity = _baseEntityGenerator.GenerateBaseEntity();
+            var country = new Country
+            {
+                Id = baseEntity.Id,
+                Name = baseEntity.Name,
+                Slug = baseEntity.Slug
+            };
 
-            _unitOfWorkMock.SetupUnitOfWorkArtistDeleteAsync(artist, cancellationToken);
+            _unitOfWorkMock.SetupUnitOfWorkMockCountryDeleteAsync(country, cancellationToken);
             _elasticClientMock.SetupDeleteByQueryAsync(It.IsAny<Func<QueryContainerDescriptor<RecordDTO>, QueryContainer>>());
 
             // Act
-            await _artistCatalogService.DeleteAsync(artist.Id, cancellationToken);
+            await _countryCatalogService.DeleteAsync(country.Id, cancellationToken);
 
             // Assert
             _unitOfWorkMock.Verify();
@@ -179,67 +170,66 @@ namespace RecordHub.CatalogService.Tests.UnitTests.Services
         }
 
         [Fact]
-        public async Task UpdateAsync_ArtistFound_UpdatesArtistAndIndexesRecords()
+        public async Task UpdateAsync_CountryFound_UpdatesCountryAndIndexesRecords()
         {
             // Arrange
             var cancellationToken = CancellationToken.None;
-            var artistId = Guid.NewGuid();
+            var countryId = Guid.NewGuid();
 
-            var model = _artistGenerator.GenerateModel();
+            var model = _baseEntityGenerator.GenerateCountryModel();
 
-            var artist = new Artist
+            var country = new Country
             {
-                Id = artistId,
+                Id = countryId,
                 Name = model.Name,
                 Slug = model.Slug
             };
 
             var records = new List<Record>
             {
-                new Record { Id = Guid.NewGuid(), Name = "Record 1", ArtistId = artistId },
-                new Record { Id = Guid.NewGuid(), Name = "Record 2", ArtistId = artistId }
+                new Record { Id = Guid.NewGuid(), Name = "Record 1", CountryId = countryId },
+                new Record { Id = Guid.NewGuid(), Name = "Record 2", CountryId = countryId }
             };
 
             var recordsDTO = records.Select(r => new RecordDTO { Id = r.Id, Name = r.Name }).ToList();
 
-            _unitOfWorkMock.SetupUnitOfWorkArtistGetByIdAsync(artist, cancellationToken);
-            _mapperMock.SetupMap(model, artist);
+            _unitOfWorkMock.SetupUnitOfWorkMockCountryGetByIdAsync(country, cancellationToken);
+            _mapperMock.SetupMap(model, country);
 
             _validatorMock.SetupValidatorMock(new ValidationResult(), cancellationToken);
-            _unitOfWorkMock.SetupUnitOfWorkArtistUpdateAsync(cancellationToken);
-            _unitOfWorkMock.SetupGetArtistsRecordsAsync(records, cancellationToken);
+            _unitOfWorkMock.SetupUnitOfWorkCountryUpdateAsync(cancellationToken);
+            _unitOfWorkMock.SetupGetCountriesRecordsAsync(records, cancellationToken);
 
             _mapperMock.Setup(m => m.Map<IEnumerable<RecordDTO>>(records)).Returns(recordsDTO);
 
             _elasticClientMock.SetupIndexManyAsync(recordsDTO);
 
             // Act
-            await _artistCatalogService.UpdateAsync(artistId, model, cancellationToken);
+            await _countryCatalogService.UpdateAsync(countryId, model, cancellationToken);
 
             // Assert
             _unitOfWorkMock.Verify();
             _validatorMock.Verify();
-            _mapperMock.Verify(m => m.Map(model, artist), Times.Once);
+            _mapperMock.Verify(m => m.Map(model, country), Times.Once);
             _elasticClientMock.Verify();
         }
 
         [Fact]
-        public async Task UpdateAsync_ArtistNotFound_ThrowsArgumentException()
+        public async Task UpdateAsync_CountryNotFound_ThrowsArgumentException()
         {
             // Arrange
             var cancellationToken = CancellationToken.None;
-            var artistId = Guid.NewGuid();
+            var countryId = Guid.NewGuid();
 
-            _unitOfWorkMock.SetupUnitOfWorkArtistGetByIdAsync(null, cancellationToken);
+            _unitOfWorkMock.SetupUnitOfWorkMockCountryGetByIdAsync(null, cancellationToken);
 
             // Act
-            Func<Task> updateAsyncTask = async () => await _artistCatalogService.UpdateAsync(artistId, new ArtistModel(), cancellationToken);
+            Func<Task> updateAsyncTask = async () => await _countryCatalogService.UpdateAsync(countryId, new CountryModel(), cancellationToken);
 
             // Assert
             await updateAsyncTask
                 .Should()
-                .ThrowAsync<ArgumentException>()
-                .WithMessage($"Failed to update: no artist with id {artistId}");
+                .ThrowAsync<ArgumentException>();
         }
     }
 }

@@ -23,7 +23,6 @@ namespace RecordHub.CatalogService.Tests.Generators
 
         public IEnumerable<BaseEntity> GenerateBaseEntities() => _faker.GenerateBetween(0, 10);
 
-
         public LabelModel GenerateLabelModel()
         {
             var baseEntity = _faker.Generate();

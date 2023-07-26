@@ -8,7 +8,6 @@ using RecordHub.CatalogService.Tests.UnitTests.Grpc.Helpers;
 
 namespace RecordHub.CatalogService.Tests.UnitTests.Grpc
 {
-
     public class CatalogCheckerTests
     {
         private readonly RecordGenerator _recordGenerator;
@@ -46,7 +45,9 @@ namespace RecordHub.CatalogService.Tests.UnitTests.Grpc
 
             // Assert
             unitOfWork.Verify(v => v.Records.GetByIdAsync(id, cancellationToken));
-            response.Should().BeEquivalentTo(response);
+            response
+                .Should()
+                .BeEquivalentTo(response);
         }
     }
 }

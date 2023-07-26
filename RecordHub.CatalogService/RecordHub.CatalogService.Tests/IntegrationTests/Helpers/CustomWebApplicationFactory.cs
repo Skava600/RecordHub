@@ -24,6 +24,7 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests.Helpers
                .WithCleanUp(true)
                .Build();
         }
+
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.UseTestServer();
@@ -49,6 +50,7 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests.Helpers
 
             builder.UseEnvironment("Development");
         }
+
         public async Task InitializeAsync()
         {
             await _container.StartAsync();

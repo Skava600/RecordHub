@@ -26,9 +26,13 @@ namespace RecordHub.CatalogService.Tests.UnitTests.Middleware
             await middleware.Invoke(context);
 
             // Assert
-            response.StatusCode.Should().Be((int)HttpStatusCode.NotFound);
+            response.StatusCode
+                .Should()
+                .Be((int)HttpStatusCode.NotFound);
 
-            response.ContentType.Should().Be("application/json");
+            response.ContentType
+                .Should()
+                .Be("application/json");
         }
 
         [Fact]
@@ -49,9 +53,13 @@ namespace RecordHub.CatalogService.Tests.UnitTests.Middleware
             await middleware.Invoke(context);
 
             // Assert
-            response.StatusCode.Should().Be((int)HttpStatusCode.InternalServerError);
+            response.StatusCode
+                .Should()
+                .Be((int)HttpStatusCode.InternalServerError);
 
-            response.ContentType.Should().Be("application/json");
+            response.ContentType
+                .Should()
+                .Be("application/json");
         }
     }
 }

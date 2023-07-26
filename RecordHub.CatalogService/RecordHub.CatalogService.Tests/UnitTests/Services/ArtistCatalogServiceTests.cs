@@ -73,7 +73,6 @@ namespace RecordHub.CatalogService.Tests.UnitTests.Services
                 .Verify(uow => uow
                 .CommitAsync(cancellationToken),
                 Times.Once); // Verify CommitAsync was called
-
         }
 
         [Fact]

@@ -71,6 +71,7 @@ namespace RecordHub.CatalogService.Tests.Generators
 
             return model;
         }
+
         public Record GenerateRecord()
         {
             return _faker.Generate();

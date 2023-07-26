@@ -154,10 +154,10 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests.Helpers
             Country = Countries[2].Slug,
             Artist = Artists[2].Slug,
             Styles = new List<string>
-                {
-                    Styles[1].Slug,
-                    Styles[3].Slug
-                }
+            {
+                Styles[1].Slug,
+                Styles[3].Slug
+            }
         };
 
         public static RecordModel InvalidRecordModel { get; } = new RecordModel
@@ -173,8 +173,8 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests.Helpers
             Artist = Artists[2].Slug,
             Styles = new List<string>
             {
-                    Styles[1].Slug,
-                    Styles[3].Slug
+                Styles[1].Slug,
+                Styles[3].Slug
             }
         };
     }

@@ -26,7 +26,7 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests
         }
 
         [Fact]
-        public async Task CreateAsync_ReturnsOkResponse()
+        public async Task CreateAsync_ValidModel_ReturnsOkResponse()
         {
             // Arrange
             client.SetFakeBearerToken((object)token);
@@ -66,7 +66,7 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests
         }
 
         [Fact]
-        public async Task UpdateAsync_ReturnsOkResponse()
+        public async Task UpdateAsync_ExistingId_ReturnsOkResponse()
         {
             // Arrange
             client.SetFakeBearerToken((object)token);
@@ -130,7 +130,7 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests
         }
 
         [Fact]
-        public async Task GetAllAsync_ReturnsOkResponse()
+        public async Task GetAllAsync_ExistingLabels_ReturnsOkResponse()
         {
             // Act
             var response = await client.GetAsync("api/Labels");
@@ -146,7 +146,7 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests
         }
 
         [Fact]
-        public async Task DeleteAsync_ReturnsNoContent()
+        public async Task DeleteAsync_ExistingId_ReturnsNoContent()
         {
             // Arrange
             client.SetFakeBearerToken((object)token);

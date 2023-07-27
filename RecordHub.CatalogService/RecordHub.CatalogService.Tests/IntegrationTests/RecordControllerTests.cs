@@ -26,7 +26,7 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests
         }
 
         [Fact]
-        public async Task CreateAsync_ReturnsOkResponse()
+        public async Task CreateAsync_ValidModel_ReturnsOkResponse()
         {
             // Arrange
             client.SetFakeBearerToken((object)token);
@@ -62,7 +62,7 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests
         }
 
         [Fact]
-        public async Task UpdateAsync_ReturnsOkResponse()
+        public async Task UpdateAsync_ValidModel_ReturnsOkResponse()
         {
             // Arrange
             client.SetFakeBearerToken((object)token);
@@ -97,7 +97,7 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests
         }
 
         [Fact]
-        public async Task UpdateAsync_NotExistingRecord_ReturnsInternalErrorResponse()
+        public async Task UpdateAsync_ExistingId_ReturnsInternalErrorResponse()
         {
             // Arrange
             client.SetFakeBearerToken((object)token);
@@ -122,7 +122,7 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests
         }
 
         [Fact]
-        public async Task DeleteAsync_ReturnsNoContent()
+        public async Task DeleteAsync_ExistingId_ReturnsNoContent()
         {
             // Arrange
             client.SetFakeBearerToken((object)token);
@@ -140,7 +140,7 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests
         }
 
         [Fact]
-        public async Task GetBySlugAsync_ReturnsOkResponse()
+        public async Task GetBySlugAsync_ExistingSlug_ReturnsOkResponse()
         {
             // Arrange
             var recordToGet = TestData.Records[1];
@@ -176,7 +176,7 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests
         }
 
         [Fact]
-        public async Task GetByPageAsync_ReturnsOkResponse()
+        public async Task GetByPageAsync_ValidRequest_ReturnsOkResponse()
         {
             // Arrange
             client.SetFakeBearerToken((object)token);

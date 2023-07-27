@@ -185,7 +185,7 @@ namespace RecordHub.CatalogService.Tests.UnitTests.Services
                 Slug = model.Slug,
                 Records = new List<Record>
                 {
-                    new Record { Id = Guid.NewGuid(), Name = "Record 1",  },
+                    new Record { Id = Guid.NewGuid(), Name = "Record 1", },
                     new Record { Id = Guid.NewGuid(), Name = "Record 2", }
                 }
             };

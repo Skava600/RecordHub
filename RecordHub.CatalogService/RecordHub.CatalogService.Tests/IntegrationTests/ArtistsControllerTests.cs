@@ -26,7 +26,7 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests
         }
 
         [Fact]
-        public async Task CreateAsync_ReturnsOkResponse()
+        public async Task CreateAsync_ValidModel_ReturnsOkResponse()
         {
             // Arrange
             client.SetFakeBearerToken((object)token);
@@ -46,7 +46,7 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests
         }
 
         [Fact]
-        public async Task UpdateAsync_ReturnsOkResponse()
+        public async Task UpdateAsync_ExistingId_ReturnsOkResponse()
         {
             // Arrange
             client.SetFakeBearerToken((object)token);
@@ -86,7 +86,7 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests
         }
 
         [Fact]
-        public async Task DeleteAsync_ReturnsNoContent()
+        public async Task DeleteAsync_ExistingId_ReturnsNoContent()
         {
             // Arrange
             client.SetFakeBearerToken((object)token);
@@ -104,7 +104,7 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests
         }
 
         [Fact]
-        public async Task GetBySlug_ReturnsOkResponse()
+        public async Task GetBySlug_ExistingSlug_ReturnsOkResponse()
         {
             // Arrange
             var artistToGet = TestData.Artists[1];
@@ -129,7 +129,7 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests
         }
 
         [Fact]
-        public async Task GetBySlug_ReturnsNotFoundResponse()
+        public async Task GetBySlug_NotExistingSlug_ReturnsNotFoundResponse()
         {
             // Arrange
             var slug = "not-existing-slug";

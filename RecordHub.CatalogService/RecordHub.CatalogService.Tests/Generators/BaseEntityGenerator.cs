@@ -6,7 +6,6 @@ namespace RecordHub.CatalogService.Tests.Generators
 {
     internal class BaseEntityGenerator
     {
-
         private Faker<BaseEntity> _faker;
 
         public BaseEntityGenerator()

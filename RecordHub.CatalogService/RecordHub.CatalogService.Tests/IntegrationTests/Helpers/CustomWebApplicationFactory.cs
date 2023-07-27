@@ -10,7 +10,7 @@ using WebMotions.Fake.Authentication.JwtBearer;
 namespace RecordHub.CatalogService.Tests.IntegrationTests.Helpers
 {
     public class CustomWebApplicationFactory<TProgram>
-     : WebApplicationFactory<TProgram>, IAsyncLifetime where TProgram : class
+        : WebApplicationFactory<TProgram>, IAsyncLifetime where TProgram : class
     {
         private readonly PostgreSqlContainer _container;
 

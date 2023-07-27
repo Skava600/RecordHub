@@ -22,6 +22,7 @@ namespace RecordHub.BasketService.Api.Controllers
         public async Task<IActionResult> GetBasketAsync(CancellationToken cancellationToken = default)
         {
             string? userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
             return Ok(await basketService.GetBasketAsync(userId, cancellationToken));
         }
 

@@ -31,6 +31,38 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.OrderingService.A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.OrderingService.Domain", "RecordHub.OrderingService\RecordHub.OrderingService.Domain\RecordHub.OrderingService.Domain.csproj", "{4845D817-4DF0-4AD3-ADE6-A69C543DAC9F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RecordHub.MailService", "RecordHub.MailService", "{297F85BE-F51D-41DF-95E5-C700ED9152C8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.MailService.Api", "RecordHub.MailService\RecordHub.MailService.Api\RecordHub.MailService.Api.csproj", "{85506BEA-FF13-4F3E-96A4-AAFF5F903CFC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.MailService.Infrastructure", "RecordHub.MailService\RecordHub.MailService.Infrastructure\RecordHub.MailService.Infrastructure.csproj", "{8E9E1254-E271-401F-9707-0CB926A0F152}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.MailService.Application", "RecordHub.MailService\RecordHub.MailService.Application\RecordHub.MailService.Application.csproj", "{796F3139-08CF-4365-8CB1-A27E5C10CEC7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RecordHub.IdentityService", "RecordHub.IdentityService", "{2DB977D1-6C00-48CD-A4A6-14177C9ED4D6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.IdentityService.Api", "RecordHub.IdentityService\RecordHub.IdentityService.Api\RecordHub.IdentityService.Api.csproj", "{81EC4423-6A24-4ED0-8D44-48461BCC7C12}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.IdentityService.Core", "RecordHub.IdentityService\RecordHub.IdentityService.Core\RecordHub.IdentityService.Core.csproj", "{49FEE2EE-34B8-448D-BD59-EE3760067A70}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.IdentityService.Domain", "RecordHub.IdentityService\RecordHub.IdentityService.Domain\RecordHub.IdentityService.Domain.csproj", "{0B3705A5-CD37-4ED0-804C-B7125589844E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.IdentityService.Persistence", "RecordHub.IdentityService\RecordHub.IdentityService.Persistence\RecordHub.IdentityService.Persistence.csproj", "{B0AB98EC-FA8B-4FCC-A6D4-F5C279FB32E4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.IdentityService.Infrastructure", "RecordHub.IdentityService\RecordHub.IdentityService.Infrastructure\RecordHub.IdentityService.Infrastructure.csproj", "{CB3643BE-233A-4DF9-8055-A42E9F292A69}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.IdentityService.Tests", "RecordHub.IdentityService\RecordHub.IdentityService.Tests\RecordHub.IdentityService.Tests.csproj", "{8F8892BB-1B73-415D-8B1D-68D71B3F717D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RecordHub.CatalogService", "RecordHub.CatalogService", "{B7528753-F62B-42A9-8D1F-D03AE0DD9949}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.CatalogService.Api", "RecordHub.CatalogService\RecordHub.CatalogService.Api\RecordHub.CatalogService.Api.csproj", "{2E8FD0DA-22C7-4515-BACC-CD0813C9D14C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.CatalogService.Infrastructure", "RecordHub.CatalogService\RecordHub.CatalogService.Infrastructure\RecordHub.CatalogService.Infrastructure.csproj", "{307B50CA-DFC9-4AAE-BF94-0FFF217894FC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.CatalogService.Application", "RecordHub.CatalogService\RecordHub.CatalogService.Application\RecordHub.CatalogService.Application.csproj", "{2CB21E0A-64B0-4510-A8A4-E3E5BFBBC8BD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.CatalogService.Domain", "RecordHub.CatalogService\RecordHub.CatalogService.Domain\RecordHub.CatalogService.Domain.csproj", "{8F70C735-B66A-4BF0-A55E-8E166D37B7DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -85,6 +117,58 @@ Global
 		{4845D817-4DF0-4AD3-ADE6-A69C543DAC9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4845D817-4DF0-4AD3-ADE6-A69C543DAC9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4845D817-4DF0-4AD3-ADE6-A69C543DAC9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85506BEA-FF13-4F3E-96A4-AAFF5F903CFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85506BEA-FF13-4F3E-96A4-AAFF5F903CFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85506BEA-FF13-4F3E-96A4-AAFF5F903CFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85506BEA-FF13-4F3E-96A4-AAFF5F903CFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E9E1254-E271-401F-9707-0CB926A0F152}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E9E1254-E271-401F-9707-0CB926A0F152}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E9E1254-E271-401F-9707-0CB926A0F152}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E9E1254-E271-401F-9707-0CB926A0F152}.Release|Any CPU.Build.0 = Release|Any CPU
+		{796F3139-08CF-4365-8CB1-A27E5C10CEC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{796F3139-08CF-4365-8CB1-A27E5C10CEC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{796F3139-08CF-4365-8CB1-A27E5C10CEC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{796F3139-08CF-4365-8CB1-A27E5C10CEC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{81EC4423-6A24-4ED0-8D44-48461BCC7C12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81EC4423-6A24-4ED0-8D44-48461BCC7C12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81EC4423-6A24-4ED0-8D44-48461BCC7C12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81EC4423-6A24-4ED0-8D44-48461BCC7C12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49FEE2EE-34B8-448D-BD59-EE3760067A70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49FEE2EE-34B8-448D-BD59-EE3760067A70}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49FEE2EE-34B8-448D-BD59-EE3760067A70}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49FEE2EE-34B8-448D-BD59-EE3760067A70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B3705A5-CD37-4ED0-804C-B7125589844E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B3705A5-CD37-4ED0-804C-B7125589844E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B3705A5-CD37-4ED0-804C-B7125589844E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B3705A5-CD37-4ED0-804C-B7125589844E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0AB98EC-FA8B-4FCC-A6D4-F5C279FB32E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0AB98EC-FA8B-4FCC-A6D4-F5C279FB32E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0AB98EC-FA8B-4FCC-A6D4-F5C279FB32E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0AB98EC-FA8B-4FCC-A6D4-F5C279FB32E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CB3643BE-233A-4DF9-8055-A42E9F292A69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB3643BE-233A-4DF9-8055-A42E9F292A69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CB3643BE-233A-4DF9-8055-A42E9F292A69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CB3643BE-233A-4DF9-8055-A42E9F292A69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F8892BB-1B73-415D-8B1D-68D71B3F717D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F8892BB-1B73-415D-8B1D-68D71B3F717D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F8892BB-1B73-415D-8B1D-68D71B3F717D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F8892BB-1B73-415D-8B1D-68D71B3F717D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E8FD0DA-22C7-4515-BACC-CD0813C9D14C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E8FD0DA-22C7-4515-BACC-CD0813C9D14C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E8FD0DA-22C7-4515-BACC-CD0813C9D14C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E8FD0DA-22C7-4515-BACC-CD0813C9D14C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{307B50CA-DFC9-4AAE-BF94-0FFF217894FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{307B50CA-DFC9-4AAE-BF94-0FFF217894FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{307B50CA-DFC9-4AAE-BF94-0FFF217894FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{307B50CA-DFC9-4AAE-BF94-0FFF217894FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2CB21E0A-64B0-4510-A8A4-E3E5BFBBC8BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2CB21E0A-64B0-4510-A8A4-E3E5BFBBC8BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2CB21E0A-64B0-4510-A8A4-E3E5BFBBC8BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2CB21E0A-64B0-4510-A8A4-E3E5BFBBC8BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F70C735-B66A-4BF0-A55E-8E166D37B7DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F70C735-B66A-4BF0-A55E-8E166D37B7DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F70C735-B66A-4BF0-A55E-8E166D37B7DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F70C735-B66A-4BF0-A55E-8E166D37B7DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -99,6 +183,19 @@ Global
 		{3C9937A7-D703-4E57-A90C-4EA263AD9E48} = {5747CBA8-76F6-4E79-B0B7-953220D2A718}
 		{02B7D5D4-5475-4E19-8402-D92C8145268B} = {5747CBA8-76F6-4E79-B0B7-953220D2A718}
 		{4845D817-4DF0-4AD3-ADE6-A69C543DAC9F} = {5747CBA8-76F6-4E79-B0B7-953220D2A718}
+		{85506BEA-FF13-4F3E-96A4-AAFF5F903CFC} = {297F85BE-F51D-41DF-95E5-C700ED9152C8}
+		{8E9E1254-E271-401F-9707-0CB926A0F152} = {297F85BE-F51D-41DF-95E5-C700ED9152C8}
+		{796F3139-08CF-4365-8CB1-A27E5C10CEC7} = {297F85BE-F51D-41DF-95E5-C700ED9152C8}
+		{81EC4423-6A24-4ED0-8D44-48461BCC7C12} = {2DB977D1-6C00-48CD-A4A6-14177C9ED4D6}
+		{49FEE2EE-34B8-448D-BD59-EE3760067A70} = {2DB977D1-6C00-48CD-A4A6-14177C9ED4D6}
+		{0B3705A5-CD37-4ED0-804C-B7125589844E} = {2DB977D1-6C00-48CD-A4A6-14177C9ED4D6}
+		{B0AB98EC-FA8B-4FCC-A6D4-F5C279FB32E4} = {2DB977D1-6C00-48CD-A4A6-14177C9ED4D6}
+		{CB3643BE-233A-4DF9-8055-A42E9F292A69} = {2DB977D1-6C00-48CD-A4A6-14177C9ED4D6}
+		{8F8892BB-1B73-415D-8B1D-68D71B3F717D} = {2DB977D1-6C00-48CD-A4A6-14177C9ED4D6}
+		{2E8FD0DA-22C7-4515-BACC-CD0813C9D14C} = {B7528753-F62B-42A9-8D1F-D03AE0DD9949}
+		{307B50CA-DFC9-4AAE-BF94-0FFF217894FC} = {B7528753-F62B-42A9-8D1F-D03AE0DD9949}
+		{2CB21E0A-64B0-4510-A8A4-E3E5BFBBC8BD} = {B7528753-F62B-42A9-8D1F-D03AE0DD9949}
+		{8F70C735-B66A-4BF0-A55E-8E166D37B7DF} = {B7528753-F62B-42A9-8D1F-D03AE0DD9949}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0BE218B3-1EC7-425A-AEC4-234E900C58B1}

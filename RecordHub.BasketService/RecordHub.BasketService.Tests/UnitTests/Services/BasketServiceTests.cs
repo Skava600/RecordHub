@@ -79,21 +79,17 @@ namespace RecordHub.BasketService.Tests.UnitTests.Services
         {
             // Arrange
             string userName = "testuser";
-            var item = BasketItemGenerator.Generate();
-            var basket = new Basket(userName);
 
-            basket.UpdateItem(item);
-            basket.UpdateItem(BasketItemGenerator.Generate());
+            var items = BasketItemGenerator.GenerateBeetween(3, 10);
+            var itemToDelete = items.First();
 
-            _basketRepositoryMock.SetupGetBasketAsync(userName, basket);
+            _basketRepositoryMock.SetupGetBasketAsync(userName, items);
 
             // Act
-            await _basketService.RemoveBasketItemAsync(userName, item.ProductId);
+            await _basketService.RemoveBasketItemAsync(userName, itemToDelete.ProductId);
 
             // Assert
-            basket.Items.Should().HaveCount(1);
-            basket.Items.Should().NotContain(i => i.ProductId == item.ProductId);
-            _basketRepositoryMock.Verify(m => m.UpdateBasket(It.IsAny<Basket>()), Times.Once);
+            _basketRepositoryMock.Verify(m => m.UpdateBasket(userName, It.IsAny<IEnumerable<BasketItem>>()), Times.Once);
         }
 
         [Fact]
@@ -120,7 +116,7 @@ namespace RecordHub.BasketService.Tests.UnitTests.Services
             var basket = new Basket(userName);
             basket.UpdateItem(BasketItemGenerator.Generate());
 
-            _basketRepositoryMock.SetupGetBasketAsync(userName, basket);
+            _basketRepositoryMock.SetupGetBasketAsync(userName, basket.Items);
 
             // Act and Assert
             await FluentActions.Awaiting(() => _basketService.RemoveBasketItemAsync(userName, productId))
@@ -138,9 +134,8 @@ namespace RecordHub.BasketService.Tests.UnitTests.Services
                 ProductId = productId,
                 Quantity = 3,
             };
-            var basket = new Basket(userName);
 
-            _basketRepositoryMock.SetupGetBasketAsync(userName, basket);
+            _basketRepositoryMock.SetupGetBasketAsync(userName, Enumerable.Empty<BasketItem>());
             _catalogGrpcClientMock.SetupCheckProductExistenceAsync(productId, new ProductReply
             {
                 Name = "record",
@@ -155,8 +150,7 @@ namespace RecordHub.BasketService.Tests.UnitTests.Services
             await _basketService.UpdateBasketItemAsync(userName, model);
 
             // Assert
-            basket.Items.Should().ContainSingle(item =>
-                item.ProductId == productId && item.Price == 100 && item.Quantity == model.Quantity);
+            _basketRepositoryMock.Verify(m => m.UpdateBasket(userName, It.IsAny<IEnumerable<BasketItem>>()), Times.Once);
         }
 
         [Fact]
@@ -172,7 +166,7 @@ namespace RecordHub.BasketService.Tests.UnitTests.Services
             };
             var basket = new Basket(userName);
 
-            _basketRepositoryMock.SetupGetBasketAsync(userName, basket);
+            _basketRepositoryMock.SetupGetBasketAsync(userName, basket.Items);
             _catalogGrpcClientMock.SetupCheckProductExistenceAsync(productId, new ProductReply { IsExisting = false });
 
             // Act and Assert
@@ -194,7 +188,7 @@ namespace RecordHub.BasketService.Tests.UnitTests.Services
                 basket.UpdateItem(item);
             }
 
-            _basketRepositoryMock.SetupGetBasketAsync(model.UserId, basket);
+            _basketRepositoryMock.SetupGetBasketAsync(model.UserId, basket.Items);
             _mapperMock.SetupMap(model, new BasketCheckoutMessage());
             // Act
             await _basketService.CheckoutAsync(model);

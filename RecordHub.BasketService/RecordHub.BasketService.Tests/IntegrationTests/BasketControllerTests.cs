@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using RecordHub.BasketService.Domain.Entities;
 using RecordHub.BasketService.Domain.Models;
+using RecordHub.BasketService.Tests.Generators;
 using RecordHub.BasketService.Tests.IntegrationTests.Helpers;
 using System.Dynamic;
 using System.Net;
@@ -38,9 +39,9 @@ namespace RecordHub.BasketService.Tests.IntegrationTests
             response.StatusCode.Should().Be(HttpStatusCode.OK);
 
             var content = await response.Content.ReadAsStringAsync();
-            var basketItems = JsonSerializer.Deserialize<Basket>(content);
-            basketItems.Should().NotBeNull();
-            // Add further assertions based on your implementation
+            var basket = JsonSerializer.Deserialize<Basket>(content);
+            basket.Should().NotBeNull();
+            basket.UserName.Should().BeEquivalentTo(_factory.UserId);
         }
 
         [Fact]
@@ -51,7 +52,8 @@ namespace RecordHub.BasketService.Tests.IntegrationTests
 
             var cartItem = new BasketItemModel
             {
-                // Set properties of the cartItem accordingly
+                ProductId = Guid.NewGuid().ToString(),
+                Quantity = 10
             };
 
             var json = JsonSerializer.Serialize(cartItem);
@@ -65,6 +67,25 @@ namespace RecordHub.BasketService.Tests.IntegrationTests
         }
 
         [Fact]
+        public async Task BasketCheckoutAsync_ReturnsAcceptedResponse()
+        {
+            // Arrange
+            client.SetFakeBearerToken((object)token);
+
+            var model = BasketCheckoutModelGenerator.GenerateModel();
+            model.UserId = _factory.UserId;
+
+            var json = JsonSerializer.Serialize(model);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            // Act
+            var response = await client.PostAsync("api/Basket/checkout", content);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.Accepted);
+        }
+
+        [Fact]
         public async Task ClearBasketAsync_ReturnsOkResponse()
         {
             // Arrange
@@ -75,27 +96,6 @@ namespace RecordHub.BasketService.Tests.IntegrationTests
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-        }
-
-        [Fact]
-        public async Task BasketCheckoutAsync_ReturnsAcceptedResponse()
-        {
-            // Arrange
-            client.SetFakeBearerToken((object)token);
-
-            var model = new BasketCheckoutModel
-            {
-                // Set properties of the BasketCheckoutModel accordingly
-            };
-
-            var json = JsonSerializer.Serialize(model);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            // Act
-            var response = await client.PostAsync("api/Basket/checkout", content);
-
-            // Assert
-            response.StatusCode.Should().Be(HttpStatusCode.Accepted);
         }
     }
 }

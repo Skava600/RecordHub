@@ -13,11 +13,11 @@ namespace RecordHub.BasketService.Tests.Setups
                 .Verifiable();
         }
 
-        public static void SetupGetBasketAsync(this Mock<IBasketRepository> basketRepositoryMock, string userName, Basket basket)
+        public static void SetupGetBasketAsync(this Mock<IBasketRepository> basketRepositoryMock, string userName, IEnumerable<BasketItem> items)
         {
             basketRepositoryMock
                 .Setup(m => m.GetBasketAsync(userName))
-                .ReturnsAsync(basket)
+                .ReturnsAsync(items)
                 .Verifiable();
         }
     }

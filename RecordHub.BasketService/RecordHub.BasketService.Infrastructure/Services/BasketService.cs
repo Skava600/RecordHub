@@ -44,7 +44,10 @@ namespace RecordHub.BasketService.Infrastructure.Services
 
         public async Task<Basket?> GetBasketAsync(string? userId, CancellationToken cancellationToken = default)
         {
-            return await _repo.GetBasketAsync(userId);
+            var basketItems = await _repo.GetBasketAsync(userId);
+            var basket = new Basket(userId, basketItems);
+
+            return basket;
         }
 
         public async Task RemoveBasketItemAsync(
@@ -52,12 +55,13 @@ namespace RecordHub.BasketService.Infrastructure.Services
             string productId,
             CancellationToken cancellationToken = default)
         {
-            var basket = await _repo.GetBasketAsync(userName);
-            if (basket == null)
+            var basketItems = await _repo.GetBasketAsync(userName);
+            if (basketItems == null)
             {
                 throw new BasketIsEmptyException();
             }
 
+            var basket = new Basket(userName, basketItems.ToList());
             var itemToDelete = basket.Items.FirstOrDefault(i => i.ProductId.Equals(productId));
             if (itemToDelete == null)
             {
@@ -66,7 +70,7 @@ namespace RecordHub.BasketService.Infrastructure.Services
 
             basket.RemoveItem(itemToDelete);
 
-            await _repo.UpdateBasket(basket);
+            await _repo.UpdateBasket(basket.UserName, basket.Items);
         }
 
         public async Task UpdateBasketItemAsync(
@@ -74,11 +78,9 @@ namespace RecordHub.BasketService.Infrastructure.Services
             BasketItemModel model,
             CancellationToken cancellationToken = default)
         {
-            var basket = await _repo.GetBasketAsync(userName) ?? new Basket
-            {
-                UserName = userName,
-            };
+            var basketItems = await _repo.GetBasketAsync(userName) ?? Enumerable.Empty<BasketItem>();
 
+            var basket = new Basket(userName, basketItems.ToList());
             var reply = await _catalogGrpcClient.CheckProductExistenceAsync(model.ProductId);
 
             if (!reply.IsExisting)
@@ -99,16 +101,17 @@ namespace RecordHub.BasketService.Infrastructure.Services
             await ValidateShoppingCartAsync(basket, cancellationToken);
 
             basket.UpdateItem(item);
-            await _repo.UpdateBasket(basket);
+            await _repo.UpdateBasket(basket.UserName, basket.Items);
         }
 
         public async Task CheckoutAsync(
             BasketCheckoutModel model,
             CancellationToken cancellationToken = default)
         {
-            var basket = await _repo.GetBasketAsync(model.UserId);
+            var basketItems = await _repo.GetBasketAsync(model.UserId);
 
-            if (basket == null || basket.Items.IsNullOrEmpty())
+            var basket = new Basket(model.UserId, basketItems);
+            if (basket.Items.IsNullOrEmpty())
             {
                 throw new BasketIsEmptyException();
             }

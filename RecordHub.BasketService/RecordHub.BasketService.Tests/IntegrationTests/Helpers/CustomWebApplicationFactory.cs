@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using MassTransit;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,11 +17,11 @@ namespace RecordHub.BasketService.Tests.IntegrationTests.Helpers
     {
         public string UserId = Guid.NewGuid().ToString();
 
-        private readonly RedisContainer _container;
+        private readonly RedisContainer _redisContainer;
 
         public CustomWebApplicationFactory()
         {
-            _container = new RedisBuilder()
+            _redisContainer = new RedisBuilder()
                .WithCleanUp(true)
                .Build();
         }
@@ -31,19 +32,14 @@ namespace RecordHub.BasketService.Tests.IntegrationTests.Helpers
             builder.ConfigureTestServices(services =>
             {
 
-                var dbConnectionDescriptor = services.SingleOrDefault(
-                    d => d.ServiceType ==
-                        typeof(IConnectionMultiplexer));
+                services.RemoveProductionRedis();
 
-                services.Remove(dbConnectionDescriptor);
+                services.AddTestContainersRedis(_redisContainer.GetConnectionString());
 
-                services.AddSingleton<IConnectionMultiplexer>(sp =>
-                {
-                    var multConfig = ConfigurationOptions.Parse(_container.GetConnectionString(), true);
-                    multConfig.AbortOnConnectFail = false;
+                services.AddMockedGrpc();
 
-                    return ConnectionMultiplexer.Connect(multConfig);
-                });
+                var publishEndpoint = new Mock<IPublishEndpoint>();
+                services.AddScoped<IPublishEndpoint>(e => publishEndpoint.Object);
 
                 services.AddAuthentication(options =>
                 {
@@ -59,12 +55,12 @@ namespace RecordHub.BasketService.Tests.IntegrationTests.Helpers
 
         public async Task InitializeAsync()
         {
-            await _container.StartAsync();
+            await _redisContainer.StartAsync();
         }
 
         public new async Task DisposeAsync()
         {
-            await _container.DisposeAsync();
+            await _redisContainer.DisposeAsync();
         }
 
         private void SeedTestData(IServiceCollection services)
@@ -83,8 +79,7 @@ namespace RecordHub.BasketService.Tests.IntegrationTests.Helpers
                 basket.UpdateItem(item);
             }
 
-            database.StringSet(UserId, JsonSerializer.Serialize(basket));
-            basket = JsonSerializer.Deserialize<Basket>(database.StringGet(UserId));
+            database.StringSet(UserId, JsonSerializer.Serialize(basket.Items));
         }
     }
 }

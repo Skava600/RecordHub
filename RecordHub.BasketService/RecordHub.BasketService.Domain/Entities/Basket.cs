@@ -1,10 +1,14 @@
-﻿namespace RecordHub.BasketService.Domain.Entities
+﻿using System.Text.Json.Serialization;
+
+namespace RecordHub.BasketService.Domain.Entities
 {
     public class Basket
     {
+        [JsonPropertyName("username")]
         public string UserName { get; set; }
         public IReadOnlyList<BasketItem> Items => items.AsReadOnly();
 
+        [JsonPropertyName("items")]
         private List<BasketItem> items;
         private bool isDirty = true;
         private double totalPrice;
@@ -14,10 +18,13 @@
             items = new List<BasketItem>();
         }
 
-        public Basket(string userName)
+        public Basket(string userName, IEnumerable<BasketItem>? items = default)
         {
             UserName = userName;
-            items = new List<BasketItem>();
+
+            this.items = items == null
+                ? new List<BasketItem>()
+                : items.ToList();
         }
 
         public double TotalPrice

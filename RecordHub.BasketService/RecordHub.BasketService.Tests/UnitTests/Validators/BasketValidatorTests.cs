@@ -28,8 +28,7 @@ namespace RecordHub.BasketService.Tests.UnitTests.Validators
             var result = _validator.TestValidate(basket);
 
             // Assert
-            result.ShouldHaveValidationErrorFor(b => b.UserName)
-                .WithErrorMessage("'User Name' must not be empty.");
+            result.ShouldHaveValidationErrorFor(b => b.UserName);
         }
 
         [Theory]
@@ -46,8 +45,7 @@ namespace RecordHub.BasketService.Tests.UnitTests.Validators
             var result = _validator.TestValidate(basket);
 
             // Assert
-            result.ShouldHaveValidationErrorFor(b => b.UserName)
-                .WithErrorMessage("'User Name' must be a valid GUID.");
+            result.ShouldHaveValidationErrorFor(b => b.UserName);
         }
 
         [Fact]

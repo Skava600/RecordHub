@@ -36,6 +36,5 @@ namespace RecordHub.Shared.Services.Logging
             [CallerMemberName] string memberName = "",
             [CallerFilePath] string sourceFilePath = "",
             [CallerLineNumber] int sourceLineNumber = 0);
-
     }
 }

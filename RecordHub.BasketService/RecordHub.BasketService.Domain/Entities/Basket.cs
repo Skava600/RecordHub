@@ -11,6 +11,7 @@
 
         public Basket()
         {
+            items = new List<BasketItem>();
         }
 
         public Basket(string userName)

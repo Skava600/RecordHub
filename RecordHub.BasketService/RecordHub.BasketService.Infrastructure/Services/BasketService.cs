@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using FluentValidation;
 using MassTransit;
+using Microsoft.IdentityModel.Tokens;
 using RecordHub.BasketService.Application.Exceptions;
 using RecordHub.BasketService.Application.Services;
 using RecordHub.BasketService.Domain.Entities;
@@ -80,6 +81,11 @@ namespace RecordHub.BasketService.Infrastructure.Services
 
             var reply = await _catalogGrpcClient.CheckProductExistenceAsync(model.ProductId);
 
+            if (!reply.IsExisting)
+            {
+                throw new EntityNotFoundException(nameof(model.ProductId));
+            }
+
             BasketItem item = new BasketItem
             {
                 Price = reply.Price,
@@ -102,7 +108,7 @@ namespace RecordHub.BasketService.Infrastructure.Services
         {
             var basket = await _repo.GetBasketAsync(model.UserId);
 
-            if (basket == null)
+            if (basket == null || basket.Items.IsNullOrEmpty())
             {
                 throw new BasketIsEmptyException();
             }
@@ -134,7 +140,7 @@ namespace RecordHub.BasketService.Infrastructure.Services
             Basket cart,
             CancellationToken cancellationToken = default)
         {
-            var validationResults = await _validatorCart.ValidateAsync(cart);
+            var validationResults = await _validatorCart.ValidateAsync(cart, cancellationToken);
             if (!validationResults.IsValid)
             {
                 throw new InvalidRequestBodyException

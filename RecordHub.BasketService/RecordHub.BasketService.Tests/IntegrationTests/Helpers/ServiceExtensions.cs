@@ -1,6 +1,5 @@
 ﻿using MassTransit;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using RecordHub.BasketService.Application.Protos;
 using RecordHub.BasketService.Application.Services;
 using StackExchange.Redis;
@@ -18,34 +17,15 @@ namespace RecordHub.BasketService.Tests.IntegrationTests.Helpers
             return services;
         }
 
-        public static IServiceCollection AddMockedRabbitMq(this IServiceCollection services)
+        public static IServiceCollection AddMockedMassTransit(this IServiceCollection services)
         {
-            var grpcClientMocked = new Mock<ICatalogGrpcClient>();
-            grpcClientMocked.Setup(client => client.CheckProductExistenceAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(new ProductReply { IsExisting = true, Name = "Some record", Price = 100 });
-            services.AddScoped<ICatalogGrpcClient>(a => grpcClientMocked.Object);
+            var publishEndpoint = new Mock<IPublishEndpoint>();
+            services.AddScoped<IPublishEndpoint>(e => publishEndpoint.Object);
 
             return services;
         }
 
-        public static IServiceCollection RemoveApplicationMassTransit(this IServiceCollection services)
-        {
-            var massTransitHostedService = services.FirstOrDefault(d => d.ServiceType == typeof(IHostedService) &&
-                   d.ImplementationFactory != null &&
-                   d.ImplementationFactory.Method.ReturnType == typeof(MassTransitHostedService)
-               );
-            services.Remove(massTransitHostedService);
-            var descriptors = services.Where(d =>
-                   d.ServiceType.Namespace.Contains("MassTransit", StringComparison.OrdinalIgnoreCase))
-                                      .ToList();
-            foreach (var d in descriptors)
-            {
-                services.Remove(d);
-            }
-
-            return services;
-        }
-
-        public static IServiceCollection RemoveProductionRedis(this IServiceCollection services)
+        public static IServiceCollection RemoveApplicationRedis(this IServiceCollection services)
         {
             var dbConnectionDescriptor = services.SingleOrDefault(
                     d => d.ServiceType ==

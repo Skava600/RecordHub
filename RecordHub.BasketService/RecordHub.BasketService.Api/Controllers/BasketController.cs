@@ -33,9 +33,9 @@ namespace RecordHub.BasketService.Api.Controllers
             CancellationToken cancellationToken = default)
         {
             string? userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            await basketService.UpdateBasketItemAsync(userId, cartItem, cancellationToken);
+            var basket = await basketService.UpdateBasketItemAsync(userId, cartItem, cancellationToken);
 
-            return Ok();
+            return Ok(basket);
         }
 
         [HttpDelete]
@@ -47,6 +47,18 @@ namespace RecordHub.BasketService.Api.Controllers
             await basketService.ClearBasketAsync(userId, cancellationToken);
 
             return Ok();
+        }
+
+        [HttpDelete("{productId}")]
+        [Authorize]
+        public async Task<IActionResult> DeleteItemAsync(
+            [FromRoute] string productId,
+            CancellationToken cancellationToken = default)
+        {
+            string? userId = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var basket = await basketService.RemoveBasketItemAsync(userId, productId, cancellationToken);
+
+            return Ok(basket);
         }
 
         [HttpPost("checkout")]

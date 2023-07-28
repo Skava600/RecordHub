@@ -14,6 +14,25 @@ namespace RecordHub.BasketService.Tests.UnitTests.Validators
             _validator = new BasketItemValidator();
         }
 
+        [Fact]
+        public void Validate_ValidItem_ShouldPasslValidation()
+        {
+            // Arrange
+            var basketItem = new BasketItem
+            {
+                Price = 10,
+                Quantity = 2,
+                ProductId = Guid.NewGuid().ToString(),
+                ProductName = "Product"
+            };
+
+            // Act
+            var result = _validator.TestValidate(basketItem);
+
+            // Assert
+            result.ShouldNotHaveAnyValidationErrors();
+        }
+
         [Theory]
         [MemberData(nameof(GetInvalidPrices))]
         public void Validate_InvalidPrice_ShouldFailValidation(double price)

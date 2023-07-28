@@ -1,9 +1,7 @@
-﻿using MassTransit;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
-using RecordHub.BasketService.Domain.Entities;
 using RecordHub.BasketService.Tests.Generators;
 using StackExchange.Redis;
 using System.Text.Json;
@@ -31,15 +29,11 @@ namespace RecordHub.BasketService.Tests.IntegrationTests.Helpers
             builder.UseTestServer();
             builder.ConfigureTestServices(services =>
             {
-
-                services.RemoveProductionRedis();
+                services.RemoveApplicationRedis();
 
                 services.AddTestContainersRedis(_redisContainer.GetConnectionString());
-
                 services.AddMockedGrpc();
-
-                var publishEndpoint = new Mock<IPublishEndpoint>();
-                services.AddScoped<IPublishEndpoint>(e => publishEndpoint.Object);
+                services.AddMockedMassTransit();
 
                 services.AddAuthentication(options =>
                 {
@@ -68,18 +62,11 @@ namespace RecordHub.BasketService.Tests.IntegrationTests.Helpers
             var serviceProvider = services.BuildServiceProvider();
             var connectionMultiplexer = serviceProvider.GetRequiredService<IConnectionMultiplexer>();
 
-            // Get a reference to the database
             var database = connectionMultiplexer.GetDatabase();
 
-
-            var basket = new Basket(UserId);
             var basketItems = BasketItemGenerator.GenerateBeetween(3, 10);
-            foreach (var item in basketItems)
-            {
-                basket.UpdateItem(item);
-            }
 
-            database.StringSet(UserId, JsonSerializer.Serialize(basket.Items));
+            database.StringSet(UserId, JsonSerializer.Serialize(basketItems));
         }
     }
 }

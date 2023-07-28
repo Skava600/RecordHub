@@ -86,10 +86,15 @@ namespace RecordHub.BasketService.Tests.UnitTests.Services
             _basketRepositoryMock.SetupGetBasketAsync(userName, items);
 
             // Act
-            await _basketService.RemoveBasketItemAsync(userName, itemToDelete.ProductId);
+            var basket = await _basketService.RemoveBasketItemAsync(userName, itemToDelete.ProductId);
 
             // Assert
-            _basketRepositoryMock.Verify(m => m.UpdateBasket(userName, It.IsAny<IEnumerable<BasketItem>>()), Times.Once);
+            _basketRepositoryMock
+                .Verify(m => m
+                .UpdateBasket(userName, It.IsAny<IEnumerable<BasketItem>>()),
+                Times.Once);
+
+            basket.Items.Should().NotContain(itemToDelete);
         }
 
         [Fact]
@@ -135,22 +140,35 @@ namespace RecordHub.BasketService.Tests.UnitTests.Services
                 Quantity = 3,
             };
 
-            _basketRepositoryMock.SetupGetBasketAsync(userName, Enumerable.Empty<BasketItem>());
-            _catalogGrpcClientMock.SetupCheckProductExistenceAsync(productId, new ProductReply
+            var productReply = new ProductReply
             {
                 Name = "record",
                 Price = 100,
                 IsExisting = true
-            });
+            };
+
+            _basketRepositoryMock.SetupGetBasketAsync(userName, Enumerable.Empty<BasketItem>());
+            _catalogGrpcClientMock.SetupCheckProductExistenceAsync(productId, productReply);
 
             _validatorItemMock.SetupValidatorMock(new ValidationResult());
             _validatorCartMock.SetupValidatorMock(new ValidationResult());
 
             // Act
-            await _basketService.UpdateBasketItemAsync(userName, model);
+            var basket = await _basketService.UpdateBasketItemAsync(userName, model);
 
             // Assert
-            _basketRepositoryMock.Verify(m => m.UpdateBasket(userName, It.IsAny<IEnumerable<BasketItem>>()), Times.Once);
+            _basketRepositoryMock
+                .Verify(m => m
+                .UpdateBasket(userName, It.IsAny<IEnumerable<BasketItem>>()),
+                Times.Once);
+
+            basket.Items
+                .Should()
+                .Contain(item => item
+                    .ProductId.Equals(productId) && item
+                    .Quantity == model.Quantity && item
+                    .ProductName.Equals(productReply.Name) && item
+                    .Price == productReply.Price);
         }
 
         [Fact]
@@ -211,7 +229,6 @@ namespace RecordHub.BasketService.Tests.UnitTests.Services
                 .Awaiting(() => _basketService.CheckoutAsync(model))
                 .Should().ThrowAsync<BasketIsEmptyException>();
         }
-
     }
 }
 

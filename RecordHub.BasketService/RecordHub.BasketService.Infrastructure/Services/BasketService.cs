@@ -50,7 +50,7 @@ namespace RecordHub.BasketService.Infrastructure.Services
             return basket;
         }
 
-        public async Task RemoveBasketItemAsync(
+        public async Task<Basket> RemoveBasketItemAsync(
             string? userName,
             string productId,
             CancellationToken cancellationToken = default)
@@ -71,9 +71,11 @@ namespace RecordHub.BasketService.Infrastructure.Services
             basket.RemoveItem(itemToDelete);
 
             await _repo.UpdateBasket(basket.UserName, basket.Items);
+
+            return basket;
         }
 
-        public async Task UpdateBasketItemAsync(
+        public async Task<Basket> UpdateBasketItemAsync(
             string? userName,
             BasketItemModel model,
             CancellationToken cancellationToken = default)
@@ -102,6 +104,8 @@ namespace RecordHub.BasketService.Infrastructure.Services
 
             basket.UpdateItem(item);
             await _repo.UpdateBasket(basket.UserName, basket.Items);
+
+            return basket;
         }
 
         public async Task CheckoutAsync(

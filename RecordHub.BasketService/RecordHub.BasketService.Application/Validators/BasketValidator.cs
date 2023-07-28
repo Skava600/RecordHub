@@ -10,7 +10,7 @@ namespace RecordHub.BasketService.Application.Validators
             RuleFor(x => x.UserName)
                 .NotEmpty()
                 .Must(username => Guid.TryParse(username, out _))
-                .WithMessage("UserName is guid");
+                .WithMessage("UserName must be a valid GUID.");
         }
     }
 }

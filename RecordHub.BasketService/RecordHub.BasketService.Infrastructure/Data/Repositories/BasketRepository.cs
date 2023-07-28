@@ -20,7 +20,7 @@ namespace RecordHub.BasketService.Infrastructure.Data.Repositories
             return result != RedisValue.Null;
         }
 
-        public async Task<Basket?> GetBasketAsync(string userId)
+        public async Task<IEnumerable<BasketItem>?> GetBasketAsync(string userId)
         {
             var basket = await database.StringGetAsync(userId);
             if (String.IsNullOrEmpty(basket))
@@ -28,12 +28,12 @@ namespace RecordHub.BasketService.Infrastructure.Data.Repositories
                 return null;
             }
 
-            return JsonSerializer.Deserialize<Basket>(basket);
+            return JsonSerializer.Deserialize<IEnumerable<BasketItem>>(basket);
         }
 
-        public Task UpdateBasket(Basket basket)
+        public Task UpdateBasket(string userName, IEnumerable<BasketItem> items)
         {
-            return database.StringSetAsync(basket.UserName, JsonSerializer.Serialize(basket));
+            return database.StringSetAsync(userName, JsonSerializer.Serialize(items));
         }
     }
 }

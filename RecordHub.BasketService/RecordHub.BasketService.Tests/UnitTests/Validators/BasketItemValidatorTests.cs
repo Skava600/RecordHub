@@ -15,7 +15,7 @@ namespace RecordHub.BasketService.Tests.UnitTests.Validators
         }
 
         [Fact]
-        public void Validate_ValidItem_ShouldPasslValidation()
+        public void Validate_ValidItem_ShouldPassValidation()
         {
             // Arrange
             var basketItem = new BasketItem

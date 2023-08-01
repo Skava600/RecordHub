@@ -8,6 +8,7 @@ namespace RecordHub.OrderingService.Domain.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string EmailAddress { get; set; }
+        public string PhoneNumber { get; set; }
         public double TotalPrice { get; set; }
         public string Address { get; set; }
         public StatesEnum State { get; set; }

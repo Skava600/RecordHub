@@ -27,7 +27,7 @@ namespace RecordHub.CatalogService.Infrastructure.Data.Repositories
         {
             return await GetAllQueryIncludeGraph()
                 .AsNoTracking()
-                .FirstOrDefaultAsync(r => r.Slug.Equals(slug, StringComparison.OrdinalIgnoreCase));
+                .FirstOrDefaultAsync(r => r.Slug == slug);
         }
 
         public async Task<IEnumerable<Record>> GetByPageAsync(

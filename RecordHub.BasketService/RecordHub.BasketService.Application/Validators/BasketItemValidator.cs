@@ -20,7 +20,7 @@ namespace RecordHub.BasketService.Application.Validators
             RuleFor(x => x.ProductId)
                 .NotEmpty()
                 .Must(p => Guid.TryParse(p, out _))
-                .WithMessage("Product id is guid");
+                .WithMessage("Product id must be a valid GUID.");
 
             RuleFor(x => x.ProductName).NotEmpty();
         }

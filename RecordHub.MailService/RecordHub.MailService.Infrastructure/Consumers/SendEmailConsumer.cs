@@ -1,7 +1,7 @@
 ﻿using Hangfire;
 using MassTransit;
 using RecordHub.MailService.Application.Services;
-using RecordHub.Shared.Models;
+using RecordHub.Shared.MassTransit.Models;
 
 namespace RecordHub.MailService.Infrastructure.Consumers
 {

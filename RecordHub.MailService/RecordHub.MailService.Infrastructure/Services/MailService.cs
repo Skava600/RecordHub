@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 using MimeKit;
 using RecordHub.MailService.Application.Services;
 using RecordHub.MailService.Infrastructure.Settings;
-using RecordHub.Shared.Models;
+using RecordHub.Shared.MassTransit.Models;
 
 namespace RecordHub.MailService.Infrastructure.Services
 {
@@ -54,6 +54,10 @@ namespace RecordHub.MailService.Infrastructure.Services
             else if (_settings.UseStartTls)
             {
                 await smtp.ConnectAsync(_settings.Host, _settings.Port, SecureSocketOptions.StartTls, ct);
+            }
+            else
+            {
+                await smtp.ConnectAsync(_settings.Host, _settings.Port, false, ct);
             }
 
             await smtp.AuthenticateAsync(_settings.UserName, _settings.Password, ct);

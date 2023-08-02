@@ -19,19 +19,23 @@ namespace RecordHub.CatalogService.Infrastructure.Services
         private readonly IUnitOfWork _repository;
         private readonly IValidator<Record> _validator;
         private readonly IElasticClient _elasticClient;
+        private readonly IRedisCacheService _cache;
         private readonly ElasticsearchConfig _elasticsearchConfig;
 
-        public RecordCatalogService(IMapper mapper,
+        public RecordCatalogService(
+            IMapper mapper,
             IUnitOfWork repository,
             IValidator<Record> validator,
             IElasticClient elasticClient,
-            IOptions<ElasticsearchConfig> elasticsearchConfig)
+            IOptions<ElasticsearchConfig> elasticsearchConfig,
+            IRedisCacheService cache)
         {
             _mapper = mapper;
             _repository = repository;
             _validator = validator;
             _elasticClient = elasticClient;
             _elasticsearchConfig = elasticsearchConfig.Value;
+            _cache = cache;
         }
 
         public async Task AddAsync(RecordModel model, CancellationToken cancellationToken = default)
@@ -44,7 +48,9 @@ namespace RecordHub.CatalogService.Infrastructure.Services
             await _repository.CommitAsync();
 
             var recordDTO = _mapper.Map<RecordDTO>(record);
+
             await _elasticClient.IndexAsync(recordDTO, i => i.Id(recordDTO.Id), cancellationToken);
+            await _cache.SetAsync(record.Slug, recordDTO, cancellationToken);
         }
 
         public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
@@ -60,12 +66,6 @@ namespace RecordHub.CatalogService.Infrastructure.Services
 
         public async Task<RecordDTO?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            var response = await _elasticClient.GetAsync<RecordDTO>(id, ct: cancellationToken);
-            if (response.IsValid && response.Found)
-            {
-                return response.Source;
-            }
-
             var record = await _repository.Records.GetByIdAsync(id, cancellationToken);
             return _mapper.Map<RecordDTO>(record);
         }
@@ -82,14 +82,21 @@ namespace RecordHub.CatalogService.Infrastructure.Services
 
         public async Task<RecordDTO?> GetBySlugAsync(string slug, CancellationToken cancellationToken = default)
         {
+            var cached = await _cache.GetAsync<RecordDTO>(slug, cancellationToken);
+
+            if (cached is not null)
+            {
+                return cached;
+            }
+
             Record? record = await _repository.Records.GetBySlugAsync(slug, cancellationToken);
 
             if (record == null)
             {
                 throw new EntityNotFoundException(nameof(slug));
             }
-
             var result = _mapper.Map<RecordDTO>(record);
+            await _cache.SetAsync(slug, result, cancellationToken);
 
             return result;
         }

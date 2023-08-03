@@ -65,7 +65,7 @@ namespace RecordHub.CatalogService.Infrastructure.Extensions
 
             services.AddStackExchangeRedisCache(options =>
             {
-                options.Configuration = cfg.RedisConfig.Host;
+                options.Configuration = $"{cfg.RedisConfig.Host}:{cfg.RedisConfig.Port},password={cfg.RedisConfig.Password}";
                 options.InstanceName = Assembly.GetAssembly(typeof(ServiceExtensions)).FullName;
             });
 

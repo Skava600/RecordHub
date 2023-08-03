@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace RecordHub.CatalogService.Tests.IntegrationTests.Helpers
 {
@@ -19,6 +20,15 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests.Helpers
             var scopedServices = scope.ServiceProvider;
             var context = scopedServices.GetRequiredService<T>();
             context.Database.EnsureCreated();
+        }
+
+        public static void AddRedisTestCache(this IServiceCollection services, string connectionString)
+        {
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = connectionString;
+                options.InstanceName = Assembly.GetAssembly(typeof(ServiceCollectionExtensions)).FullName;
+            });
         }
     }
 }

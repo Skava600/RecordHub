@@ -8,6 +8,7 @@
         public string UserId { get; set; }
         public double TotalPrice { get; set; }
         public string Address { get; set; }
+        public string PhoneNumber { get; set; }
         public IEnumerable<OrderItemModel> Items { get; set; }
     }
 }

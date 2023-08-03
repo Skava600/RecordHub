@@ -17,3 +17,5 @@ var app = builder.Build();
 app.UseHangfireDashboard();
 app.UseHttpsRedirection();
 app.Run();
+
+public partial class Program { }

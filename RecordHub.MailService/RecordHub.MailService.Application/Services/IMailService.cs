@@ -1,4 +1,4 @@
-﻿using RecordHub.Shared.Models;
+﻿using RecordHub.Shared.MassTransit.Models;
 
 namespace RecordHub.MailService.Application.Services
 {

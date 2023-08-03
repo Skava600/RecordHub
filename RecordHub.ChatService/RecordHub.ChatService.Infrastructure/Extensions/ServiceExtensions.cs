@@ -14,6 +14,7 @@ namespace RecordHub.ChatService.Infrastructure.Extensions
             services.Configure<ChatStoreDatabaseConfig>(configuration.GetSection(
                         key: nameof(ChatStoreDatabaseConfig)));
             services.AddSingleton<IRoomsRepository, RoomsRepository>();
+
             return services;
         }
 

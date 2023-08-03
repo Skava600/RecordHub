@@ -12,7 +12,7 @@ namespace RecordHub.ChatService.Infrastructure.Data.Repos
         public RoomsRepository(IOptions<ChatStoreDatabaseConfig> options)
         {
             var mongoClient = new MongoClient(
-            options.Value.ConnectionString);
+                options.Value.ConnectionString);
 
             var mongoDatabase = mongoClient.GetDatabase(
                 options.Value.DatabaseName);

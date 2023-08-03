@@ -8,6 +8,7 @@ namespace RecordHub.ChatService.Api.Controllers
     public class ChatController : ControllerBase
     {
         private readonly IDictionary<string, UserConnection> _connections;
+
         public ChatController(IDictionary<string, UserConnection> connections)
         {
             _connections = connections;
@@ -17,7 +18,6 @@ namespace RecordHub.ChatService.Api.Controllers
         [HttpGet]
         public IActionResult GetChats()
         {
-
             return Ok(_connections);
         }
     }

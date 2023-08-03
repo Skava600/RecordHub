@@ -25,22 +25,26 @@ namespace RecordHub.ChatService.Api.Middlewares
             catch (EntityNotFoundException ex)
             {
                 var code = HttpStatusCode.BadRequest;
-                _logger.LogWarning("{Exception}: {Message}, Source: {Source}",
-                    ex.GetType().Name, ex.Message, ex.Source);
-                await HandleExceptionAsync(context, code, new BaseResponseDTO { Errors = new[] { ex.Message }, IsSuccess = false });
+                await HandleExceptionAsync(context, code, ex);
             }
             catch (Exception ex)
             {
                 var code = HttpStatusCode.InternalServerError;
-                _logger.LogWarning("{Exception}: {Message}, Source: {Source}",
-                    ex.GetType().Name, ex.Message, ex.Source);
-                await HandleExceptionAsync(context, code, new BaseResponseDTO { Errors = new[] { ex.Message }, IsSuccess = false });
+                await HandleExceptionAsync(context, code, ex);
             }
         }
 
-        private async Task HandleExceptionAsync(HttpContext context, HttpStatusCode code, BaseResponseDTO response)
+        private async Task HandleExceptionAsync(HttpContext context, HttpStatusCode code, Exception ex)
         {
+            var response = new BaseResponseDTO
+            {
+                Errors = new[] { ex.Message },
+                IsSuccess = false
+            };
             var result = JsonSerializer.Serialize(response);
+
+            _logger.LogWarning("{Exception}: {Message}, Source: {Source}",
+                  ex.GetType().Name, ex.Message, ex.Source);
 
             var httpResponse = context.Response;
             httpResponse.ContentType = "application/json";

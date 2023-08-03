@@ -23,7 +23,6 @@ namespace RecordHub.CatalogService.Infrastructure.Extensions
             var settings = new ConnectionSettings(new Uri(cfg.ElasticsearchConfig.Url))
                 .DefaultIndex(cfg.ElasticsearchConfig.Index);
 
-            AddDefaultMappings(settings);
             var client = new ElasticClient(settings);
 
             services.AddSingleton<IElasticClient>(client);
@@ -52,13 +51,6 @@ namespace RecordHub.CatalogService.Infrastructure.Extensions
                     .IncludeInRoot()
                     .Name(np => np.Country)
                     .AutoMap()))));
-        }
-
-        private static void AddDefaultMappings(ConnectionSettings settings)
-        {
-            settings
-                .DefaultMappingFor<RecordDTO>(m => m
-                    .Ignore(p => p.Slug));
         }
     }
 }

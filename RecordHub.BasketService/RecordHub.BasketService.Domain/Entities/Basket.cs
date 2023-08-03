@@ -11,12 +11,16 @@
 
         public Basket()
         {
+            items = new List<BasketItem>();
         }
 
-        public Basket(string userName)
+        public Basket(string userName, IEnumerable<BasketItem>? items = default)
         {
             UserName = userName;
-            items = new List<BasketItem>();
+
+            this.items = items == null
+                ? new List<BasketItem>()
+                : items.ToList();
         }
 
         public double TotalPrice

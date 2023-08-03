@@ -3,59 +3,69 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.IdentityService.Api", "RecordHub.IdentityService\RecordHub.IdentityService.Api\RecordHub.IdentityService.Api.csproj", "{2E8F2E2D-733E-43A3-B129-FC1A12C00BE9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.Shared", "RecordHub.Shared\RecordHub.Shared.csproj", "{88C366AA-D7A0-4938-BBC0-E391F9EC6EAE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.IdentityService.Core", "RecordHub.IdentityService\RecordHub.IdentityService.Core\RecordHub.IdentityService.Core.csproj", "{98E887D4-08A7-4C0E-905E-6E5A9F238A8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.Gateway", "RecordHub.Gateway\RecordHub.Gateway.csproj", "{D3E7391E-50C0-44F6-B140-344D669A4B08}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RecordHub.IdentityService", "RecordHub.IdentityService", "{B9F8F39F-9E6B-41D8-8362-D5F08A7BEF81}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RecordHub.BasketService", "RecordHub.BasketService", "{71F246DA-57F4-47A7-9F43-396B470FE05A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.IdentityService.Persistence", "RecordHub.IdentityService\RecordHub.IdentityService.Persistence\RecordHub.IdentityService.Persistence.csproj", "{F3349ACB-4DAF-4292-A472-3D4550B17836}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.BasketService.Api", "RecordHub.BasketService\RecordHub.BasketService.Api\RecordHub.BasketService.Api.csproj", "{746B9694-6786-4EB4-91D2-04CB206064D0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.IdentityService.Domain", "RecordHub.IdentityService\RecordHub.IdentityService.Domain\RecordHub.IdentityService.Domain.csproj", "{702FF8BD-874C-42E7-852E-F6A50D690075}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.BasketService.Application", "RecordHub.BasketService\RecordHub.BasketService.Application\RecordHub.BasketService.Application.csproj", "{27256216-B319-4836-9070-422CE4F4B042}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.IdentityService.Infrastructure", "RecordHub.IdentityService\RecordHub.IdentityService.Infrastructure\RecordHub.IdentityService.Infrastructure.csproj", "{8DF07400-7CEF-4BBB-9367-F68F2998625A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.BasketService.Domain", "RecordHub.BasketService\RecordHub.BasketService.Domain\RecordHub.BasketService.Domain.csproj", "{BF78187F-563D-4271-9CB0-DF27BDB455CC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.BasketService.Infrastructure", "RecordHub.BasketService\RecordHub.BasketService.Infrastructure\RecordHub.BasketService.Infrastructure.csproj", "{0EB1B960-6A4C-4E3C-BB98-71F61CC2693F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.BasketService.Tests", "RecordHub.BasketService\RecordHub.BasketService.Tests\RecordHub.BasketService.Tests.csproj", "{51743AF2-D92E-415D-A104-7E04075643B0}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{5F0BBB7F-9847-4217-8DF1-5319955CFDF7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RecordHub.MailService", "RecordHub.MailService", "{7F475E42-E4F1-4F62-A42A-9E8158B85855}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RecprdHub.OrderingService", "RecprdHub.OrderingService", "{5747CBA8-76F6-4E79-B0B7-953220D2A718}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.MailService.Api", "RecordHub.MailService\RecordHub.MailService.Api\RecordHub.MailService.Api.csproj", "{A08B1940-189D-4323-A377-5610553BA67F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.OrderingService.Api", "RecordHub.OrderingService\RecordHub.OrderingService.Api\RecordHub.OrderingService.Api.csproj", "{40B1A2DF-6547-4D8B-A0E2-1419DD671D65}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.MailService.Infrastructure", "RecordHub.MailService\RecordHub.MailService.Infrastructure\RecordHub.MailService.Infrastructure.csproj", "{AC3EA011-29CF-45BC-AACA-C3DC2CF8549B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.OrderingService.Infrastructure", "RecordHub.OrderingService\RecordHub.OrderingService.Infrastructure\RecordHub.OrderingService.Infrastructure.csproj", "{3C9937A7-D703-4E57-A90C-4EA263AD9E48}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.MailService.Application", "RecordHub.MailService\RecordHub.MailService.Application\RecordHub.MailService.Application.csproj", "{5ACA8124-CECE-4080-B383-E1A443B962B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.OrderingService.Application", "RecordHub.OrderingService\RecordHub.OrderingService.Application\RecordHub.OrderingService.Application.csproj", "{02B7D5D4-5475-4E19-8402-D92C8145268B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.Gateway", "RecordHub.Gateway\RecordHub.Gateway.csproj", "{66123DEB-6B9C-4B94-8F8F-ACDF7D7BBCAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.OrderingService.Domain", "RecordHub.OrderingService\RecordHub.OrderingService.Domain\RecordHub.OrderingService.Domain.csproj", "{4845D817-4DF0-4AD3-ADE6-A69C543DAC9F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RecordHub.CatalogService", "RecordHub.CatalogService", "{ABD4F5C0-98D7-4516-9755-2BFC2A89333F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RecordHub.MailService", "RecordHub.MailService", "{297F85BE-F51D-41DF-95E5-C700ED9152C8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.CatalogService.Api", "RecordHub.CatalogService\RecordHub.CatalogService.Api\RecordHub.CatalogService.Api.csproj", "{5CBF074E-7B34-4E35-8DA9-33C8EAC2EE20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.MailService.Api", "RecordHub.MailService\RecordHub.MailService.Api\RecordHub.MailService.Api.csproj", "{85506BEA-FF13-4F3E-96A4-AAFF5F903CFC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.CatalogService.Application", "RecordHub.CatalogService\RecordHub.CatalogService.Application\RecordHub.CatalogService.Application.csproj", "{0ECCAAFE-7415-448F-9F6E-48BFAA76AB9B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.MailService.Infrastructure", "RecordHub.MailService\RecordHub.MailService.Infrastructure\RecordHub.MailService.Infrastructure.csproj", "{8E9E1254-E271-401F-9707-0CB926A0F152}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.CatalogService.Domain", "RecordHub.CatalogService\RecordHub.CatalogService.Domain\RecordHub.CatalogService.Domain.csproj", "{6F5A771A-F69A-4EC7-8AAF-19F475B61828}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.MailService.Application", "RecordHub.MailService\RecordHub.MailService.Application\RecordHub.MailService.Application.csproj", "{796F3139-08CF-4365-8CB1-A27E5C10CEC7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.CatalogService.Infrastructure", "RecordHub.CatalogService\RecordHub.CatalogService.Infrastructure\RecordHub.CatalogService.Infrastructure.csproj", "{FBEFD793-FA06-47C3-B435-2877CCE5B4FD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RecordHub.IdentityService", "RecordHub.IdentityService", "{2DB977D1-6C00-48CD-A4A6-14177C9ED4D6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.Shared", "RecordHub.Shared\RecordHub.Shared.csproj", "{76E50B8A-CE1B-4CF1-8C1E-69A67F8BAD05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.IdentityService.Api", "RecordHub.IdentityService\RecordHub.IdentityService.Api\RecordHub.IdentityService.Api.csproj", "{81EC4423-6A24-4ED0-8D44-48461BCC7C12}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RecordHub.BasketService", "RecordHub.BasketService", "{FD42E63E-4F96-4177-BE06-C4A9F67AC7D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.IdentityService.Core", "RecordHub.IdentityService\RecordHub.IdentityService.Core\RecordHub.IdentityService.Core.csproj", "{49FEE2EE-34B8-448D-BD59-EE3760067A70}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.BasketService.Api", "RecordHub.BasketService\RecordHub.BasketService.Api\RecordHub.BasketService.Api.csproj", "{BC49E11A-77C4-4664-A302-B5AF867F3BFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.IdentityService.Domain", "RecordHub.IdentityService\RecordHub.IdentityService.Domain\RecordHub.IdentityService.Domain.csproj", "{0B3705A5-CD37-4ED0-804C-B7125589844E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.BasketService.Domain", "RecordHub.BasketService\RecordHub.BasketService.Domain\RecordHub.BasketService.Domain.csproj", "{F756041F-7F94-4EC1-931E-8EECFCE4B6FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.IdentityService.Persistence", "RecordHub.IdentityService\RecordHub.IdentityService.Persistence\RecordHub.IdentityService.Persistence.csproj", "{B0AB98EC-FA8B-4FCC-A6D4-F5C279FB32E4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.BasketService.Infrastructure", "RecordHub.BasketService\RecordHub.BasketService.Infrastructure\RecordHub.BasketService.Infrastructure.csproj", "{2BA80EDA-DF90-41AE-9367-27F61169A20A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.IdentityService.Infrastructure", "RecordHub.IdentityService\RecordHub.IdentityService.Infrastructure\RecordHub.IdentityService.Infrastructure.csproj", "{CB3643BE-233A-4DF9-8055-A42E9F292A69}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RecordHub.OrderingService", "RecordHub.OrderingService", "{7D2CC435-9AD5-40BA-B651-540ACE9D0879}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.IdentityService.Tests", "RecordHub.IdentityService\RecordHub.IdentityService.Tests\RecordHub.IdentityService.Tests.csproj", "{8F8892BB-1B73-415D-8B1D-68D71B3F717D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.OrderingService.Api", "RecordHub.OrderingService\RecordHub.OrderingService.Api\RecordHub.OrderingService.Api.csproj", "{18A1EB10-F3A4-48A7-A432-91A7C5F49085}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RecordHub.CatalogService", "RecordHub.CatalogService", "{B7528753-F62B-42A9-8D1F-D03AE0DD9949}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.OrderingService.Application", "RecordHub.OrderingService\RecordHub.OrderingService.Application\RecordHub.OrderingService.Application.csproj", "{ABCBFA5D-A454-4737-AC89-A26ED8008B8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.CatalogService.Api", "RecordHub.CatalogService\RecordHub.CatalogService.Api\RecordHub.CatalogService.Api.csproj", "{2E8FD0DA-22C7-4515-BACC-CD0813C9D14C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.OrderingService.Domain", "RecordHub.OrderingService\RecordHub.OrderingService.Domain\RecordHub.OrderingService.Domain.csproj", "{DA056435-4B05-4230-B7B8-B1C1278791EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.CatalogService.Infrastructure", "RecordHub.CatalogService\RecordHub.CatalogService.Infrastructure\RecordHub.CatalogService.Infrastructure.csproj", "{307B50CA-DFC9-4AAE-BF94-0FFF217894FC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.OrderingService.Infrastructure", "RecordHub.OrderingService\RecordHub.OrderingService.Infrastructure\RecordHub.OrderingService.Infrastructure.csproj", "{0146AA25-697F-4FA0-88C6-793257C925F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.CatalogService.Application", "RecordHub.CatalogService\RecordHub.CatalogService.Application\RecordHub.CatalogService.Application.csproj", "{2CB21E0A-64B0-4510-A8A4-E3E5BFBBC8BD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.CatalogService.Domain", "RecordHub.CatalogService\RecordHub.CatalogService.Domain\RecordHub.CatalogService.Domain.csproj", "{8F70C735-B66A-4BF0-A55E-8E166D37B7DF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.OrderingService.Tests", "RecordHub.OrderingService\RecordHub.OrderingService.Tests\RecordHub.OrderingService.Tests.csproj", "{542A19A9-D8C2-4AD6-91DF-C6809C20942F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.BasketService.Application", "RecordHub.BasketService\RecordHub.BasketService.Application\RecordHub.BasketService.Application.csproj", "{947655BF-91C4-4A2B-86CD-2DA67D0A3445}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.MailService.Tests", "RecordHub.MailService\RecordHub.MailService.Tests\RecordHub.MailService.Tests.csproj", "{1C1E3CD4-96AE-4949-A5DB-28C24736C94E}"
 EndProject
@@ -65,26 +75,34 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2E8F2E2D-733E-43A3-B129-FC1A12C00BE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2E8F2E2D-733E-43A3-B129-FC1A12C00BE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2E8F2E2D-733E-43A3-B129-FC1A12C00BE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2E8F2E2D-733E-43A3-B129-FC1A12C00BE9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{98E887D4-08A7-4C0E-905E-6E5A9F238A8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{98E887D4-08A7-4C0E-905E-6E5A9F238A8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{98E887D4-08A7-4C0E-905E-6E5A9F238A8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{98E887D4-08A7-4C0E-905E-6E5A9F238A8B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F3349ACB-4DAF-4292-A472-3D4550B17836}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F3349ACB-4DAF-4292-A472-3D4550B17836}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F3349ACB-4DAF-4292-A472-3D4550B17836}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F3349ACB-4DAF-4292-A472-3D4550B17836}.Release|Any CPU.Build.0 = Release|Any CPU
-		{702FF8BD-874C-42E7-852E-F6A50D690075}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{702FF8BD-874C-42E7-852E-F6A50D690075}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{702FF8BD-874C-42E7-852E-F6A50D690075}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{702FF8BD-874C-42E7-852E-F6A50D690075}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8DF07400-7CEF-4BBB-9367-F68F2998625A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8DF07400-7CEF-4BBB-9367-F68F2998625A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8DF07400-7CEF-4BBB-9367-F68F2998625A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8DF07400-7CEF-4BBB-9367-F68F2998625A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{88C366AA-D7A0-4938-BBC0-E391F9EC6EAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88C366AA-D7A0-4938-BBC0-E391F9EC6EAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88C366AA-D7A0-4938-BBC0-E391F9EC6EAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88C366AA-D7A0-4938-BBC0-E391F9EC6EAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3E7391E-50C0-44F6-B140-344D669A4B08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3E7391E-50C0-44F6-B140-344D669A4B08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3E7391E-50C0-44F6-B140-344D669A4B08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3E7391E-50C0-44F6-B140-344D669A4B08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{746B9694-6786-4EB4-91D2-04CB206064D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{746B9694-6786-4EB4-91D2-04CB206064D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{746B9694-6786-4EB4-91D2-04CB206064D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{746B9694-6786-4EB4-91D2-04CB206064D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27256216-B319-4836-9070-422CE4F4B042}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27256216-B319-4836-9070-422CE4F4B042}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27256216-B319-4836-9070-422CE4F4B042}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27256216-B319-4836-9070-422CE4F4B042}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF78187F-563D-4271-9CB0-DF27BDB455CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF78187F-563D-4271-9CB0-DF27BDB455CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF78187F-563D-4271-9CB0-DF27BDB455CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF78187F-563D-4271-9CB0-DF27BDB455CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0EB1B960-6A4C-4E3C-BB98-71F61CC2693F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0EB1B960-6A4C-4E3C-BB98-71F61CC2693F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0EB1B960-6A4C-4E3C-BB98-71F61CC2693F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0EB1B960-6A4C-4E3C-BB98-71F61CC2693F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51743AF2-D92E-415D-A104-7E04075643B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51743AF2-D92E-415D-A104-7E04075643B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51743AF2-D92E-415D-A104-7E04075643B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51743AF2-D92E-415D-A104-7E04075643B0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5F0BBB7F-9847-4217-8DF1-5319955CFDF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5F0BBB7F-9847-4217-8DF1-5319955CFDF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F0BBB7F-9847-4217-8DF1-5319955CFDF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -153,10 +171,14 @@ Global
 		{0146AA25-697F-4FA0-88C6-793257C925F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0146AA25-697F-4FA0-88C6-793257C925F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0146AA25-697F-4FA0-88C6-793257C925F1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1C1E3CD4-96AE-4949-A5DB-28C24736C94E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1C1E3CD4-96AE-4949-A5DB-28C24736C94E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1C1E3CD4-96AE-4949-A5DB-28C24736C94E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1C1E3CD4-96AE-4949-A5DB-28C24736C94E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{542A19A9-D8C2-4AD6-91DF-C6809C20942F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{542A19A9-D8C2-4AD6-91DF-C6809C20942F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{542A19A9-D8C2-4AD6-91DF-C6809C20942F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{542A19A9-D8C2-4AD6-91DF-C6809C20942F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{947655BF-91C4-4A2B-86CD-2DA67D0A3445}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{947655BF-91C4-4A2B-86CD-2DA67D0A3445}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{947655BF-91C4-4A2B-86CD-2DA67D0A3445}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{947655BF-91C4-4A2B-86CD-2DA67D0A3445}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -182,8 +204,10 @@ Global
 		{DA056435-4B05-4230-B7B8-B1C1278791EE} = {7D2CC435-9AD5-40BA-B651-540ACE9D0879}
 		{0146AA25-697F-4FA0-88C6-793257C925F1} = {7D2CC435-9AD5-40BA-B651-540ACE9D0879}
 		{1C1E3CD4-96AE-4949-A5DB-28C24736C94E} = {7F475E42-E4F1-4F62-A42A-9E8158B85855}
+		{542A19A9-D8C2-4AD6-91DF-C6809C20942F} = {7D2CC435-9AD5-40BA-B651-540ACE9D0879}
+		{947655BF-91C4-4A2B-86CD-2DA67D0A3445} = {FD42E63E-4F96-4177-BE06-C4A9F67AC7D0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {BDD6659A-32F8-4085-AA8B-340D17435983}
+		SolutionGuid = {0BE218B3-1EC7-425A-AEC4-234E900C58B1}
 	EndGlobalSection
 EndGlobal

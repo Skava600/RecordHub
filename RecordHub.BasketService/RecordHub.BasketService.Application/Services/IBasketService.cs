@@ -13,12 +13,12 @@ namespace RecordHub.BasketService.Application.Services
             string? userName,
             CancellationToken cancellationToken = default);
 
-        Task UpdateBasketItemAsync(
+        Task<Basket> UpdateBasketItemAsync(
             string? userName,
             BasketItemModel item,
             CancellationToken cancellationToken = default);
 
-        Task RemoveBasketItemAsync(
+        Task<Basket> RemoveBasketItemAsync(
             string? userName,
             string productId,
             CancellationToken cancellationToken = default);

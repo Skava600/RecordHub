@@ -3,6 +3,7 @@ using RecordHub.OrderingService.Application.Services;
 using RecordHub.OrderingService.Domain.Entities;
 using RecordHub.OrderingService.Infrastructure.Data.Repositories;
 using RecordHub.Shared.Enums;
+using RecordHub.Shared.Exceptions;
 using RecordHub.Shared.MassTransit.Models.Order;
 using System.Security.Claims;
 

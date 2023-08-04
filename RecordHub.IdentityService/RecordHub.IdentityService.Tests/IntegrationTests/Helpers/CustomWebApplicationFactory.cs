@@ -71,7 +71,6 @@ namespace RecordHub.IdentityService.Tests.IntegrationTests.Helpers
             var dbContext = scope.ServiceProvider.GetRequiredService<AccountDbContext>();
             var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
 
-
             userManager.CreateAsync(TestData.User, "123456aA.").Wait();
             userManager.AddToRoleAsync(TestData.User, nameof(Roles.Admin)).Wait();
 
@@ -80,8 +79,6 @@ namespace RecordHub.IdentityService.Tests.IntegrationTests.Helpers
             dbContext.Addresses.Add(TestData.AddressToUpdate);
             dbContext.Addresses.Add(TestData.AddressToDelete);
             dbContext.SaveChanges();
-
-
         }
     }
 }

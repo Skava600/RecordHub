@@ -86,7 +86,7 @@ namespace RecordHub.IdentityService.Tests.UnitTests.Services
             var cancellationToken = CancellationToken.None;
             var user = new Mock<ClaimsPrincipal>();
             _addressRepositoryMock.SetupGetByIdAsync(address, cancellationToken);
-            user.Setup(u => u.IsInRole(It.IsAny<string>())).Returns(true);
+            user.SetupIsInRoleAsync(true);
 
             // Act
             await _addressService.DeleteAsync(address.Id, user.Object, cancellationToken);
@@ -120,7 +120,7 @@ namespace RecordHub.IdentityService.Tests.UnitTests.Services
             var model = new AddressModel();
             var cancellationToken = CancellationToken.None;
             var user = new Mock<ClaimsPrincipal>();
-            user.Setup(u => u.IsInRole(It.IsAny<string>())).Returns(true);
+            user.SetupIsInRoleAsync(true);
 
             _addressRepositoryMock.SetupGetByIdAsync(address, cancellationToken);
 

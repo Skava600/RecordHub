@@ -8,7 +8,7 @@ using RecordHub.IdentityService.Persistence.Data.Repositories.Generic;
 using RecordHub.IdentityService.Tests.Setups;
 using RecordHub.Shared.Exceptions;
 
-namespace RecordHub.IdentityService.Tests.Services
+namespace RecordHub.IdentityService.Tests.UnitTests.Services
 {
     public class AddressServiceTests
     {

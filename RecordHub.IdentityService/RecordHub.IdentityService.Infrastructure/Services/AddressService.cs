@@ -24,7 +24,7 @@ namespace RecordHub.IdentityService.Infrastructure.Services
             _mapper = mapper;
         }
 
-        public async Task AddAsync(
+        public async Task<Address> AddAsync(
             string? userId,
             AddressModel model,
             CancellationToken cancellationToken = default)
@@ -39,6 +39,8 @@ namespace RecordHub.IdentityService.Infrastructure.Services
             address.UserId = user.Id;
 
             await _repo.AddAsync(address, cancellationToken);
+
+            return address;
         }
 
         public Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
@@ -46,7 +48,7 @@ namespace RecordHub.IdentityService.Infrastructure.Services
             return _repo.DeleteAsync(id, cancellationToken);
         }
 
-        public async Task UpdateAsync(
+        public async Task<Address> UpdateAsync(
             Guid id,
             AddressModel model,
             CancellationToken cancellationToken = default)
@@ -60,6 +62,8 @@ namespace RecordHub.IdentityService.Infrastructure.Services
             _mapper.Map(model, address);
 
             await _repo.Update(address, cancellationToken);
+
+            return address;
         }
     }
 }

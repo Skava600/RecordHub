@@ -5,7 +5,7 @@ using RecordHub.IdentityService.Api.Middlewares;
 using RecordHub.IdentityService.Core.Exceptions;
 using System.Net;
 
-namespace RecordHub.IdentityService.Tests
+namespace RecordHub.IdentityService.Tests.UnitTests.Middlewares
 {
     public class GlobalExceptionHandlingMiddlewareTests
     {

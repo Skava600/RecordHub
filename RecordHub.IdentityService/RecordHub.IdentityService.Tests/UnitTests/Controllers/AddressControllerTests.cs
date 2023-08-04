@@ -7,7 +7,7 @@ using RecordHub.IdentityService.Tests.Generators;
 using RecordHub.IdentityService.Tests.Setups;
 using System.Security.Claims;
 
-namespace RecordHub.IdentityService.Tests.Controllers
+namespace RecordHub.IdentityService.Tests.UnitTests.Controllers
 {
     public class AddressesControllerTests
     {
@@ -37,7 +37,7 @@ namespace RecordHub.IdentityService.Tests.Controllers
             var result = await controller.AddAddressAsync(model, cancellationToken);
 
             // Assert
-            result.Should().BeOfType<OkResult>();
+            result.Should().BeOfType<OkObjectResult>();
         }
 
         [Fact]
@@ -56,7 +56,7 @@ namespace RecordHub.IdentityService.Tests.Controllers
             var result = await controller.UpdateAddressAsync(id, model, cancellationToken);
 
             // Assert
-            result.Should().BeOfType<OkResult>();
+            result.Should().BeOfType<OkObjectResult>();
         }
 
         [Fact]

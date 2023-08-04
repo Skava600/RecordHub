@@ -1,6 +1,7 @@
   {
     "Routes": [
       // Identity service
+      // Auth controller
       {
         "UpstreamPathTemplate": "/api/Auth/{endpoint}",
         "UpstreamHttpMethod": [ "Get", "Post" ],
@@ -26,6 +27,35 @@
           }
         ],
         "DownstreamPathTemplate": "/api/Auth",
+        "DangerousAcceptAnyServerCertificateValidator": true,
+        "SwaggerKey": "identity"
+      },
+      // Addresses controller
+      {
+        "UpstreamPathTemplate": "/api/Addresses",
+        "UpstreamHttpMethod": [ "Get", "Post" ],
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "recordhub.identityservice.api",
+            "Port": 443
+          }
+        ],
+        "DownstreamPathTemplate": "/api/Addresses",
+        "DangerousAcceptAnyServerCertificateValidator": true,
+        "SwaggerKey": "identity"
+      },
+      {
+        "UpstreamPathTemplate": "/api/Addresses/{endpoint}",
+        "UpstreamHttpMethod": [ "Delete", "Put" ],
+        "DownstreamScheme": "https",
+        "DownstreamHostAndPorts": [
+          {
+            "Host": "recordhub.identityservice.api",
+            "Port": 443
+          }
+        ],
+        "DownstreamPathTemplate": "/api/Auth/{endpoint}",
         "DangerousAcceptAnyServerCertificateValidator": true,
         "SwaggerKey": "identity"
       },
@@ -208,7 +238,7 @@
       // Ordering Service
       {
         "UpstreamPathTemplate": "/api/orders/{endpoint}/{endpoint2}",
-        "UpstreamHttpMethod": [ "Put" ],
+        "UpstreamHttpMethod": [ "Post" ],
         "DownstreamScheme": "https",
         "DownstreamHostAndPorts": [
           {

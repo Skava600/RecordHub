@@ -1,10 +1,11 @@
-﻿using RecordHub.IdentityService.Domain.Models;
+﻿using RecordHub.IdentityService.Domain.Data.Entities;
+using RecordHub.IdentityService.Domain.Models;
 
 namespace RecordHub.IdentityService.Core.Services
 {
     public interface IAddressService
     {
-        Task AddAsync(
+        Task<Address> AddAsync(
             string? userId,
             AddressModel model,
             CancellationToken cancellationToken = default);
@@ -13,7 +14,7 @@ namespace RecordHub.IdentityService.Core.Services
             Guid id,
             CancellationToken cancellationToken = default);
 
-        Task UpdateAsync(
+        Task<Address> UpdateAsync(
             Guid id,
             AddressModel model,
             CancellationToken cancellationToken = default);

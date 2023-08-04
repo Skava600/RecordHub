@@ -14,6 +14,7 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests
         private readonly CustomWebApplicationFactory<Program> _factory;
         protected HttpClient client;
         protected dynamic token;
+        private readonly JsonSerializerOptions jsonOptions;
 
         public ArtistsControllerTests(CustomWebApplicationFactory<Program> factory)
         {
@@ -23,6 +24,10 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests
             token = new ExpandoObject();
             token.sub = Guid.NewGuid();
             token.role = new[] { "sub_role", "Admin" };
+            jsonOptions = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+            };
         }
 
         [Fact]
@@ -75,7 +80,7 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests
                 .Be(HttpStatusCode.OK);
 
             var artistContent = await updatedArtistResponse.Content.ReadAsStringAsync();
-            var artistDto = JsonSerializer.Deserialize<ArtistDTO>(artistContent);
+            var artistDto = JsonSerializer.Deserialize<ArtistDTO>(artistContent, jsonOptions);
             artistDto
                 .Should()
                 .NotBeNull();
@@ -118,7 +123,7 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests
                  .Should()
                  .Be(HttpStatusCode.OK);
             var content = await response.Content.ReadAsStringAsync();
-            var artistDto = JsonSerializer.Deserialize<ArtistDTO>(content);
+            var artistDto = JsonSerializer.Deserialize<ArtistDTO>(content, jsonOptions);
             artistDto
                 .Should()
                 .NotBeNull();

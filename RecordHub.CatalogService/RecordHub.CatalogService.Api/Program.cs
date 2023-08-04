@@ -16,7 +16,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureSwagger();
 builder.Services.AddPersistence(builder.Configuration);
-builder.Services.AddInfrastructure();
+builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddElasticsearch(builder.Configuration);
 builder.Services.AddJwtAuth(builder.Configuration);
 builder.ConfigureSerilog();

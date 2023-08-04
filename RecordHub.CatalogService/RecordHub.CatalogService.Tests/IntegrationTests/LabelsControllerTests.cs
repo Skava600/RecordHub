@@ -14,6 +14,7 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests
         private readonly CustomWebApplicationFactory<Program> _factory;
         protected HttpClient client;
         protected dynamic token;
+        private readonly JsonSerializerOptions jsonOptions;
 
         public LabelsControllerTests(CustomWebApplicationFactory<Program> factory)
         {
@@ -23,6 +24,10 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests
             token = new ExpandoObject();
             token.sub = Guid.NewGuid();
             token.role = new[] { "sub_role", "Admin" };
+            jsonOptions = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+            };
         }
 
         [Fact]
@@ -93,7 +98,7 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests
             allLabelsResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 
             var labelsContent = await allLabelsResponse.Content.ReadAsStringAsync();
-            var labelDTOs = JsonSerializer.Deserialize<List<LabelDTO>>(labelsContent);
+            var labelDTOs = JsonSerializer.Deserialize<List<LabelDTO>>(labelsContent, jsonOptions);
             labelDTOs
                 .Should()
                 .NotBeNull();
@@ -139,7 +144,7 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests
             response.StatusCode.Should().Be(HttpStatusCode.OK);
 
             var content = await response.Content.ReadAsStringAsync();
-            var labels = JsonSerializer.Deserialize<List<LabelDTO>>(content);
+            var labels = JsonSerializer.Deserialize<List<LabelDTO>>(content, jsonOptions);
             labels
                 .Should()
                 .NotBeNullOrEmpty();

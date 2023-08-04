@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 using Nest;
 using RecordHub.CatalogService.Application.Data;
 using RecordHub.CatalogService.Application.DTO;
+using RecordHub.CatalogService.Application.Services;
 using RecordHub.CatalogService.Domain.Entities;
 using RecordHub.CatalogService.Domain.Models;
 using RecordHub.CatalogService.Infrastructure.Config;
@@ -23,6 +24,7 @@ public class RecordCatalogServiceTests
     private readonly Mock<IUnitOfWork> _unitOfWorkMock;
     private readonly Mock<IValidator<Domain.Entities.Record>> _validatorMock;
     private readonly Mock<IElasticClient> _elasticClientMock;
+    private readonly Mock<IRedisCacheService> _cacheServiceMock;
     private readonly Mock<IOptions<ElasticsearchConfig>> _elasticsearchConfigMock;
     private readonly RecordCatalogService _recordCatalogService;
     private readonly RecordGenerator recordGenerator;
@@ -35,13 +37,15 @@ public class RecordCatalogServiceTests
         _validatorMock = new Mock<IValidator<Domain.Entities.Record>>();
         _elasticClientMock = new Mock<IElasticClient>();
         _elasticsearchConfigMock = new Mock<IOptions<ElasticsearchConfig>>();
+        _cacheServiceMock = new Mock<IRedisCacheService>();
+
         _recordCatalogService = new RecordCatalogService(
             _mapperMock.Object,
             _unitOfWorkMock.Object,
             _validatorMock.Object,
             _elasticClientMock.Object,
-            _elasticsearchConfigMock.Object
-        );
+            _elasticsearchConfigMock.Object,
+            _cacheServiceMock.Object);
     }
 
     [Fact]
@@ -206,7 +210,7 @@ public class RecordCatalogServiceTests
     }
 
     [Fact]
-    public async Task GetBySlugAsync_RecordFound_ReturnsRecordDTO()
+    public async Task GetBySlugAsync_RecordFoundInRepository_ReturnsRecordDTO()
     {
         // Arrange
         var cancellationToken = CancellationToken.None;
@@ -214,6 +218,7 @@ public class RecordCatalogServiceTests
 
         var expectedRecord = recordGenerator.GenerateRecord();
 
+        _cacheServiceMock.SetupCacheServiceForGetAsync((RecordDTO?)null);
         _unitOfWorkMock.SetupUnitOfWorkMockRecordGetBySlugAsync(expectedRecord, cancellationToken);
 
         var expectedRecordDTO = new RecordDTO
@@ -243,12 +248,41 @@ public class RecordCatalogServiceTests
     }
 
     [Fact]
+    public async Task GetByPageAsync_CachedValueExists_ReturnsCachedData()
+    {
+        // Arrange
+
+        var expectedData = new List<RecordDTO>
+        {
+            recordGenerator.GenerateRecordDTO(),
+            recordGenerator.GenerateRecordDTO()
+        };
+
+        _cacheServiceMock.SetupCacheServiceForGetAsync<IEnumerable<RecordDTO>>(expectedData);
+
+        // Act
+        var result = await _recordCatalogService.GetByPageAsync(1, 10);
+
+        // Assert
+        result
+            .Should()
+            .BeEquivalentTo(expectedData);
+
+        _cacheServiceMock
+            .Verify(cache => cache
+            .GetAsync<IEnumerable<RecordDTO>>(It.IsAny<string>(), It.IsAny<CancellationToken>()),
+            Times.Once);
+    }
+
+
+    [Fact]
     public async Task GetBySlugAsync_RecordNotFound_ThrowsEntityNotFoundException()
     {
         // Arrange
         var cancellationToken = CancellationToken.None;
         var slug = "non-existing-slug";
 
+        _cacheServiceMock.SetupCacheServiceForGetAsync((RecordDTO?)null);
         _unitOfWorkMock.SetupUnitOfWorkMockRecordGetBySlugAsync(null, cancellationToken);
 
         // Act and Assert
@@ -286,13 +320,16 @@ public class RecordCatalogServiceTests
             recordGenerator.GenerateRecordDTO(),
         };
 
+        _cacheServiceMock.SetupCacheServiceForGetAsync<IEnumerable<RecordDTO>>((IEnumerable<RecordDTO>?)null);
         _elasticClientMock.SetupSearchAsync(expectedRecords.AsReadOnly(), cancellationToken);
 
         // Act
         var result = await _recordCatalogService.GetByPageAsync(filterModel, cancellationToken);
 
         // Assert
-        result.Should().BeEquivalentTo(expectedRecords);
+        result
+            .Should()
+            .BeEquivalentTo(expectedRecords);
     }
 
     [Fact]
@@ -409,6 +446,7 @@ public class RecordCatalogServiceTests
         };
 
         _elasticClientMock.SetupSearchAsync(expectedRecords.AsReadOnly(), cancellationToken);
+        _cacheServiceMock.SetupCacheServiceForGetAsync<IEnumerable<RecordDTO>>((IEnumerable<RecordDTO>?)null);
 
         // Act
         var result = await _recordCatalogService.SearchAsync(searchText, cancellationToken);
@@ -420,6 +458,36 @@ public class RecordCatalogServiceTests
     }
 
     [Fact]
+    public async Task SearchAsync_CachedValueExists_ReturnsCachedData()
+    {
+        // Arrange
+        var searchText = "sample search text";
+        var expectedRecords = new List<RecordDTO>
+        {
+           recordGenerator.GenerateRecordDTO(),
+           recordGenerator.GenerateRecordDTO()
+        };
+
+        _cacheServiceMock.SetupCacheServiceForGetAsync<IEnumerable<RecordDTO>>(expectedRecords);
+
+
+        // Act
+        var result = await _recordCatalogService.SearchAsync(searchText);
+
+        // Assert
+        result
+            .Should()
+            .BeEquivalentTo(expectedRecords);
+
+        _cacheServiceMock
+            .Verify(cache => cache
+            .GetAsync<IEnumerable<RecordDTO>>(
+                It.IsAny<string>(),
+                It.IsAny<CancellationToken>()),
+            Times.Once);
+    }
+
+    [Fact]
     public async Task SearchAsync_InvalidSearchResponse_ThrowsOriginalException()
     {
         // Arrange
@@ -428,6 +496,7 @@ public class RecordCatalogServiceTests
 
         var originalException = new Exception("Search failed");
 
+        _cacheServiceMock.SetupCacheServiceForGetAsync<IEnumerable<RecordDTO>>((IEnumerable<RecordDTO>?)null);
         _elasticClientMock.SetupInvalidSearchAsync<RecordDTO>(originalException, cancellationToken);
 
         // Act and Assert

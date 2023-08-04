@@ -14,6 +14,7 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests
         private readonly CustomWebApplicationFactory<Program> _factory;
         protected HttpClient client;
         protected dynamic token;
+        private readonly JsonSerializerOptions jsonOptions;
 
         public CountriesControllerTests(CustomWebApplicationFactory<Program> factory)
         {
@@ -23,6 +24,10 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests
             token = new ExpandoObject();
             token.sub = Guid.NewGuid();
             token.role = new[] { "sub_role", "Admin" };
+            jsonOptions = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+            };
         }
 
         [Fact]
@@ -91,7 +96,7 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests
             allCountriesResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 
             var countriesContent = await allCountriesResponse.Content.ReadAsStringAsync();
-            var countryDTOs = JsonSerializer.Deserialize<List<CountryDTO>>(countriesContent);
+            var countryDTOs = JsonSerializer.Deserialize<List<CountryDTO>>(countriesContent, jsonOptions);
             countryDTOs
                 .Should()
                 .NotBeNull();
@@ -137,7 +142,7 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests
             response.StatusCode.Should().Be(HttpStatusCode.OK);
 
             var content = await response.Content.ReadAsStringAsync();
-            var countries = JsonSerializer.Deserialize<List<CountryDTO>>(content);
+            var countries = JsonSerializer.Deserialize<List<CountryDTO>>(content, jsonOptions);
             countries
                 .Should()
                 .NotBeNullOrEmpty();

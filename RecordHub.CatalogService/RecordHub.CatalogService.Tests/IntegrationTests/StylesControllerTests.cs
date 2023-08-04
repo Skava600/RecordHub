@@ -14,6 +14,7 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests
         private readonly CustomWebApplicationFactory<Program> _factory;
         protected HttpClient client;
         protected dynamic token;
+        private readonly JsonSerializerOptions jsonOptions;
 
         public StylesControllerTests(CustomWebApplicationFactory<Program> factory)
         {
@@ -23,6 +24,10 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests
             token = new ExpandoObject();
             token.sub = Guid.NewGuid();
             token.role = new[] { "sub_role", "Admin" };
+            jsonOptions = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+            };
         }
 
         [Fact]
@@ -87,7 +92,7 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests
             allStylesResponse.StatusCode.Should().Be(HttpStatusCode.OK);
 
             var stylesContent = await allStylesResponse.Content.ReadAsStringAsync();
-            var styleDTOs = JsonSerializer.Deserialize<List<StyleDTO>>(stylesContent);
+            var styleDTOs = JsonSerializer.Deserialize<List<StyleDTO>>(stylesContent, jsonOptions);
             styleDTOs.Should().NotBeNull();
             styleDTOs.Find(s => s.Name.Equals(model.Name)).Should().NotBeNull();
         }
@@ -125,7 +130,7 @@ namespace RecordHub.CatalogService.Tests.IntegrationTests
             response.StatusCode.Should().Be(HttpStatusCode.OK);
 
             var content = await response.Content.ReadAsStringAsync();
-            var styles = JsonSerializer.Deserialize<List<StyleDTO>>(content);
+            var styles = JsonSerializer.Deserialize<List<StyleDTO>>(content, jsonOptions);
             styles.Should().NotBeNullOrEmpty();
         }
 

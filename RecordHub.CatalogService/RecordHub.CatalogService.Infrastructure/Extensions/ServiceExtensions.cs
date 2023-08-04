@@ -6,16 +6,19 @@ using RecordHub.CatalogService.Application.Data;
 using RecordHub.CatalogService.Application.Mappers;
 using RecordHub.CatalogService.Application.Services;
 using RecordHub.CatalogService.Application.Validators;
+using RecordHub.CatalogService.Infrastructure.Config;
 using RecordHub.CatalogService.Infrastructure.Services;
 using RecordHub.Shared.Extensions;
+using System.Reflection;
 
 namespace RecordHub.CatalogService.Infrastructure.Extensions
 {
     public static class ServiceExtensions
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services)
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddAutoMapperProfiles();
+            services.AddRedisCaching(configuration);
 
             services.AddValidatorsFromAssemblyContaining(typeof(RecordValidator));
 
@@ -53,7 +56,22 @@ namespace RecordHub.CatalogService.Infrastructure.Extensions
             return services;
         }
 
+        private static IServiceCollection AddRedisCaching(this IServiceCollection services, IConfiguration configuration)
+        {
+            var cfg = configuration.Get<AppConfig>();
+            services.Configure<RedisConfig>(
+                configuration.GetSection(
+                    key: nameof(RedisConfig)));
+
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = $"{cfg.RedisConfig.Host}:{cfg.RedisConfig.Port},password={cfg.RedisConfig.Password}";
+                options.InstanceName = Assembly.GetAssembly(typeof(ServiceExtensions)).FullName;
+            });
+
+            services.AddScoped<IRedisCacheService, RedisCacheService>();
+
+            return services;
+        }
     }
 }
-
-

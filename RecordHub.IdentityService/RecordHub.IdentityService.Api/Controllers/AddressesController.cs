@@ -36,7 +36,7 @@ namespace RecordHub.IdentityService.Api.Controllers
             [FromBody] AddressModel model,
             CancellationToken cancellationToken = default)
         {
-            var updatedAdress = await _addressService.UpdateAsync(id, model, cancellationToken);
+            var updatedAdress = await _addressService.UpdateAsync(id, model, HttpContext.User, cancellationToken);
 
             return Ok(updatedAdress);
         }
@@ -47,7 +47,7 @@ namespace RecordHub.IdentityService.Api.Controllers
             Guid id,
             CancellationToken cancellationToken = default)
         {
-            await _addressService.DeleteAsync(id, cancellationToken);
+            await _addressService.DeleteAsync(id, HttpContext.User, cancellationToken);
 
             return Ok();
         }

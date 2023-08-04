@@ -52,6 +52,7 @@ namespace RecordHub.IdentityService.Tests.UnitTests.Controllers
 
             var controller = new AddressesController(_addressServiceMock.Object);
 
+            controller.ControllerContext = GetMockControllerContextWithUser(string.Empty);
             // Act
             var result = await controller.UpdateAddressAsync(id, model, cancellationToken);
 
@@ -69,6 +70,7 @@ namespace RecordHub.IdentityService.Tests.UnitTests.Controllers
             _addressServiceMock.SetupDeleteAsync();
 
             var controller = new AddressesController(_addressServiceMock.Object);
+            controller.ControllerContext = GetMockControllerContextWithUser(string.Empty);
 
             // Act
             var result = await controller.DeleteAddressAsync(id, cancellationToken);

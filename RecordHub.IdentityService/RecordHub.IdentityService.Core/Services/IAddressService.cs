@@ -1,5 +1,6 @@
 ﻿using RecordHub.IdentityService.Domain.Data.Entities;
 using RecordHub.IdentityService.Domain.Models;
+using System.Security.Claims;
 
 namespace RecordHub.IdentityService.Core.Services
 {
@@ -12,11 +13,13 @@ namespace RecordHub.IdentityService.Core.Services
 
         Task DeleteAsync(
             Guid id,
+            ClaimsPrincipal user,
             CancellationToken cancellationToken = default);
 
         Task<Address> UpdateAsync(
             Guid id,
             AddressModel model,
+            ClaimsPrincipal user,
             CancellationToken cancellationToken = default);
     }
 }

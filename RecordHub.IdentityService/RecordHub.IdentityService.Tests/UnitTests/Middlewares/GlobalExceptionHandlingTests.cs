@@ -55,7 +55,7 @@ namespace RecordHub.IdentityService.Tests.UnitTests.Middlewares
 
             // Assert
             var response = context.Response;
-            response.StatusCode.Should().Be((int)HttpStatusCode.InternalServerError);
+            response.StatusCode.Should().Be((int)HttpStatusCode.BadRequest);
             response.ContentType.Should().Be("application/json");
         }
     }

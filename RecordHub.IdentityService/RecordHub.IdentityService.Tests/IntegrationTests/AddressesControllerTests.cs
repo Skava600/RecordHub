@@ -51,6 +51,23 @@ namespace RecordHub.IdentityService.Tests.IntegrationTests
         }
 
         [Fact]
+        public async Task AddAddressAsync_NonValidData_ReturnsBadRequest()
+        {
+            // Arrange
+            client.SetFakeBearerToken((object)token);
+            var addressModel = new AddressGenerator().GenerateModel();
+            addressModel.Korpus = "not-valid-korpus";
+
+            var content = new StringContent(JsonSerializer.Serialize(addressModel), Encoding.UTF8, "application/json");
+
+            // Act
+            var response = await client.PostAsync("/api/addresses", content);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        }
+
+        [Fact]
         public async Task UpdateAddressAsync_ValidData_ReturnsOk()
         {
             // Arrange
@@ -68,6 +85,23 @@ namespace RecordHub.IdentityService.Tests.IntegrationTests
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
             updatedAddress.Should().NotBeNull();
+        }
+
+        [Fact]
+        public async Task UpdateAddressAsync_NonExistingAddress_ReturnsOk()
+        {
+            // Arrange
+            client.SetFakeBearerToken((object)token);
+            var addressId = Guid.Empty;
+            var addressModel = new AddressGenerator().GenerateModel();
+
+            var content = new StringContent(JsonSerializer.Serialize(addressModel), Encoding.UTF8, "application/json");
+
+            // Act
+            var response = await client.PutAsync($"/api/addresses/{addressId}", content);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.NotFound);
         }
 
         [Fact]

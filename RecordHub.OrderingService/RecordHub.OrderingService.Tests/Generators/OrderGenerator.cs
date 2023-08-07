@@ -12,6 +12,7 @@ namespace RecordHub.OrderingService.Tests.Generators
             RuleFor(o => o.UserId, f => f.Random.Guid().ToString());
             RuleFor(o => o.FirstName, f => f.Person.FirstName);
             RuleFor(o => o.LastName, f => f.Person.LastName);
+            RuleFor(o => o.PhoneNumber, f => f.Phone.PhoneNumber("+375##########"));
             RuleFor(o => o.EmailAddress, f => f.Person.Email);
             RuleFor(o => o.TotalPrice, f => f.Random.Double(100, 1000));
             RuleFor(o => o.Address, f => f.Address.FullAddress());

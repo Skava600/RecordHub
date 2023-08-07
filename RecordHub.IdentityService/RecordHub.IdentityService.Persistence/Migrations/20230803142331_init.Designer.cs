@@ -12,8 +12,8 @@ using RecordHub.IdentityService.Persistence;
 namespace RecordHub.IdentityService.Persistence.Migrations
 {
     [DbContext(typeof(AccountDbContext))]
-    [Migration("20230628124207_add-address")]
-    partial class addaddress
+    [Migration("20230803142331_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,13 +54,13 @@ namespace RecordHub.IdentityService.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("4c1bfc9e-a5ff-4bbe-bd64-bbdbbcd7741c"),
+                            Id = new Guid("0d73b66b-f5dc-4932-8cea-8b15bc830cff"),
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = new Guid("56f497ec-3db3-4b9a-a1ce-f2ac3dc03518"),
+                            Id = new Guid("11957df0-ce60-4404-81c0-38e5aa9d05f2"),
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });

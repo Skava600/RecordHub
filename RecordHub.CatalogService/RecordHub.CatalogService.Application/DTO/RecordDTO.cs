@@ -1,11 +1,8 @@
-﻿using System.Text.Json.Serialization;
-
-namespace RecordHub.CatalogService.Application.DTO
+﻿namespace RecordHub.CatalogService.Application.DTO
 {
     public class RecordDTO
     {
         public Guid Id { get; set; }
-        [JsonPropertyName("name")]
         public string Name { get; set; }
         public string Slug { get; set; }
         public short Radius { get; set; }

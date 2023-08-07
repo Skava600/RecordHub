@@ -10,6 +10,7 @@ using RecordHub.CatalogService.Domain.Entities;
 using RecordHub.CatalogService.Domain.Models;
 using RecordHub.CatalogService.Infrastructure.Config;
 using RecordHub.Shared.Exceptions;
+using System.Text.Json;
 
 namespace RecordHub.CatalogService.Infrastructure.Services
 {
@@ -19,19 +20,23 @@ namespace RecordHub.CatalogService.Infrastructure.Services
         private readonly IUnitOfWork _repository;
         private readonly IValidator<Record> _validator;
         private readonly IElasticClient _elasticClient;
+        private readonly IRedisCacheService _cache;
         private readonly ElasticsearchConfig _elasticsearchConfig;
 
-        public RecordCatalogService(IMapper mapper,
+        public RecordCatalogService(
+            IMapper mapper,
             IUnitOfWork repository,
             IValidator<Record> validator,
             IElasticClient elasticClient,
-            IOptions<ElasticsearchConfig> elasticsearchConfig)
+            IOptions<ElasticsearchConfig> elasticsearchConfig,
+            IRedisCacheService cache)
         {
             _mapper = mapper;
             _repository = repository;
             _validator = validator;
             _elasticClient = elasticClient;
             _elasticsearchConfig = elasticsearchConfig.Value;
+            _cache = cache;
         }
 
         public async Task AddAsync(RecordModel model, CancellationToken cancellationToken = default)
@@ -44,7 +49,9 @@ namespace RecordHub.CatalogService.Infrastructure.Services
             await _repository.CommitAsync();
 
             var recordDTO = _mapper.Map<RecordDTO>(record);
+
             await _elasticClient.IndexAsync(recordDTO, i => i.Id(recordDTO.Id), cancellationToken);
+            await _cache.SetAsync(record.Slug, recordDTO, cancellationToken);
         }
 
         public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
@@ -54,18 +61,14 @@ namespace RecordHub.CatalogService.Infrastructure.Services
             {
                 await _repository.CommitAsync();
 
+                await _cache.DeleteAsync(deletedRecord.Slug, cancellationToken);
+
                 await _elasticClient.DeleteAsync<RecordDTO>(deletedRecord.Id);
             }
         }
 
         public async Task<RecordDTO?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            var response = await _elasticClient.GetAsync<RecordDTO>(id, ct: cancellationToken);
-            if (response.IsValid && response.Found)
-            {
-                return response.Source;
-            }
-
             var record = await _repository.Records.GetByIdAsync(id, cancellationToken);
             return _mapper.Map<RecordDTO>(record);
         }
@@ -75,21 +78,39 @@ namespace RecordHub.CatalogService.Infrastructure.Services
             int pageSize,
             CancellationToken cancellationToken = default)
         {
+            string cacheKey = $"page={page},pageSize={pageSize}";
+
+            var cached = await _cache.GetAsync<IEnumerable<RecordDTO>>(cacheKey, cancellationToken);
+            if (cached != null)
+            {
+                return cached;
+            }
+
             IEnumerable<Record> records = await _repository.Records.GetByPageAsync(page, pageSize, cancellationToken);
             IEnumerable<RecordDTO> result = _mapper.Map<IEnumerable<Record>, IEnumerable<RecordDTO>>(records);
+
+            await _cache.SetAsync(cacheKey, result, cancellationToken);
+
             return result;
         }
 
         public async Task<RecordDTO?> GetBySlugAsync(string slug, CancellationToken cancellationToken = default)
         {
+            var cached = await _cache.GetAsync<RecordDTO>(slug, cancellationToken);
+
+            if (cached is not null)
+            {
+                return cached;
+            }
+
             Record? record = await _repository.Records.GetBySlugAsync(slug, cancellationToken);
 
             if (record == null)
             {
                 throw new EntityNotFoundException(nameof(slug));
             }
-
             var result = _mapper.Map<RecordDTO>(record);
+            await _cache.SetAsync(slug, result, cancellationToken);
 
             return result;
         }
@@ -101,6 +122,14 @@ namespace RecordHub.CatalogService.Infrastructure.Services
 
         public async Task<IEnumerable<RecordDTO>> GetByPageAsync(RecordFilterModel filterModel, CancellationToken cancellationToken = default)
         {
+            var cacheKey = JsonSerializer.Serialize(filterModel);
+
+            var cached = await _cache.GetAsync<IEnumerable<RecordDTO>>(cacheKey, cancellationToken);
+            if (cached != null)
+            {
+                return cached;
+            }
+
             var searchResponse = await _elasticClient.SearchAsync<RecordDTO>(s => s
             .From((filterModel.Page - 1) * filterModel.PageSize)
             .Size(filterModel.PageSize)
@@ -161,12 +190,9 @@ namespace RecordHub.CatalogService.Infrastructure.Services
                                 .Query(q => q
                                     .Terms(terms => terms
                                         .Field(field => field.Label.Slug.Suffix("keyword"))
-                                        .Terms(filterModel.Labels))))
-                     )
-                 )
-             )
-         );
+                                        .Terms(filterModel.Labels))))))));
 
+            await _cache.SetAsync(cacheKey, searchResponse.Documents, cancellationToken);
             return searchResponse.Documents;
         }
 
@@ -188,10 +214,19 @@ namespace RecordHub.CatalogService.Infrastructure.Services
 
             var recordDTO = _mapper.Map<RecordDTO>(record);
             await _elasticClient.UpdateAsync<RecordDTO>(recordDTO.Id, i => i.Doc(recordDTO).Index(_elasticsearchConfig.Index));
+            await _cache.SetAsync(recordDTO.Slug, recordDTO, cancellationToken);
         }
 
         public async Task<IEnumerable<RecordDTO>> SearchAsync(string text, CancellationToken cancellationToken = default)
         {
+            var cacheKey = $"search:{text}";
+
+            var cached = await _cache.GetAsync<IEnumerable<RecordDTO>>(cacheKey, cancellationToken);
+            if (cached != null)
+            {
+                return cached;
+            }
+
             var searchResponse = await _elasticClient.SearchAsync<RecordDTO>(s => s
                 .Query(q => q
                     .CombinedFields(c => c
@@ -216,6 +251,9 @@ namespace RecordHub.CatalogService.Infrastructure.Services
             {
                 searchResponse.OriginalException.Rethrow();
             }
+
+            await _cache.SetAsync(cacheKey, searchResponse.Documents, cancellationToken);
+
             return searchResponse.Documents;
         }
     }

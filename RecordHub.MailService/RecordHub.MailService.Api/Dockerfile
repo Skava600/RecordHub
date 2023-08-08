@@ -8,8 +8,9 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["RecordHub.MailService/RecordHub.MailService.Api/RecordHub.MailService.Api.csproj", "RecordHub.MailService/RecordHub.MailService.Api/"]
-COPY ["RecordHub.MailService/RecordHub.MailService.Infrastructure/RecordHub.MailService.Infrastructure.csproj", "RecordHub.MailService/RecordHub.MailService.Infrastructure/"]
 COPY ["RecordHub.MailService/RecordHub.MailService.Application/RecordHub.MailService.Application.csproj", "RecordHub.MailService/RecordHub.MailService.Application/"]
+COPY ["RecordHub.Shared/RecordHub.Shared.csproj", "RecordHub.Shared/"]
+COPY ["RecordHub.MailService/RecordHub.MailService.Infrastructure/RecordHub.MailService.Infrastructure.csproj", "RecordHub.MailService/RecordHub.MailService.Infrastructure/"]
 RUN dotnet restore "RecordHub.MailService/RecordHub.MailService.Api/RecordHub.MailService.Api.csproj"
 COPY . .
 WORKDIR "/src/RecordHub.MailService/RecordHub.MailService.Api"

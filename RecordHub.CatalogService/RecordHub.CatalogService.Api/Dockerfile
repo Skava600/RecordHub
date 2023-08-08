@@ -9,6 +9,7 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["RecordHub.CatalogService/RecordHub.CatalogService.Api/RecordHub.CatalogService.Api.csproj", "RecordHub.CatalogService/RecordHub.CatalogService.Api/"]
 COPY ["RecordHub.CatalogService/RecordHub.CatalogService.Application/RecordHub.CatalogService.Application.csproj", "RecordHub.CatalogService/RecordHub.CatalogService.Application/"]
+COPY ["RecordHub.Shared/RecordHub.Shared.csproj", "RecordHub.Shared/"]
 COPY ["RecordHub.CatalogService/RecordHub.CatalogService.Domain/RecordHub.CatalogService.Domain.csproj", "RecordHub.CatalogService/RecordHub.CatalogService.Domain/"]
 COPY ["RecordHub.CatalogService/RecordHub.CatalogService.Infrastructure/RecordHub.CatalogService.Infrastructure.csproj", "RecordHub.CatalogService/RecordHub.CatalogService.Infrastructure/"]
 RUN dotnet restore "RecordHub.CatalogService/RecordHub.CatalogService.Api/RecordHub.CatalogService.Api.csproj"

@@ -66,25 +66,25 @@ jobs:
           dotnet build
           dotnet test
 
-          #cd ../../RecordHub.CatalogService/RecordHub.CatalogService.Tests
-          #dotnet restore
-          #dotnet build
-          #dotnet test
+          cd ../../RecordHub.CatalogService/RecordHub.CatalogService.Tests
+          dotnet restore
+          dotnet build
+          dotnet test
 
-          #cd ../../RecordHub.BasketService/RecordHub.BasketService.Tests
-          #dotnet restore
-          #dotnet build
-          #dotnet test
+          cd ../../RecordHub.BasketService/RecordHub.BasketService.Tests
+          dotnet restore
+          dotnet build
+          dotnet test
 
-          #cd ../../RecordHub.OrderingService/RecordHub.OrderingService.Tests
-          #dotnet restore
-          #dotnet build
-          #dotnet test
+          cd ../../RecordHub.OrderingService/RecordHub.OrderingService.Tests
+          dotnet restore
+          dotnet build
+          dotnet test
 
-          #cd ../../RecordHub.MailService/RecordHub.MailService.Tests
-          #dotnet restore
-          #dotnet build
-          #dotnet test
+          cd ../../RecordHub.MailService/RecordHub.MailService.Tests
+          dotnet restore
+          dotnet build
+          dotnet test
 
       - name: Login to Amazon ECR
         id: login-ecr

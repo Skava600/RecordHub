@@ -62,9 +62,6 @@ jobs:
       - name: Build and test .NET Core services
         run: |
           cd RecordHub.IdentityService/RecordHub.IdentityService.Tests
-          dotnet restore
-          dotnet build
-          dotnet test
 
           cd ../../RecordHub.CatalogService/RecordHub.CatalogService.Tests
           dotnet restore

@@ -73,8 +73,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.ChatService.Domai
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.ChatService.Infrastructure", "RecordHub.ChatService\RecordHub.ChatService.Infrastructure\RecordHub.ChatService.Infrastructure.csproj", "{316E63A5-9702-4E93-9961-E725FF93F581}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.CatalogService.Tests", "RecordHub.CatalogService\RecordHub.CatalogService.Tests\RecordHub.CatalogService.Tests.csproj", "{A9AC3DC9-DCA3-46A2-9FF8-090734313B87}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.IdentityService.Tests", "RecordHub.IdentityService\RecordHub.IdentityService.Tests\RecordHub.IdentityService.Tests.csproj", "{38B41C7B-CB19-466E-AB3A-217F8BC90F38}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.OrderingService.Tests", "RecordHub.OrderingService\RecordHub.OrderingService.Tests\RecordHub.OrderingService.Tests.csproj", "{BF99A2CB-4092-4CA4-B0F8-14163B1BFDE8}"
@@ -83,6 +81,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\aws.yaml = .github\workflows\aws.yaml
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.BasketService.Tests", "RecordHub.BasketService\RecordHub.BasketService.Tests\RecordHub.BasketService.Tests.csproj", "{D3AD7B86-A36D-4D67-BB00-583140F123AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -214,6 +214,10 @@ Global
 		{BF99A2CB-4092-4CA4-B0F8-14163B1BFDE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF99A2CB-4092-4CA4-B0F8-14163B1BFDE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF99A2CB-4092-4CA4-B0F8-14163B1BFDE8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3AD7B86-A36D-4D67-BB00-583140F123AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3AD7B86-A36D-4D67-BB00-583140F123AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3AD7B86-A36D-4D67-BB00-583140F123AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3AD7B86-A36D-4D67-BB00-583140F123AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -247,6 +251,7 @@ Global
 		{316E63A5-9702-4E93-9961-E725FF93F581} = {1A638131-C350-4F56-B7BE-7BF182F2741C}
 		{38B41C7B-CB19-466E-AB3A-217F8BC90F38} = {B9F8F39F-9E6B-41D8-8362-D5F08A7BEF81}
 		{BF99A2CB-4092-4CA4-B0F8-14163B1BFDE8} = {7D2CC435-9AD5-40BA-B651-540ACE9D0879}
+		{D3AD7B86-A36D-4D67-BB00-583140F123AB} = {FD42E63E-4F96-4177-BE06-C4A9F67AC7D0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BDD6659A-32F8-4085-AA8B-340D17435983}

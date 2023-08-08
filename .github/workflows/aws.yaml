@@ -32,7 +32,12 @@ on:
 
 env:
   AWS_REGION: eu-north-1                 # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REPOSITORY: recordhub          # set this to your Amazon ECR repository name
+  ECR_IDENTITY_REPOSITORY: recordhub-identity          # set this to your Amazon ECR repository name
+  ECR_CATALOG_REPOSITORY: recordhub-catalog
+  ECR_BASKET_REPOSITORY: recordhub-basket 
+  ECR_ORDERING_REPOSITORY: recordhub-ordering
+  ECR_MAIL_REPOSITORY: recordhub-mail
+  ECR_CHAT_REPOSITORY: recordhub-chat
   ECS_SERVICE: MY_ECS_SERVICE                 # set this to your Amazon ECS service name
   ECS_CLUSTER: record-hub-cluster               # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: MY_ECS_TASK_DEFINITION # set this to the path to your Amazon ECS task definition
@@ -54,6 +59,32 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
+      - name: Build and test .NET Core services
+        run: |
+          cd RecordHub.IdentityService/RecordHub.IdentityService.Tests
+          dotnet restore
+          dotnet build
+          dotnet test
+
+          cd ../../RecordHub.CatalogService/RecordHub.CatalogService.Tests
+          dotnet restore
+          dotnet build
+          dotnet test
+
+          cd ../../RecordHub.BasketService/RecordHub.BasketService.Tests
+          dotnet restore
+          dotnet build
+          dotnet test
+
+          cd ../../RecordHub.OrderingService/RecordHub.OrderingService.Tests
+          dotnet restore
+          dotnet build
+          dotnet test
+
+          cd ../../RecordHub.MailService/RecordHub.MailService.Tests
+          dotnet restore
+          dotnet build
+          dotnet test
 
       - name: Login to Amazon ECR
         id: login-ecr
@@ -63,12 +94,24 @@ jobs:
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ env.ECR_REPOSITORY }}
+          ECR_IDENTITY_REPOSITORY: ${{ env.ECR_IDENTITY_REPOSITORY }}
+          ECR_CATALOG_REPOSITORY: ${{ env.ECR_CATALOG_REPOSITORY }}
+          ECR_BASKET_REPOSITORY: ${{ env.ECR_BASKET_REPOSITORY }}
+          ECR_ORDERING_REPOSITORY: ${{ env.ECR_ORDERING_REPOSITORY }}
+          ECR_MAIL_REPOSITORY: ${{ env.ECR_MAIL_REPOSITORY }}
+          ECR_CHAT_REPOSITORY: ${{ env.ECR_CHAT_REPOSITORY }}
           IMAGE_TAG: latest
         run: |
-          # Build a docker container and
-          # push it to ECR so that it can
-          # be deployed to ECS.
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+          docker build -t $ECR_REGISTRY/$ECR_IDENTITY_REPOSITORY:$IMAGE_TAG ./RecordHub.IdentityService/RecordHub.IdentityService.Api
+          docker build -t $ECR_REGISTRY/$ECR_CATALOG_REPOSITORY:$IMAGE_TAG ./RecordHub.CatalogService/RecordHub.CatalogService.Api
+          docker build -t $ECR_REGISTRY/$ECR_BASKET_REPOSITORY:$IMAGE_TAG ./RecordHub.BasketService/RecordHub.BasketService.Api
+          docker build -t $ECR_REGISTRY/$ECR_ORDERING_REPOSITORY:$IMAGE_TAG ./RecordHub.OrderingService/RecordHub.OrderingService.Api
+          docker build -t $ECR_REGISTRY/$ECR_MAIL_REPOSITORY:$IMAGE_TAG ./RecordHub.MailService/RecordHub.MailService.Api
+          docker build -t $ECR_REGISTRY/$ECR_CHAT_REPOSITORY:$IMAGE_TAG ./RecordHub.ChatService/RecordHub.ChatService.Api
+
+          docker push $ECR_REGISTRY/$ECR_IDENTITY_REPOSITORY:$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_CATALOG_REPOSITORY:$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_BASKET_REPOSITORY:$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_ORDERING_REPOSITORY:$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_MAIL_REPOSITORY:$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_CHAT_REPOSITORY:$IMAGE_TAG

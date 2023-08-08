@@ -100,11 +100,11 @@ jobs:
           IMAGE_TAG: latest
         run: |
           docker build -f RecordHub.IdentityService/RecordHub.IdentityService.Api/Dockerfile -t $ECR_REGISTRY/$ECR_IDENTITY_REPOSITORY:$IMAGE_TAG .
-          docker build -f RecordHub.CatalogService/RecordHub.CatalogService.Api -t $ECR_REGISTRY/$ECR_CATALOG_REPOSITORY:$IMAGE_TAG .
-          docker build -f RecordHub.BasketService/RecordHub.BasketService.Api -t $ECR_REGISTRY/$ECR_BASKET_REPOSITORY:$IMAGE_TAG .
-          docker build -f RecordHub.OrderingService/RecordHub.OrderingService.Api -t $ECR_REGISTRY/$ECR_ORDERING_REPOSITORY:$IMAGE_TAG .
-          docker build -f RecordHub.MailService/RecordHub.MailService.Api -t $ECR_REGISTRY/$ECR_MAIL_REPOSITORY:$IMAGE_TAG .
-          docker build -f RecordHub.ChatService/RecordHub.ChatService.Api -t $ECR_REGISTRY/$ECR_CHAT_REPOSITORY:$IMAGE_TAG .
+          docker build -f RecordHub.CatalogService/RecordHub.CatalogService.Api/Dockerfile -t $ECR_REGISTRY/$ECR_CATALOG_REPOSITORY:$IMAGE_TAG .
+          docker build -f RecordHub.BasketService/RecordHub.BasketService.Api/Dockerfile -t $ECR_REGISTRY/$ECR_BASKET_REPOSITORY:$IMAGE_TAG .
+          docker build -f RecordHub.OrderingService/RecordHub.OrderingService.Api/Dockerfile -t $ECR_REGISTRY/$ECR_ORDERING_REPOSITORY:$IMAGE_TAG .
+          docker build -f RecordHub.MailService/RecordHub.MailService.Api/Dockerfile -t $ECR_REGISTRY/$ECR_MAIL_REPOSITORY:$IMAGE_TAG .
+          docker build -f RecordHub.ChatService/RecordHub.ChatService.Api/Dockerfile -t $ECR_REGISTRY/$ECR_CHAT_REPOSITORY:$IMAGE_TAG .
 
           docker push $ECR_REGISTRY/$ECR_IDENTITY_REPOSITORY:$IMAGE_TAG
           docker push $ECR_REGISTRY/$ECR_CATALOG_REPOSITORY:$IMAGE_TAG

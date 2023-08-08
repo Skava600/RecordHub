@@ -32,7 +32,7 @@ namespace RecordHub.IdentityService.Tests.IntegrationTests
             // Arrange
             var loginModel = new LoginModel
             {
-                UserName = "test",
+                UserName = "admin",
                 Password = "123456aA."
             };
 

@@ -8,7 +8,7 @@ using RecordHub.IdentityService.Tests.Generators;
 using RecordHub.IdentityService.Tests.Setups;
 using System.Security.Claims;
 
-namespace RecordHub.IdentityService.Tests.Controllers
+namespace RecordHub.IdentityService.Tests.UnitTests.Controllers
 {
     public class AccountControllerTests
     {

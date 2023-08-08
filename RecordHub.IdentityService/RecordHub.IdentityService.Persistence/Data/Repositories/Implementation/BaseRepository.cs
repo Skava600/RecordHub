@@ -20,18 +20,15 @@ namespace RecordHub.IdentityService.Persistence.Data.Repositories.Implementation
             await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
+        public async Task DeleteAsync(T entity, CancellationToken cancellationToken = default)
         {
-            var entity = await GetByIdAsync(id);
-            if (entity != null)
+            if (_context.Entry(entity).State == EntityState.Detached)
             {
-                if (_context.Entry(entity).State == EntityState.Detached)
-                {
-                    _dbSet.Attach(entity);
-                }
-                _dbSet.Remove(entity);
-                await _context.SaveChangesAsync(cancellationToken);
+                _dbSet.Attach(entity);
             }
+
+            _dbSet.Remove(entity);
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
         public async Task<IEnumerable<T>> GetAllAsync(CancellationToken cancellationToken = default)

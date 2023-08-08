@@ -8,6 +8,6 @@ namespace RecordHub.IdentityService.Persistence.Data.Repositories.Generic
         Task<TEntity?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
         Task AddAsync(TEntity entity, CancellationToken cancellationToken = default);
         Task Update(TEntity entity, CancellationToken cancellationToken = default);
-        Task DeleteAsync(Guid id, CancellationToken cancellationToken = default);
+        Task DeleteAsync(TEntity entity, CancellationToken cancellationToken = default);
     }
 }

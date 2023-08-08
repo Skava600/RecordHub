@@ -14,7 +14,7 @@ using RecordHub.IdentityService.Tests.Setups;
 using RecordHub.Shared.Exceptions;
 using RecordHub.Shared.MassTransit.Models;
 
-namespace RecordHub.IdentityService.Tests.Services
+namespace RecordHub.IdentityService.Tests.UnitTests.Services
 {
     public class AccountServiceTests
     {

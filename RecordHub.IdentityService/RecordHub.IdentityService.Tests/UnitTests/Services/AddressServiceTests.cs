@@ -5,10 +5,12 @@ using RecordHub.IdentityService.Domain.Data.Entities;
 using RecordHub.IdentityService.Domain.Models;
 using RecordHub.IdentityService.Infrastructure.Services;
 using RecordHub.IdentityService.Persistence.Data.Repositories.Generic;
+using RecordHub.IdentityService.Tests.Generators;
 using RecordHub.IdentityService.Tests.Setups;
 using RecordHub.Shared.Exceptions;
+using System.Security.Claims;
 
-namespace RecordHub.IdentityService.Tests.Services
+namespace RecordHub.IdentityService.Tests.UnitTests.Services
 {
     public class AddressServiceTests
     {
@@ -80,14 +82,17 @@ namespace RecordHub.IdentityService.Tests.Services
         public async Task DeleteAsync_CallsDeleteAsyncOnRepository_WithSpecifiedId()
         {
             // Arrange
-            var id = Guid.NewGuid();
+            var address = new AddressGenerator().Generate();
             var cancellationToken = CancellationToken.None;
+            var user = new Mock<ClaimsPrincipal>();
+            _addressRepositoryMock.SetupGetByIdAsync(address, cancellationToken);
+            user.SetupIsInRoleAsync(true);
 
             // Act
-            await _addressService.DeleteAsync(id, cancellationToken);
+            await _addressService.DeleteAsync(address.Id, user.Object, cancellationToken);
 
             // Assert
-            _addressRepositoryMock.Verify(r => r.DeleteAsync(id, cancellationToken), Times.Once);
+            _addressRepositoryMock.Verify(r => r.DeleteAsync(address, cancellationToken), Times.Once);
         }
 
         [Fact]
@@ -97,11 +102,10 @@ namespace RecordHub.IdentityService.Tests.Services
             var id = Guid.NewGuid();
             var model = new AddressModel();
             var cancellationToken = CancellationToken.None;
-
             _addressRepositoryMock.SetupGetByIdAsync(null, cancellationToken);
 
             // Act
-            Func<Task> act = async () => await _addressService.UpdateAsync(id, model, cancellationToken);
+            Func<Task> act = async () => await _addressService.UpdateAsync(id, model, new ClaimsPrincipal(), cancellationToken);
 
             // Assert
             await act.Should().ThrowAsync<EntityNotFoundException>();
@@ -115,11 +119,13 @@ namespace RecordHub.IdentityService.Tests.Services
             var address = new Address();
             var model = new AddressModel();
             var cancellationToken = CancellationToken.None;
+            var user = new Mock<ClaimsPrincipal>();
+            user.SetupIsInRoleAsync(true);
 
             _addressRepositoryMock.SetupGetByIdAsync(address, cancellationToken);
 
             // Act
-            await _addressService.UpdateAsync(id, model, cancellationToken);
+            await _addressService.UpdateAsync(id, model, user.Object, cancellationToken);
 
             // Assert
             _mapperMock.Verify(m => m.Map(model, address), Times.Once);

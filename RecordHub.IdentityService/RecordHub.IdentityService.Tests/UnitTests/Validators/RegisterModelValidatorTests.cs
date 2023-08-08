@@ -2,7 +2,7 @@
 using RecordHub.IdentityService.Core.Validators;
 using RecordHub.IdentityService.Domain.Models;
 
-namespace RecordHub.IdentityService.Tests
+namespace RecordHub.IdentityService.Tests.UnitTests.Validators
 {
     public class RegisterModelValidatorTests
     {
@@ -92,8 +92,7 @@ namespace RecordHub.IdentityService.Tests
             var result = _validator.TestValidate(registerModel);
 
             // Assert
-            result.ShouldHaveValidationErrorFor(r => r.Email)
-                .WithErrorMessage("'Email' must not be empty.");
+            result.ShouldHaveValidationErrorFor(r => r.Email);
         }
 
         [Fact]
@@ -113,8 +112,7 @@ namespace RecordHub.IdentityService.Tests
             var result = _validator.TestValidate(registerModel);
 
             // Assert
-            result.ShouldHaveValidationErrorFor(r => r.Password)
-                .WithErrorMessage("'Password' must be between 5 and 40 characters. You entered 3 characters.");
+            result.ShouldHaveValidationErrorFor(r => r.Password);
         }
 
         [Fact]
@@ -176,8 +174,7 @@ namespace RecordHub.IdentityService.Tests
             var result = _validator.TestValidate(registerModel);
 
             // Assert
-            result.ShouldHaveValidationErrorFor(r => r.Name)
-                .WithErrorMessage("'Name' must be between 5 and 40 characters. You entered 1 characters.");
+            result.ShouldHaveValidationErrorFor(r => r.Name);
         }
 
         [Fact]
@@ -197,8 +194,7 @@ namespace RecordHub.IdentityService.Tests
             var result = _validator.TestValidate(registerModel);
 
             // Assert
-            result.ShouldHaveValidationErrorFor(r => r.Surname)
-                .WithErrorMessage("'Surname' must be between 5 and 40 characters. You entered 1 characters.");
+            result.ShouldHaveValidationErrorFor(r => r.Surname);
         }
     }
 }

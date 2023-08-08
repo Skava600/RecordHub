@@ -1,5 +1,7 @@
 ﻿using RecordHub.IdentityService.Core.Services;
+using RecordHub.IdentityService.Domain.Data.Entities;
 using RecordHub.IdentityService.Domain.Models;
+using System.Security.Claims;
 
 namespace RecordHub.IdentityService.Tests.Setups
 {
@@ -9,20 +11,20 @@ namespace RecordHub.IdentityService.Tests.Setups
         {
             addressServiceMock
                 .Setup(m => m.AddAsync(It.IsAny<string>(), It.IsAny<AddressModel>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.CompletedTask);
+                .ReturnsAsync(It.IsAny<Address>());
         }
 
         public static void SetupUpdateAsync(this Mock<IAddressService> addressServiceMock)
         {
             addressServiceMock
-                .Setup(m => m.UpdateAsync(It.IsAny<Guid>(), It.IsAny<AddressModel>(), It.IsAny<CancellationToken>()))
-                .Returns(Task.CompletedTask);
+                .Setup(m => m.UpdateAsync(It.IsAny<Guid>(), It.IsAny<AddressModel>(), It.IsAny<ClaimsPrincipal>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(It.IsAny<Address>());
         }
 
         public static void SetupDeleteAsync(this Mock<IAddressService> addressServiceMock)
         {
             addressServiceMock
-                .Setup(m => m.DeleteAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+                .Setup(m => m.DeleteAsync(It.IsAny<Guid>(), It.IsAny<ClaimsPrincipal>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
         }
     }

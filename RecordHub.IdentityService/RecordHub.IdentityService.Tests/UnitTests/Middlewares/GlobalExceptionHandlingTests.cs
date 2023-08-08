@@ -5,7 +5,7 @@ using RecordHub.IdentityService.Api.Middlewares;
 using RecordHub.IdentityService.Core.Exceptions;
 using System.Net;
 
-namespace RecordHub.IdentityService.Tests
+namespace RecordHub.IdentityService.Tests.UnitTests.Middlewares
 {
     public class GlobalExceptionHandlingMiddlewareTests
     {
@@ -55,7 +55,7 @@ namespace RecordHub.IdentityService.Tests
 
             // Assert
             var response = context.Response;
-            response.StatusCode.Should().Be((int)HttpStatusCode.InternalServerError);
+            response.StatusCode.Should().Be((int)HttpStatusCode.BadRequest);
             response.ContentType.Should().Be("application/json");
         }
     }

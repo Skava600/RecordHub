@@ -41,8 +41,6 @@ namespace RecordHub.IdentityService.Persistence
                 var result = await _userManager.CreateAsync(user, "123456aA.");
                 await _userManager.AddToRoleAsync(user, nameof(Roles.Admin));
             }
-
-
         }
     }
 }

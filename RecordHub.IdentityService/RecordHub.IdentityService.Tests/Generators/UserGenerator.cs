@@ -17,9 +17,9 @@ namespace RecordHub.IdentityService.Tests.Generators
             _fakerRegisterModel = new Faker<RegisterModel>()
                 .RuleFor(r => r.Name, f => f.Name.FirstName())
                 .RuleFor(r => r.Surname, f => f.Name.LastName())
-                .RuleFor(r => r.Password, f => f.Internet.Password())
+                .RuleFor(r => r.Password, f => f.Internet.PasswordCustom())
                 .RuleFor(r => r.Email, f => f.Internet.Email())
-                .RuleFor(r => r.PhoneNumber, f => f.Person.Phone);
+                .RuleFor(r => r.PhoneNumber, f => f.Phone.PhoneNumber("+375#########"));
         }
 
         public RegisterModel GenerateRegisterModel() => _fakerRegisterModel.Generate();

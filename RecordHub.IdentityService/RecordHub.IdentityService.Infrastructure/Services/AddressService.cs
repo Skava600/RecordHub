@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Identity;
 using RecordHub.IdentityService.Core.Services;
 using RecordHub.IdentityService.Domain.Data.Entities;
+using RecordHub.IdentityService.Domain.Enum;
 using RecordHub.IdentityService.Domain.Models;
 using RecordHub.IdentityService.Persistence.Data.Repositories.Generic;
 using RecordHub.Shared.Exceptions;
+using System.Security.Claims;
 
 namespace RecordHub.IdentityService.Infrastructure.Services
 {
@@ -24,7 +26,7 @@ namespace RecordHub.IdentityService.Infrastructure.Services
             _mapper = mapper;
         }
 
-        public async Task AddAsync(
+        public async Task<Address> AddAsync(
             string? userId,
             AddressModel model,
             CancellationToken cancellationToken = default)
@@ -39,16 +41,28 @@ namespace RecordHub.IdentityService.Infrastructure.Services
             address.UserId = user.Id;
 
             await _repo.AddAsync(address, cancellationToken);
+
+            return address;
         }
 
-        public Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
+        public async Task DeleteAsync(
+            Guid id,
+            ClaimsPrincipal user,
+            CancellationToken cancellationToken = default)
         {
-            return _repo.DeleteAsync(id, cancellationToken);
+            var address = await _repo.GetByIdAsync(id);
+            if (address != null && (
+                address.UserId.ToString().Equals(user.FindFirst(ClaimTypes.NameIdentifier)?.Value) ||
+                user.IsInRole(Roles.Admin.ToString())))
+            {
+                await _repo.DeleteAsync(address, cancellationToken);
+            }
         }
 
-        public async Task UpdateAsync(
+        public async Task<Address> UpdateAsync(
             Guid id,
             AddressModel model,
+            ClaimsPrincipal user,
             CancellationToken cancellationToken = default)
         {
             var address = await _repo.GetByIdAsync(id, cancellationToken);
@@ -57,9 +71,17 @@ namespace RecordHub.IdentityService.Infrastructure.Services
                 throw new EntityNotFoundException(nameof(id));
             }
 
+            if (!address.UserId.ToString().Equals(user.FindFirst(ClaimTypes.NameIdentifier)?.Value) &&
+                !user.IsInRole(Roles.Admin.ToString()))
+            {
+                throw new UnauthorizedAccessException();
+            }
+
             _mapper.Map(model, address);
 
             await _repo.Update(address, cancellationToken);
+
+            return address;
         }
     }
 }

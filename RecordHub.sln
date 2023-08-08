@@ -73,6 +73,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.ChatService.Domai
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.ChatService.Infrastructure", "RecordHub.ChatService\RecordHub.ChatService.Infrastructure\RecordHub.ChatService.Infrastructure.csproj", "{316E63A5-9702-4E93-9961-E725FF93F581}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.CatalogService.Tests", "RecordHub.CatalogService\RecordHub.CatalogService.Tests\RecordHub.CatalogService.Tests.csproj", "{A9AC3DC9-DCA3-46A2-9FF8-090734313B87}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.IdentityService.Tests", "RecordHub.IdentityService\RecordHub.IdentityService.Tests\RecordHub.IdentityService.Tests.csproj", "{38B41C7B-CB19-466E-AB3A-217F8BC90F38}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.OrderingService.Tests", "RecordHub.OrderingService\RecordHub.OrderingService.Tests\RecordHub.OrderingService.Tests.csproj", "{BF99A2CB-4092-4CA4-B0F8-14163B1BFDE8}"

@@ -32,18 +32,30 @@ on:
 
 env:
   AWS_REGION: eu-north-1                 # set this to your preferred AWS region, e.g. us-west-1
+
   ECR_IDENTITY_REPOSITORY: recordhub-identity          # set this to your Amazon ECR repository name
   ECR_CATALOG_REPOSITORY: recordhub-catalog
   ECR_BASKET_REPOSITORY: recordhub-basket 
   ECR_ORDERING_REPOSITORY: recordhub-ordering
   ECR_MAIL_REPOSITORY: recordhub-mail
   ECR_CHAT_REPOSITORY: recordhub-chat
+
   ECS_IDENTITYSERVICE: recorhub_identityservice_api                 # set this to your Amazon ECS service name
   ECS_CLUSTER: recordhub-cluster               # set this to your Amazon ECS cluster name
+
   ECS_TASK_DEFINITION_IDENTITY:  .aws/task-identity.json  # set this to the path to your Amazon ECS task definition
   ECS_TASK_DEFINITION_CATALOG:  .aws/task-catalog.json                                              # file, e.g. .aws/task-definition.json
+  ECS_TASK_DEFINITION_BASKET:  .aws/task-basket.json
+  ECS_TASK_DEFINITION_ORDERING:  .aws/task-ordering.json
+  ECS_TASK_DEFINITION_MAIL:  .aws/task-mail.json
+  ECS_TASK_DEFINITION_CHAT:  .aws/task-chat.json
+
   IDENTITY_CONTAINER_NAME: recordhub-identityservice-api          # set this to the name of the container in the
   CATALOG_CONTAINER_NAME: recordhub-catalogservice-api                                               # containerDefinitions section of your task definition
+  BASKET_CONTAINER_NAME: recordhub-basketservice-api
+  ORDERING_CONTAINER_NAME: recordhub-orderingservice-api
+  MAIL_CONTAINER_NAME: recordhub-mailservice-api
+  CHAT_CONTAINER_NAME: recordhub-chatservice-api
 
 jobs:
   build-and-push:
@@ -147,10 +159,74 @@ jobs:
           container-name: ${{ env.CATALOG_CONTAINER_NAME }}
           image: ${{ steps.build-image.outputs.catalog_image }}
 
-      - name: Deploy Amazon ECS task definition -IDENTITY
+      - name: Deploy Amazon ECS task definition - CATALOG
         uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a
         with:
           task-definition: ${{ steps.task-def-catalog.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE }}
+          cluster: ${{ env.ECS_CLUSTER }}
+          wait-for-service-stability: true
+
+      - name: Fill in the new image ID in the Amazon ECS task definition BASKET
+        id: task-def-basket
+        uses: aws-actions/amazon-ecs-render-task-definition@c804dfbdd57f713b6c079302a4c01db7017a36fc
+        with:
+          task-definition: ${{ env.ECS_TASK_DEFINITION_BASKET }}
+          container-name: ${{ env.BASKET_CONTAINER_NAME }}
+          image: ${{ steps.build-image.outputs.basket_image }}
+
+      - name: Deploy Amazon ECS task definition - BASKET
+        uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a
+        with:
+          task-definition: ${{ steps.task-def-basket.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE }}
+          cluster: ${{ env.ECS_CLUSTER }}
+          wait-for-service-stability: true
+
+      - name: Fill in the new image ID in the Amazon ECS task definition ORDERING
+        id: task-def-ordering
+        uses: aws-actions/amazon-ecs-render-task-definition@c804dfbdd57f713b6c079302a4c01db7017a36fc
+        with:
+          task-definition: ${{ env.ECS_TASK_DEFINITION_ORDERING }}
+          container-name: ${{ env.ORDERING_CONTAINER_NAME }}
+          image: ${{ steps.build-image.outputs.ordering_image }}
+
+      - name: Deploy Amazon ECS task definition - ORDERING
+        uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a
+        with:
+          task-definition: ${{ steps.task-def-ordering.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE }}
+          cluster: ${{ env.ECS_CLUSTER }}
+          wait-for-service-stability: true
+
+      - name: Fill in the new image ID in the Amazon ECS task definition MAIL
+        id: task-def-mail
+        uses: aws-actions/amazon-ecs-render-task-definition@c804dfbdd57f713b6c079302a4c01db7017a36fc
+        with:
+          task-definition: ${{ env.ECS_TASK_DEFINITION_MAIL }}
+          container-name: ${{ env.MAIL_CONTAINER_NAME }}
+          image: ${{ steps.build-image.outputs.mail_image }}
+
+      - name: Deploy Amazon ECS task definition - MAIL
+        uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a
+        with:
+          task-definition: ${{ steps.task-def-mail.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE }}
+          cluster: ${{ env.ECS_CLUSTER }}
+          wait-for-service-stability: true
+
+      - name: Fill in the new image ID in the Amazon ECS task definition CHAT
+        id: task-def-chat
+        uses: aws-actions/amazon-ecs-render-task-definition@c804dfbdd57f713b6c079302a4c01db7017a36fc
+        with:
+          task-definition: ${{ env.ECS_TASK_DEFINITION_CHAT }}
+          container-name: ${{ env.CHAT_CONTAINER_NAME }}
+          image: ${{ steps.build-image.outputs.chat_image }}
+
+      - name: Deploy Amazon ECS task definition - CHAT
+        uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a
+        with:
+          task-definition: ${{ steps.task-def-chat.outputs.task-definition }}
           service: ${{ env.ECS_SERVICE }}
           cluster: ${{ env.ECS_CLUSTER }}
           wait-for-service-stability: true

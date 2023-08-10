@@ -40,7 +40,7 @@ env:
   ECR_CHAT_REPOSITORY: recordhub-chat
   ECS_IDENTITYSERVICE: recorhub_identityservice_api                 # set this to your Amazon ECS service name
   ECS_CLUSTER: recordhub-cluster               # set this to your Amazon ECS cluster name
-  ECS_TASK_DEFINITION_IDENTITY:  .aws/task-identity  # set this to the path to your Amazon ECS task definition
+  ECS_TASK_DEFINITION_IDENTITY:  .aws/task-identity.json  # set this to the path to your Amazon ECS task definition
                                                # file, e.g. .aws/task-definition.json
   IDENTITY_CONTAINER_NAME: recordhub_identityservice_api          # set this to the name of the container in the
                                                # containerDefinitions section of your task definition

@@ -1,0 +1,80 @@
+{
+  "taskDefinitionArn": "arn:aws:ecs:eu-north-1:272423006778:task-definition/recordhub-identity:1",
+  "containerDefinitions": [
+    {
+      "name": "recordhub_identityservice_api",
+      "image": "272423006778.dkr.ecr.eu-north-1.amazonaws.com/recordhub-identity:latest",
+      "cpu": 0,
+      "portMappings": [
+        {
+          "name": "recordhub_identityservice_api-443-tcp",
+          "containerPort": 443,
+          "hostPort": 5002,
+          "protocol": "tcp",
+          "appProtocol": "http"
+        }
+      ],
+      "essential": true,
+      "environment": [],
+      "environmentFiles": [],
+      "mountPoints": [],
+      "volumesFrom": [],
+      "ulimits": [],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-create-group": "true",
+          "awslogs-group": "/ecs/",
+          "awslogs-region": "eu-north-1",
+          "awslogs-stream-prefix": "ecs"
+        },
+        "secretOptions": []
+      }
+    }
+  ],
+  "family": "recordhub-identity",
+  "executionRoleArn": "arn:aws:iam::272423006778:role/ecsTaskExecutionRole",
+  "networkMode": "bridge",
+  "revision": 1,
+  "volumes": [],
+  "status": "ACTIVE",
+  "requiresAttributes": [
+    {
+      "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+    },
+    {
+      "name": "ecs.capability.execution-role-awslogs"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.ecr-auth"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+    },
+    {
+      "name": "ecs.capability.execution-role-ecr-pull"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
+    }
+  ],
+  "placementConstraints": [],
+  "compatibilities": [
+    "EC2"
+  ],
+  "requiresCompatibilities": [
+    "EC2"
+  ],
+  "cpu": "256",
+  "memory": "1024",
+  "runtimePlatform": {
+    "cpuArchitecture": "X86_64",
+    "operatingSystemFamily": "LINUX"
+  },
+  "registeredAt": "2023-08-10T07:38:53.078Z",
+  "registeredBy": "arn:aws:iam::272423006778:root",
+  "tags": []
+}

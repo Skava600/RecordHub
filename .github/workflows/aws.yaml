@@ -41,9 +41,9 @@ env:
   ECS_IDENTITYSERVICE: recorhub_identityservice_api                 # set this to your Amazon ECS service name
   ECS_CLUSTER: recordhub-cluster               # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION_IDENTITY:  .aws/task-identity.json  # set this to the path to your Amazon ECS task definition
-                                               # file, e.g. .aws/task-definition.json
-  IDENTITY_CONTAINER_NAME: recordhub_identityservice_api          # set this to the name of the container in the
-                                               # containerDefinitions section of your task definition
+  ECS_TASK_DEFINITION_CATALOG:  .aws/task-catalog.json                                              # file, e.g. .aws/task-definition.json
+  IDENTITY_CONTAINER_NAME: recordhub-identityservice-api          # set this to the name of the container in the
+  CATALOG_CONTAINER_NAME: recordhub-catalogservice-api                                               # containerDefinitions section of your task definition
 
 jobs:
   build-and-push:
@@ -131,10 +131,26 @@ jobs:
           container-name: ${{ env.IDENTITY_CONTAINER_NAME }}
           image: ${{ steps.build-image.outputs.identity_image }}
 
-      - name: Deploy Amazon ECS task definition
+      - name: Deploy Amazon ECS task definition -IDENTITY
         uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a
         with:
           task-definition: ${{ steps.task-def-identity.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE }}
+          cluster: ${{ env.ECS_CLUSTER }}
+          wait-for-service-stability: true
+
+      - name: Fill in the new image ID in the Amazon ECS task definition CATALOG
+        id: task-def-catalog
+        uses: aws-actions/amazon-ecs-render-task-definition@c804dfbdd57f713b6c079302a4c01db7017a36fc
+        with:
+          task-definition: ${{ env.ECS_TASK_DEFINITION_CATALOG }}
+          container-name: ${{ env.CATALOG_CONTAINER_NAME }}
+          image: ${{ steps.build-image.outputs.catalog_image }}
+
+      - name: Deploy Amazon ECS task definition -IDENTITY
+        uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a
+        with:
+          task-definition: ${{ steps.task-def-catalog.outputs.task-definition }}
           service: ${{ env.ECS_SERVICE }}
           cluster: ${{ env.ECS_CLUSTER }}
           wait-for-service-stability: true

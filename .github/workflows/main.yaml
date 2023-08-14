@@ -92,7 +92,7 @@ jobs:
           DOCKERHUB_CHAT_REPOSITORY: ${{ env.DOCKERHUB_CHAT_REPOSITORY }}
           IMAGE_TAG: latest
         run: |
-          docker build -f RecordHub.IdentityService/RecordHub.IdentityService.Api/Dockerfile -t $DOCKERHUB_NAMESPACEY/$DOCKERHUB_IDENTITY_REPOSITORY:$IMAGE_TAG .
+          docker build -f RecordHub.IdentityService/RecordHub.IdentityService.Api/Dockerfile -t $DOCKERHUB_NAMESPACE/$DOCKERHUB_IDENTITY_REPOSITORY:$IMAGE_TAG .
           docker build -f RecordHub.CatalogService/RecordHub.CatalogService.Api/Dockerfile -t $DOCKERHUB_NAMESPACE/$DOCKERHUB_CATALOG_REPOSITORY:$IMAGE_TAG .
           docker build -f RecordHub.BasketService/RecordHub.BasketService.Api/Dockerfile -t $DOCKERHUB_NAMESPACE/$DOCKERHUB_BASKET_REPOSITORY:$IMAGE_TAG .
           docker build -f RecordHub.OrderingService/RecordHub.OrderingService.Api/Dockerfile -t $DOCKERHUB_NAMESPACE/$DOCKERHUB_ORDERING_REPOSITORY:$IMAGE_TAG .

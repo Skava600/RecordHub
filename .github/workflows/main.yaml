@@ -2,7 +2,9 @@ name: Deploy to Amazon ECS
 
 on:
   pull_request:
-    branches: [dev, cloud]
+    branches: [dev]
+  push:
+    branches: [cloud]
 
 env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
@@ -19,8 +21,8 @@ env:
   DOCKERHUB_MAIL_REPOSITORY: recordhub-mail
   DOCKERHUB_CHAT_REPOSITORY: recordhub-chat
 
-  ECS_IDENTITYSERVICE: recorhub_identityservice_api                 # set this to your Amazon ECS service name
-  AZURE_CLUSTER: recordhubscluster              # set this to your Amazon ECS cluster name
+  ECS_IDENTITYSERVICE: recorhub_identityservice_api                
+  AZURE_CLUSTER: recordhubscluster              
 
   IDENTITY_CONTAINER_NAME: recordhub-identityservice-api          # set this to the name of the container in the
   CATALOG_CONTAINER_NAME: recordhub-catalogservice-api                                               # containerDefinitions section of your task definition

@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: recordhub-identityservice-api
+spec:
+  selector:
+    matchLabels:
+      name: recordhub-identityservice-api
+  template:
+    metadata:
+      labels:
+        name: recordhub-identityservice-api
+    spec:
+      containers:
+        - name: recordhub-identityservice-api
+          image: skava600/recordhub-identityservice
+          ports:
+            - containerPort: 8080

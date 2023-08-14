@@ -77,11 +77,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.IdentityService.T
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.OrderingService.Tests", "RecordHub.OrderingService\RecordHub.OrderingService.Tests\RecordHub.OrderingService.Tests.csproj", "{BF99A2CB-4092-4CA4-B0F8-14163B1BFDE8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C3A228DA-7D7F-4634-9FE3-1365B1AAA9F8}"
-	ProjectSection(SolutionItems) = preProject
-		.github\workflows\aws.yaml = .github\workflows\aws.yaml
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecordHub.BasketService.Tests", "RecordHub.BasketService\RecordHub.BasketService.Tests\RecordHub.BasketService.Tests.csproj", "{D3AD7B86-A36D-4D67-BB00-583140F123AB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".aws", ".aws", "{BC4D58F6-281C-48E7-81AD-E88082DB4A21}"
@@ -92,6 +87,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".aws", ".aws", "{BC4D58F6-2
 		.aws\task-identity.json = .aws\task-identity.json
 		.aws\task-mail.json = .aws\task-mail.json
 		.aws\task-ordering.json = .aws\task-ordering.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{28DB358C-3484-4BF7-BE96-17B2A8DB3800}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{2844BFED-A2D1-4ED5-BF59-EA3D8A97AAC4}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\aws.yaml = .github\workflows\aws.yaml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8s", "k8s", "{887F6288-F9ED-4140-A5B1-C287E1831408}"
+	ProjectSection(SolutionItems) = preProject
+		k8s\deployment.yaml = k8s\deployment.yaml
 	EndProjectSection
 EndProject
 Global
@@ -262,6 +269,7 @@ Global
 		{38B41C7B-CB19-466E-AB3A-217F8BC90F38} = {B9F8F39F-9E6B-41D8-8362-D5F08A7BEF81}
 		{BF99A2CB-4092-4CA4-B0F8-14163B1BFDE8} = {7D2CC435-9AD5-40BA-B651-540ACE9D0879}
 		{D3AD7B86-A36D-4D67-BB00-583140F123AB} = {FD42E63E-4F96-4177-BE06-C4A9F67AC7D0}
+		{2844BFED-A2D1-4ED5-BF59-EA3D8A97AAC4} = {28DB358C-3484-4BF7-BE96-17B2A8DB3800}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BDD6659A-32F8-4085-AA8B-340D17435983}

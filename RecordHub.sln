@@ -93,12 +93,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{28DB
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{2844BFED-A2D1-4ED5-BF59-EA3D8A97AAC4}"
 	ProjectSection(SolutionItems) = preProject
-		.github\workflows\aws.yaml = .github\workflows\aws.yaml
+		.github\workflows\main.yaml = .github\workflows\main.yaml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "k8s", "k8s", "{887F6288-F9ED-4140-A5B1-C287E1831408}"
 	ProjectSection(SolutionItems) = preProject
-		k8s\deployment.yaml = k8s\deployment.yaml
+		k8s\identity-service.yaml = k8s\identity-service.yaml
+		k8s\postgres-deployment.yaml = k8s\postgres-deployment.yaml
+		k8s\identity-deployment.yaml = k8s\identity-deployment.yaml
+		k8s\postgres-service.yaml = k8s\postgres-service.yaml
+		k8s\rabbitmq-deployment.yaml = k8s\rabbitmq-deployment.yaml
+		k8s\rabbitmq-service.yaml = k8s\rabbitmq-service.yaml
 	EndProjectSection
 EndProject
 Global

@@ -10,8 +10,6 @@ env:
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD}}
 
-  KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-  KUBE_NAMESPACE: production
   RELEASE_REVISION: "pr-${{ github.event.pull_request.number }}-${{ github.event.pull_request.head.sha }}"
 
   DOCKERHUB_IDENTITY_REPOSITORY: recordhub-identity          # set this to your Amazon ECR repository name
@@ -20,16 +18,9 @@ env:
   DOCKERHUB_ORDERING_REPOSITORY: recordhub-ordering
   DOCKERHUB_MAIL_REPOSITORY: recordhub-mail
   DOCKERHUB_CHAT_REPOSITORY: recordhub-chat
-
-  ECS_IDENTITYSERVICE: recorhub_identityservice_api                
-  AZURE_CLUSTER: recordhubscluster              
-
-  IDENTITY_CONTAINER_NAME: recordhub-identityservice-api          # set this to the name of the container in the
-  CATALOG_CONTAINER_NAME: recordhub-catalogservice-api                                               # containerDefinitions section of your task definition
-  BASKET_CONTAINER_NAME: recordhub-basketservice-api
-  ORDERING_CONTAINER_NAME: recordhub-orderingservice-api
-  MAIL_CONTAINER_NAME: recordhub-mailservice-api
-  CHAT_CONTAINER_NAME: recordhub-chatservice-api
+            
+  AZURE_CLUSTER: ${{ secrets.CLUSTER_NAME }}
+  AZURE_RECOURCEGROUP: ${{ secrets.RESOURCE_GROUP }}
 
 jobs:
   build-and-push:
@@ -43,10 +34,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Install kubectl
-        uses: azure/setup-kubectl@v3
-        with:
-          version: 'v1.27.4'
       - name: Log in to Docker Hub
         uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
         with:
@@ -55,32 +42,32 @@ jobs:
 
       - name: Build and test .NET Core services
         run: |
-          #cd RecordHub.IdentityService/RecordHub.IdentityService.Tests
-          #dotnet restore
-         # dotnet build
-          #dotnet test
+          cd RecordHub.IdentityService/RecordHub.IdentityService.Tests
+          dotnet restore
+          dotnet build
+          dotnet test
 
-          #cd ../../RecordHub.CatalogService/RecordHub.CatalogService.Tests
-          #dotnet restore
-         # dotnet build
-          #dotnet test
+          cd ../../RecordHub.CatalogService/RecordHub.CatalogService.Tests
+          dotnet restore
+          dotnet build
+          dotnet test
 
-         # cd ../../RecordHub.BasketService/RecordHub.BasketService.Tests
-         # dotnet restore
-          #dotnet build
-         # dotnet test
+          cd ../../RecordHub.BasketService/RecordHub.BasketService.Tests
+          dotnet restore
+          dotnet build
+          dotnet test
 
-          #cd ../../RecordHub.OrderingService/RecordHub.OrderingService.Tests
-         # dotnet restore
-         # dotnet build
-        #  dotnet test
+          cd ../../RecordHub.OrderingService/RecordHub.OrderingService.Tests
+          dotnet restore
+          dotnet build
+          dotnet test
 
-        #  cd ../../RecordHub.MailService/RecordHub.MailService.Tests
-       #   dotnet restore
-        #  dotnet build
-       #   dotnet test
+          cd ../../RecordHub.MailService/RecordHub.MailService.Tests
+          dotnet restore
+          dotnet build
+          dotnet test
 
-      - name: Build, Tag, and Push  to Amazon ECR
+      - name: Build, Tag, and Push  to DockerHub
         id: build-image
         env:
           DOCKERHUB_NAMESPACE: ${{ env.DOCKER_USERNAME }}
@@ -112,4 +99,50 @@ jobs:
           echo "ordering_image=$DOCKERHUB_NAMESPACE/$DOCKERHUB_ORDERING_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
           echo "mail_image=$DOCKERHUB_NAMESPACE/$DOCKERHUB_MAIL_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
           echo "chat_image=$DOCKERHUB_NAMESPACE/$DOCKERHUB_CHAT_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
-     
+
+      - name: Azure Login
+        uses: azure/login@14a755a4e2fd6dff25794233def4f2cf3f866955
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Set AKS context
+        id: set-context
+        uses: azure/aks-set-context@v3
+        with:
+          resource-group: '${{ env.AZURE_RECOURCEGROUP }}' 
+          cluster-name: '${{ env.AZURE_CLUSTER }}'
+
+      - name: Install kubectl
+        id: install-kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'v1.27.4'
+
+      - name: Deploy to AKS
+        id: deploy-aks
+        uses: Azure/k8s-deploy@v4
+        with:
+          namespace: 'default'
+          manifests: |
+             k8s/identity-deployment.yaml |
+             k8s/postgres-deployment.yaml |
+             k8s/rabbitmq-deployment.yaml |
+             k8s/mongo-deployment.yaml |
+             k8s/redis-deployment.yaml |          
+             k8s/catalog-deployment.yaml |
+             k8s/basket-deployment.yaml |
+             k8s/ordering-deployment.yaml |
+             k8s/mail-deployment.yaml |
+             k8s/chat-deployment.yaml |
+           
+          images: ${{ steps.build-image.outputs.identity_image }} |
+                  postgres:latest |
+                  rabbitmq:latest |
+                  mongo |
+                  redis/redis-stack:latest |
+                  ${{ steps.build-image.outputs.catalog_image }} |
+                  ${{ steps.build-image.outputs.basket_image }} |
+                  ${{ steps.build-image.outputs.ordering_image }} |
+                  ${{ steps.build-image.outputs.mail_image }} |
+                  ${{ steps.build-image.outputs.chat_image }} |
+          pull-images: false 

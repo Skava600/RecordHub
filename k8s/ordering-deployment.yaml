@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ordering-microservice
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: recordhub
+  template:
+    metadata:
+      labels:
+        app: recordhub
+    spec:
+      containers:
+      - name: ordering-microservice
+        image: skava600/recordhub-ordering:latest
+        ports:
+          - containerPort: 5007
+        env:
+          - name: "ASPNETCORE_ENVIRONMENT"
+            value: "Production"
+        volumeMounts:
+          - name: secrets
+            mountPath: /app/appsettings.Production.json
+            readOnly: true
+            subPath: appsettings.Production.json
+      volumes:
+      - name: secrets
+        secret:
+          secretName: ordering-secret

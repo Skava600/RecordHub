@@ -24,7 +24,7 @@ namespace RecordHub.CatalogService.Api.GrpcServices
             var product = new ProductReply
             {
                 IsExisting = isExisting,
-                Name = record?.Name ?? null,
+                Name = record?.Name ?? string.Empty,
                 Price = record?.Price ?? 0
             };
 

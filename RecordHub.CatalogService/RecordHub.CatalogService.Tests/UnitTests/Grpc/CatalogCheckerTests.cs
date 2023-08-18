@@ -49,5 +49,38 @@ namespace RecordHub.CatalogService.Tests.UnitTests.Grpc
                 .Should()
                 .BeEquivalentTo(response);
         }
+
+        [Fact]
+        public async Task CheckProductExisting_NotValidId_ReturnProductReply()
+        {
+            CancellationToken cancellationToken = CancellationToken.None;
+            var id = Guid.NewGuid();
+
+            // Arrange
+            var unitOfWork = new Mock<IUnitOfWork>();
+            Domain.Entities.Record record = null;
+
+            var productReply = new ProductReply
+            {
+                IsExisting = true,
+                Name = "",
+                Price = 0,
+            };
+
+            unitOfWork.Setup(
+                 m => m.Records.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>())).ReturnsAsync(record);
+
+            var service = new CatalogCheckerService(new Mock<ILogger<CatalogCheckerService>>().Object, unitOfWork.Object);
+
+            // Act
+            var response = await service.CheckProductExisting(
+                new ProductRequest { ProductId = id.ToString() }, TestServerCallContext.Create());
+
+            // Assert
+            unitOfWork.Verify(v => v.Records.GetByIdAsync(id, cancellationToken));
+            response.IsExisting
+                .Should()
+                .Be(false);
+        }
     }
 }

@@ -124,25 +124,26 @@ jobs:
         with:
           namespace: 'default'
           manifests: |
-             k8s/identity-deployment.yaml |
-             k8s/postgres-deployment.yaml |
-             k8s/rabbitmq-deployment.yaml |
-             k8s/mongo-deployment.yaml |
-             k8s/redis-deployment.yaml |          
-             k8s/catalog-deployment.yaml |
-             k8s/basket-deployment.yaml |
-             k8s/ordering-deployment.yaml |
-             k8s/mail-deployment.yaml |
-             k8s/chat-deployment.yaml |
+             k8s/identity-deployment.yaml 
+             k8s/postgres-deployment.yaml 
+             k8s/rabbitmq-deployment.yaml 
+             k8s/mongo-deployment.yaml 
+             k8s/redis-deployment.yaml 
+             k8s/catalog-deployment.yaml 
+             k8s/basket-deployment.yaml 
+             k8s/ordering-deployment.yaml 
+             k8s/mail-deployment.yaml 
+             k8s/chat-deployment.yaml
            
-          images: ${{ steps.build-image.outputs.identity_image }} |
-                  postgres:latest |
-                  rabbitmq:latest |
-                  mongo |
-                  redis/redis-stack:latest |
-                  ${{ steps.build-image.outputs.catalog_image }} |
-                  ${{ steps.build-image.outputs.basket_image }} |
-                  ${{ steps.build-image.outputs.ordering_image }} |
-                  ${{ steps.build-image.outputs.mail_image }} |
-                  ${{ steps.build-image.outputs.chat_image }} |
+          images: |
+              ${{ steps.build-image.outputs.identity_image }} 
+              postgres:latest 
+              rabbitmq:latest 
+              mongo 
+              redis/redis-stack:latest 
+              ${{ steps.build-image.outputs.catalog_image }} 
+              ${{ steps.build-image.outputs.basket_image }} 
+              ${{ steps.build-image.outputs.ordering_image }} 
+              ${{ steps.build-image.outputs.mail_image }} 
+              ${{ steps.build-image.outputs.chat_image }} 
           pull-images: false 

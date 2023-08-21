@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rabbitmq-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: recordhub
+  template:
+    metadata:
+      labels:
+        app: recordhub
+    spec:
+      containers:
+        - name: rabbitmq-service
+          image: rabbitmq:latest
+          ports:
+            - containerPort: 5672
+          volumeMounts:
+            - name: rabbitmq-pv
+              mountPath: ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      volumes:
+        - name: rabbitmq-pv
+          persistentVolumeClaim:
+            claimName: rabbitmq-pvc

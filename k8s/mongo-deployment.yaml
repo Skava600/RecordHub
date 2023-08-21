@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: "StatefulSet"
+metadata:
+  labels:
+    app: mongo
+  name: mongo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+      - image: mongo
+        name: mongo
+        imagePullPolicy: "Always"
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: mongo-creds
+              key: username
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mongo-creds
+              key: password
+        ports: 
+           - containerPort: 27017
+        volumeMounts:
+        - name: "mongo-data"
+          mountPath: "/data/db"
+      volumes:
+      - name: "mongo-data"
+        persistentVolumeClaim:
+          claimName: mongo-pvc

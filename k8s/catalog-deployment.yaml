@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog-microservice
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: recordhub
+  template:
+    metadata:
+      labels:
+        app: recordhub
+    spec:
+      containers:
+      - name: catalog-microservice
+        image: skava600/recordhub-catalog:latest
+        ports:
+          - containerPort: 5004 
+          - containerPort: 5005
+        env:
+          - name: "ASPNETCORE_ENVIRONMENT"
+            value: "Production"
+        volumeMounts:
+          - name: catalog-secrets
+            mountPath: /app/appsettings.Production.json
+            readOnly: true
+            subPath: appsettings.Production.json
+      volumes:
+      - name: catalog-secrets
+        secret:
+          secretName: catalog-secret

@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: basket-microservice
+spec:
+  replicas: 1 
+  selector:
+    matchLabels:
+      app: recordhub
+  template:
+    metadata:
+      labels:
+        app: recordhub
+    spec:
+      containers:
+      - name: basket-microservice
+        image: skava600/recordhub-basket:latest
+        ports:
+          - containerPort: 5006
+        env:
+          - name: "ASPNETCORE_ENVIRONMENT"
+            value: "Production"
+        volumeMounts:
+          - name: secrets
+            mountPath: /app/appsettings.Production.json
+            readOnly: true
+            subPath: appsettings.Production.json
+      volumes:
+      - name: secrets
+        secret:
+          secretName: basket-secret

@@ -1,0 +1,149 @@
+name: Deploy to Amazon ECS
+
+on:
+  pull_request:
+    branches: [dev]
+  push:
+    branches: [cloud]
+
+env:
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD}}
+
+  RELEASE_REVISION: "pr-${{ github.event.pull_request.number }}-${{ github.event.pull_request.head.sha }}"
+
+  DOCKERHUB_IDENTITY_REPOSITORY: recordhub-identity          # set this to your Amazon ECR repository name
+  DOCKERHUB_CATALOG_REPOSITORY: recordhub-catalog
+  DOCKERHUB_BASKET_REPOSITORY: recordhub-basket 
+  DOCKERHUB_ORDERING_REPOSITORY: recordhub-ordering
+  DOCKERHUB_MAIL_REPOSITORY: recordhub-mail
+  DOCKERHUB_CHAT_REPOSITORY: recordhub-chat
+            
+  AZURE_CLUSTER: ${{ secrets.CLUSTER_NAME }}
+  AZURE_RECOURCEGROUP: ${{ secrets.RESOURCE_GROUP }}
+
+jobs:
+  build-and-push:
+    name: Build and Push to docker hub and deploy in aks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs               
+        uses: styfle/cancel-workflow-action@0.4.1
+        with:                                    
+          access_token: ${{ github.token }}      
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
+        with:
+          username: ${{ env.DOCKER_USERNAME }}
+          password: ${{ env.DOCKER_PASSWORD }}
+
+      - name: Build and test .NET Core services
+        run: |
+          cd RecordHub.IdentityService/RecordHub.IdentityService.Tests
+          dotnet restore
+          dotnet build
+          dotnet test
+
+          cd ../../RecordHub.CatalogService/RecordHub.CatalogService.Tests
+          dotnet restore
+          dotnet build
+          dotnet test
+
+          cd ../../RecordHub.BasketService/RecordHub.BasketService.Tests
+          dotnet restore
+          dotnet build
+          dotnet test
+
+          cd ../../RecordHub.OrderingService/RecordHub.OrderingService.Tests
+          dotnet restore
+          dotnet build
+          dotnet test
+
+          cd ../../RecordHub.MailService/RecordHub.MailService.Tests
+          dotnet restore
+          dotnet build
+          dotnet test
+
+      - name: Build, Tag, and Push  to DockerHub
+        id: build-image
+        env:
+          DOCKERHUB_NAMESPACE: ${{ env.DOCKER_USERNAME }}
+          DOCKERHUB_IDENTITY_REPOSITORY: ${{ env.DOCKERHUB_IDENTITY_REPOSITORY }}
+          DOCKERHUB_CATALOG_REPOSITORY: ${{ env.DOCKERHUB_CATALOG_REPOSITORY }}
+          DOCKERHUB_BASKET_REPOSITORY: ${{ env.DOCKERHUB_BASKET_REPOSITORY }}
+          DOCKERHUB_ORDERING_REPOSITORY: ${{ env.DOCKERHUB_ORDERING_REPOSITORY }}
+          DOCKERHUB_MAIL_REPOSITORY: ${{ env.DOCKERHUB_MAIL_REPOSITORY }}
+          DOCKERHUB_CHAT_REPOSITORY: ${{ env.DOCKERHUB_CHAT_REPOSITORY }}
+          IMAGE_TAG: latest
+        run: |
+          docker build -f RecordHub.IdentityService/RecordHub.IdentityService.Api/Dockerfile -t $DOCKERHUB_NAMESPACE/$DOCKERHUB_IDENTITY_REPOSITORY:$IMAGE_TAG .
+          docker build -f RecordHub.CatalogService/RecordHub.CatalogService.Api/Dockerfile -t $DOCKERHUB_NAMESPACE/$DOCKERHUB_CATALOG_REPOSITORY:$IMAGE_TAG .
+          docker build -f RecordHub.BasketService/RecordHub.BasketService.Api/Dockerfile -t $DOCKERHUB_NAMESPACE/$DOCKERHUB_BASKET_REPOSITORY:$IMAGE_TAG .
+          docker build -f RecordHub.OrderingService/RecordHub.OrderingService.Api/Dockerfile -t $DOCKERHUB_NAMESPACE/$DOCKERHUB_ORDERING_REPOSITORY:$IMAGE_TAG .
+          docker build -f RecordHub.MailService/RecordHub.MailService.Api/Dockerfile -t $DOCKERHUB_NAMESPACE/$DOCKERHUB_MAIL_REPOSITORY:$IMAGE_TAG .
+          docker build -f RecordHub.ChatService/RecordHub.ChatService.Api/Dockerfile -t $DOCKERHUB_NAMESPACE/$DOCKERHUB_CHAT_REPOSITORY:$IMAGE_TAG .
+
+          docker push $DOCKERHUB_NAMESPACE/$DOCKERHUB_IDENTITY_REPOSITORY:$IMAGE_TAG
+          docker push $DOCKERHUB_NAMESPACE/$DOCKERHUB_CATALOG_REPOSITORY:$IMAGE_TAG
+          docker push $DOCKERHUB_NAMESPACE/$DOCKERHUB_BASKET_REPOSITORY:$IMAGE_TAG
+          docker push $DOCKERHUB_NAMESPACE/$DOCKERHUB_ORDERING_REPOSITORY:$IMAGE_TAG
+          docker push $DOCKERHUB_NAMESPACE/$DOCKERHUB_MAIL_REPOSITORY:$IMAGE_TAG
+          docker push $DOCKERHUB_NAMESPACE/$DOCKERHUB_CHAT_REPOSITORY:$IMAGE_TAG
+
+          echo "identity_image=$DOCKERHUB_NAMESPACE/$DOCKERHUB_IDENTITY_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+          echo "catalog_image=$DOCKERHUB_NAMESPACE/$DOCKERHUB_CATALOG_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+          echo "basket_image=$DOCKERHUB_NAMESPACE/$DOCKERHUB_BASKET_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+          echo "ordering_image=$DOCKERHUB_NAMESPACE/$DOCKERHUB_ORDERING_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+          echo "mail_image=$DOCKERHUB_NAMESPACE/$DOCKERHUB_MAIL_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+          echo "chat_image=$DOCKERHUB_NAMESPACE/$DOCKERHUB_CHAT_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Set AKS context
+        id: set-context
+        uses: azure/aks-set-context@v3
+        with:
+          resource-group: '${{ env.AZURE_RECOURCEGROUP }}' 
+          cluster-name: '${{ env.AZURE_CLUSTER }}'
+
+      - name: Install kubectl
+        id: install-kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'v1.27.4'
+
+      - name: Deploy to AKS
+        id: deploy-aks
+        uses: Azure/k8s-deploy@v4
+        with:
+          namespace: 'default'
+          manifests: |
+             k8s/identity-deployment.yaml 
+             k8s/postgres-deployment.yaml 
+             k8s/rabbitmq-deployment.yaml 
+             k8s/mongo-deployment.yaml 
+             k8s/redis-deployment.yaml 
+             k8s/catalog-deployment.yaml 
+             k8s/basket-deployment.yaml 
+             k8s/ordering-deployment.yaml 
+             k8s/mail-deployment.yaml 
+             k8s/chat-deployment.yaml
+           
+          images: |
+              ${{ steps.build-image.outputs.identity_image }} 
+              postgres:latest 
+              rabbitmq:latest 
+              mongo 
+              redis/redis-stack:latest 
+              ${{ steps.build-image.outputs.catalog_image }} 
+              ${{ steps.build-image.outputs.basket_image }} 
+              ${{ steps.build-image.outputs.ordering_image }} 
+              ${{ steps.build-image.outputs.mail_image }} 
+              ${{ steps.build-image.outputs.chat_image }} 
+          pull-images: false 

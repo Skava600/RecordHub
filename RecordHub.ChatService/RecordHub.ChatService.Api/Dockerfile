@@ -8,10 +8,9 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY ["RecordHub.ChatService/RecordHub.ChatService.Api/RecordHub.ChatService.Api.csproj", "RecordHub.ChatService/RecordHub.ChatService.Api/"]
-COPY ["RecordHub.BasketService/RecordHub.BasketService.Applicatation/RecordHub.BasketService.Applicatation.csproj", "RecordHub.BasketService/RecordHub.BasketService.Applicatation/"]
 COPY ["RecordHub.Shared/RecordHub.Shared.csproj", "RecordHub.Shared/"]
-COPY ["RecordHub.BasketService/RecordHub.BasketService.Domain/RecordHub.BasketService.Domain.csproj", "RecordHub.BasketService/RecordHub.BasketService.Domain/"]
-COPY ["RecordHub.BasketService/RecordHub.BasketService.Infrastructure/RecordHub.BasketService.Infrastructure.csproj", "RecordHub.BasketService/RecordHub.BasketService.Infrastructure/"]
+COPY ["RecordHub.ChatService/RecordHub.ChatService.Application/RecordHub.ChatService.Application.csproj", "RecordHub.ChatService/RecordHub.ChatService.Application/"]
+COPY ["RecordHub.ChatService/RecordHub.ChatService.Domain/RecordHub.ChatService.Domain.csproj", "RecordHub.ChatService/RecordHub.ChatService.Domain/"]
 COPY ["RecordHub.ChatService/RecordHub.ChatService.Infrastructure/RecordHub.ChatService.Infrastructure.csproj", "RecordHub.ChatService/RecordHub.ChatService.Infrastructure/"]
 RUN dotnet restore "RecordHub.ChatService/RecordHub.ChatService.Api/RecordHub.ChatService.Api.csproj"
 COPY . .

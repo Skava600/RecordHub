@@ -10,6 +10,7 @@ namespace RecordHub.IdentityService.Persistence
         private readonly RoleManager<IdentityRole<Guid>> _roleManager;
         private readonly UserManager<User> _userManager;
         private readonly AccountDbContext _dbContext;
+
         public DbInitializer(RoleManager<IdentityRole<Guid>> roleManager, UserManager<User> userManager, AccountDbContext dbContext)
         {
             _roleManager = roleManager;
@@ -20,6 +21,7 @@ namespace RecordHub.IdentityService.Persistence
         public async Task Initialize()
         {
             var pendingMigrations = await _dbContext.Database.GetPendingMigrationsAsync();
+
 
             if (pendingMigrations.Any())
             {

@@ -11,6 +11,7 @@ COPY ["RecordHub.IdentityService/RecordHub.IdentityService.Api/RecordHub.Identit
 COPY ["RecordHub.IdentityService/RecordHub.IdentityService.Core/RecordHub.IdentityService.Core.csproj", "RecordHub.IdentityService/RecordHub.IdentityService.Core/"]
 COPY ["RecordHub.IdentityService/RecordHub.IdentityService.Domain/RecordHub.IdentityService.Domain.csproj", "RecordHub.IdentityService/RecordHub.IdentityService.Domain/"]
 COPY ["RecordHub.IdentityService/RecordHub.IdentityService.Infrastructure/RecordHub.IdentityService.Infrastructure.csproj", "RecordHub.IdentityService/RecordHub.IdentityService.Infrastructure/"]
+COPY ["RecordHub.Shared/RecordHub.Shared.csproj", "RecordHub.Shared/"]
 COPY ["RecordHub.IdentityService/RecordHub.IdentityService.Persistence/RecordHub.IdentityService.Persistence.csproj", "RecordHub.IdentityService/RecordHub.IdentityService.Persistence/"]
 RUN dotnet restore "RecordHub.IdentityService/RecordHub.IdentityService.Api/RecordHub.IdentityService.Api.csproj"
 COPY . .
